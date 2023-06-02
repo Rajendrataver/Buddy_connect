@@ -1,0 +1,20 @@
+.login-section{
+   align-items: center;
+    height: 100%;
+    display: flex;
+    background-image: url('../../../public//assets/image/back3.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.login-section button{
+    margin-top: 15px;
+}
+.login-section p{
+  margin: 0;
+  padding: 0;
+}
+.login-section h1{
+  margin: 0;
+  padding: 0;
+}
