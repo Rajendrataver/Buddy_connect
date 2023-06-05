@@ -6,13 +6,11 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -27,10 +25,10 @@ interface userInterface {
 
 const UserList: React.FC = () => {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
-  const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState<Array<userInterface>>([]);
-
+  const [onLoad, setOnLoad] = useState<boolean>(false);
   const getUserList = () => {
     axios({
       method: "get", //you can set what request you want to be
@@ -55,6 +53,7 @@ const UserList: React.FC = () => {
     getUserList();
   }, []);
   const handleClick = (id: number, status: string) => {
+    setOnLoad(true);
     const token = localStorage.getItem("token");
     if (status === "active") {
       status = "deActive";
@@ -77,53 +76,62 @@ const UserList: React.FC = () => {
       })
       .catch((error) => {
         console.log(error.response);
+      })
+      .finally(() => {
+        setOnLoad(false);
       });
   };
   const columns: TableColumn<userInterface>[] = [
     {
-      name: "Name",
+      name: <h4>Name</h4>,
       selector: (row: userInterface) => row.first_name,
       sortable: true,
     },
     {
-      name: "Email",
+      name: <h4>Email</h4>,
       selector: (row: userInterface) => row.email,
       sortable: true,
     },
 
     {
-      name: "Designaion",
+      name: <h4>Designation</h4>,
       selector: (row: userInterface) => row.designation,
       sortable: true,
     },
     {
-      name: "Role",
+      name: <h4>Role</h4>,
       selector: (row: userInterface) => row.role,
       sortable: true,
     },
     {
-      name: "Details",
+      name: <h4>Deatails</h4>,
       cell: (row: userInterface) => {
         return (
-          <button
-            className="action-btn btn-info"
-            onClick={() => singleUser(row.id)}
+          <Button
+            key={row.id}
+            color="info"
+            variant="contained"
+            onClick={() => {
+              navigate("/singleuser/" + row.id);
+            }}
           >
-            User Details
-          </button>
+            Details
+          </Button>
         );
       },
       sortable: true,
     },
     {
-      name: "Action",
+      name: <h4>Action</h4>,
       cell: (row: userInterface) => {
         if (row.status === "active")
           return (
             <Button
+              key={row.id}
               variant="contained"
               color="warning"
               onClick={() => handleClick(row.id, row.status)}
+              disabled={onLoad}
             >
               Deactivate
             </Button>
@@ -131,11 +139,13 @@ const UserList: React.FC = () => {
         else {
           return (
             <Button
+              key={row.id}
               variant="contained"
               color="success"
               onClick={() => handleClick(row.id, row.status)}
+              disabled={onLoad}
             >
-              Activate
+              &nbsp; &nbsp;Activate&nbsp;&nbsp;
             </Button>
           );
         }
@@ -155,8 +165,9 @@ const UserList: React.FC = () => {
   return (
     <Paper
       sx={{
-        maxWidth: 65 + "%",
+        maxWidth:1100,
         margin: "auto",
+        width: 100 + "%",
         marginTop: 5,
         overflow: "hidden",
       }}
@@ -186,7 +197,7 @@ const UserList: React.FC = () => {
             </Grid>
             <Grid item>
               <Button variant="contained" sx={{ mr: 1 }}>
-                Add user
+                <Link to="/createuser">Crete User</Link>
               </Button>
             </Grid>
           </Grid>
@@ -196,10 +207,8 @@ const UserList: React.FC = () => {
         <Table
           striped
           className="table"
-          title={"User List"}
           pagination
           columns={columns}
-          
           data={data}
           fixedHeader
         />

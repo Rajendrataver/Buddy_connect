@@ -7,15 +7,18 @@ import Grid from "@mui/material/Grid";
 import HelpIcon from "@mui/icons-material/Help";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { Box, Toolbar } from "@mui/material";
+import { Toolbar } from "@mui/material";
 import { Link } from "react-router-dom";
+import { MenuOutlined } from "@mui/icons-material";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
-interface HeaderProps {
-  onDrawerToggle: () => void;
-}
-
-export default function Header() {
+export default function Header({
+  setSidebar,
+  toggleSidebar,
+}: {
+  setSidebar: (boolean: boolean) => void;
+  toggleSidebar: boolean;
+}) {
   return (
     <React.Fragment>
       <AppBar color="primary" position="sticky" elevation={0}></AppBar>
@@ -24,13 +27,13 @@ export default function Header() {
         color="primary"
         position="static"
         elevation={0}
-        sx={{ zIndex: 0, padding: 10 + "px" }}
+        sx={{ zIndex: 0, padding: 5 + "px" }}
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
             <Grid item xs>
               <Typography color="inherit" variant="h5" component="h1">
-                <Link to='/dashboard'> Buddy Connect</Link>
+                {<MenuOutlined onClick={() => setSidebar(!toggleSidebar)} />}
               </Typography>
             </Grid>
             <Grid item>
@@ -40,7 +43,7 @@ export default function Header() {
                 color="inherit"
                 size="small"
               >
-                Log-Out
+                <Link to={"/logout"}>Log-Out</Link>
               </Button>
             </Grid>
             <Grid item>

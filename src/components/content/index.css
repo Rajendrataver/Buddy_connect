@@ -1,0 +1,11 @@
+.none {
+  display: none;
+}
+.block {
+  display: contents;
+}
+@media (max-width: 800px) {
+  .block {
+    display: none;
+  }
+}

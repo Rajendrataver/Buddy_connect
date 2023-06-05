@@ -1,33 +1,92 @@
-import { Box, Button, Paper, Stack, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
+
+import { createContext } from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import validationSchema from "./createUserSchema";
 import axios from "axios";
+import TextInput from "../TextInput";
+import SelectInput from "../SelectInput";
+import DateInput from "../DateInput";
+import RadioInput from "../RadioInput";
 
+const designation = [
+  "Project Manager",
+  "Team Lead",
+  "Senior Software Engineer",
+  "Associate Engineer",
+  "Junior Software Engineer",
+  "Trainee Engineer",
+  "Intern",
+];
+export const initialValues = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  city: "",
+  gender: "",
+  address: "",
+  contact: "",
+  dob: "",
+  zip_code: "",
+  pan_card: "",
+  designation: "",
+  role: "",
+  joining_date: "",
+  country: "",
+  state: "",
+};
+
+const userFormContext = createContext<any>(0);
+const country = [
+  "Afghanistan",
+  "Guatemala",
+  "Guernsey",
+  "Guinea",
+  "Guinea-Bissau",
+  "Guyana",
+  "Haiti",
+  "Heard Island and McDonald Islands",
+  "Holy See (the)",
+  "Honduras",
+  "Hong Kong",
+  "Hungary",
+  "Iceland",
+  "India",
+  "Indonesia",
+  "Portugal",
+  "Puerto Rico",
+  "Qatar",
+  "Republic of North Macedonia",
+  "Western Sahara",
+  "Yemen",
+  "Zambia",
+  "Zimbabwe",
+];
+const roles = ["admin", "hr", "associate"];
 const CreateUser = () => {
+  const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
   const [result, setResult] = useState("");
   const formik = useFormik({
-    initialValues: {
-      first_name: "",
-      last_name: "",
-      email: "",
-      city: "",
-      gender: "",
-      address: "",
-      contact: "",
-      dob: "",
-      zip_code: "",
-      pan_card: "",
-      designation: "",
-      role: "",
-      joining_date: "",
-      country: "",
-      state: "",
-    },
+    initialValues,
     validationSchema,
     onSubmit: (values) => {
+      setOnLoad(true);
       const token = localStorage.getItem("token");
       console.log(values);
       axios({
@@ -62,81 +121,87 @@ const CreateUser = () => {
             setResult(formik.values.pan_card + " Already Registered");
             formik.values.pan_card = "";
           }
+        })
+        .finally(() => {
+          setOnLoad(false);
         });
     },
   });
+  console.log(formik.values);
   return (
     <>
       <Paper
         sx={{
           maxWidth: 65 + "%",
           margin: "auto",
-                  marginTop: 5,
-          padding:5,
+          marginTop: 5,
+          padding: 5,
           overflow: "hidden",
         }}
       >
-        <form onSubmit={formik.handleSubmit}>
-          <Stack spacing={2} direction="row" sx={{ marginBottom: 4 }}>
-            <TextField
-              type="text"
-              variant="outlined"
-              color="secondary"
-              label="First Name"
-              fullWidth
-              required
-              placeholder="First Name"
-              name="first_name"
-              value={formik.values.first_name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-            />
-            <TextField
-              type="text"
-              variant="outlined"
-              color="secondary"
-              label="Last Name"
-              placeholder="Last Name"
-              name="last_name"
-              value={formik.values.last_name}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              fullWidth
-              required
-            />
-          </Stack>
-          <TextField
-            type="email"
-            variant="outlined"
-            color="secondary"
-            label="Email"
-            placeholder="Email"
-            autoComplete="email"
-            name="email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            fullWidth
-            required
-            sx={{ mb: 4 }}
-          />
+        <Typography
+          sx={{ mx: 2, fontSize: 25 }}
+          color="red"
+          align="left"
+        ></Typography>
+        <userFormContext.Provider value={formik}>
+          <form onSubmit={formik.handleSubmit}>
+            <Grid container>
+              <Grid item sm={4} xs={12} p={1}>
+                <h1>Contact Details</h1>
+                <hr />
+                <TextInput name="first_name" type="text" label="First Name" />
+                <TextInput name="last_name" type="text" label="Last Name" />
+                <TextInput name="email" type="email" label="Email" />
+                <TextInput name="contact" type="number" label="Contact" />
+                <RadioInput
+                  name="gender"
+                  label="Gender"
+                  items={["male", "female"]}
+                />
+                <DateInput name="dob" label="Date of Birth" />
+              </Grid>
 
-          <TextField
-            type="date"
-            variant="outlined"
-            color="secondary"
-            label="Date of Birth"
-            fullWidth
-            required
-            sx={{ mb: 4 }}
-          />
-          <Button variant="outlined" color="secondary" type="submit">
-            Register
-          </Button>
-        </form>
+              <Grid item sm={4} xs={12} p={1}>
+                <h1>Job details</h1>
+                <hr />
+                <SelectInput
+                  name="designation"
+                  items={designation}
+                  label="Designation"
+                />
+                <SelectInput name="role" items={roles} label="Role" />
+                <DateInput name="joining_date" label="Joining Date" />
+              </Grid>
+
+              <Grid item sm={4} xs={12} p={1}>
+                <h1>Address Details</h1>
+                <hr />
+                <TextInput type="text" label="Pan Card" name="pan_card" />
+
+                <SelectInput name="country" label="Country" items={country} />
+
+                <TextInput type="text" label="State" name="state" />
+                <TextInput type="text" label="City" name="city" />
+                <TextInput type="text" label="Address" name="address" />
+                <TextInput type="number" label="Zip Code" name="zip_code" />
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                  sx={{ marginTop: 6 }}
+                  disabled={onLoad}
+                >
+                  Register
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </userFormContext.Provider>
       </Paper>
     </>
   );
 };
-
+export { userFormContext };
 export default CreateUser;
