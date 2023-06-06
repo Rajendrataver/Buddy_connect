@@ -21,12 +21,11 @@ export default function Header({
 }) {
   return (
     <React.Fragment>
-      <AppBar color="primary" position="sticky" elevation={0}></AppBar>
       <AppBar
         component="div"
         color="primary"
-        position="static"
         elevation={0}
+        position="static"
         sx={{ zIndex: 0, padding: 5 + "px" }}
       >
         <Toolbar>
@@ -56,10 +55,10 @@ export default function Header({
             </Grid>
           </Grid>
         </Toolbar>
-        <hr />
+
         <Grid container>
           <Grid item>
-            <Link to="/dahsboard" className="nav-links">
+            <Link to="/dashboard" className="nav-links">
               Dashboard
             </Link>
             <Link to="/userlist" className="nav-links">

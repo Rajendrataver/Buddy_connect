@@ -17,13 +17,12 @@ const SideBar = () => {
           height: "100vh",
           width: 100 + "%",
           maxWidth: 300,
-          position: "static",
+          position: "fixed",
         }}
       >
         <Menu>
           <MenuItem style={{ textAlign: "center" }}>
             <h2>Buddy Connect</h2>
-          
           </MenuItem>{" "}
           <Link to="/dashboard" className="sidebar-link">
             <MenuItem icon={<HomeOutlinedIcon />}>Dashboard</MenuItem>

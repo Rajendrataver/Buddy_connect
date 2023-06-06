@@ -8,8 +8,10 @@ import Dashboard from "../dashboard";
 import CreateUser from "../creatUser";
 import Logout from "../logout";
 import SingleUser from "../singleUser";
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import SideBar from "../sidebar";
+import AddBankDetails from "../addBankDetails";
+import AddFamilyDetail from "../addFamilyDetails";
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
@@ -29,7 +31,16 @@ const Content = () => {
       <Box className={className}>
         <SideBar />
       </Box>
-      <Box sx={{ width: 100 + "%" }}>
+      <Box
+        className={className}
+        style={{
+          height: "100vh",
+          width: 100 + "%",
+          maxWidth: 300,
+          minWidth: 300,
+        }}
+      ></Box>
+      <Box sx={{ width: 100 + "%"}}>
         <Header setSidebar={setSidebar} toggleSidebar={toggleSidebar} />
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -37,6 +48,14 @@ const Content = () => {
           <Route path="/createuser" element={<CreateUser />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/singleuser/:id" element={<SingleUser />} />
+          <Route
+            path="/add-bank-details/:user_id"
+            element={<AddBankDetails />}
+          />
+          <Route
+            path="/add-family-details/:user_id"
+            element={<AddFamilyDetail />}
+          />
         </Routes>
       </Box>
     </Box>

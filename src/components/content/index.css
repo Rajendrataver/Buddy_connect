@@ -1,8 +1,10 @@
 .none {
   display: none;
+  transition: 0.3s ease-in-out;
 }
 .block {
-  display: contents;
+  display: block;
+  transition: 0.3s ease-in-out;
 }
 @media (max-width: 800px) {
   .block {

@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
-
-
-
 const useAxios = (url: string, data: object, method: string, token: string | null) => {
     const [response, setResponse] = useState<any>();
     const [error, setError] = useState('');

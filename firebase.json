@@ -1,7 +1,5 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
+  "database": {},
   "functions": [
     {
       "source": "functions",
@@ -15,7 +13,7 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "public": "build",
     "ignore": [
       "firebase.json",
       "**/.*",
