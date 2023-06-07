@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
+import ConfirmBox from "../confirmBox";
 
 const bankData = {
   account_number: "",
@@ -28,7 +29,7 @@ const bankData = {
   id: "",
 };
 
-interface bank {
+interface bankInterface {
   account_number: string;
   bank_name: string;
   bank_branch: string;
@@ -39,22 +40,53 @@ interface bank {
 }
 
 const BankDetails = ({ id }: { id: string | undefined }) => {
-  const [bankInfo, setBankInfo] = useState<bank>(bankData);
+  const [open, setOpen] = useState<boolean>(false);
+  const [bankInfo, setBankInfo] = useState<bankInterface>(bankData);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const getBankdetails = () => {
     const response = fetch(API.GET_BANK_DETAILS_URL + id, "get", token);
     response.then((res) => {
-      setBankInfo(res.data.response[0]);
-      console.log("bank details:", res.data.response[0]);
+      if (res.data.response.length) {
+        setBankInfo(res.data.response[0]);
+        console.log(bankInfo);
+      }
     });
   };
   useEffect(() => {
     getBankdetails();
   }, []);
+
+  const confirmRemove = () => {
+    const response = fetch(
+      API.DELETE_BANK_DETAILS_URL + id + "&&bank_id=" + bankInfo.id,
+      "delete",
+      token
+    );
+    response
+      .then((res) => {
+        console.log(res.data);
+        setBankInfo(bankData);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setOpen(false);
+      });
+  };
+  const removeBankDetails = () => {
+    setOpen(true);
+  };
   return (
     <>
+      <ConfirmBox
+        msg="Do you want to Remove Details ?"
+        open={open}
+        setOpen={setOpen}
+        handleOk={confirmRemove}
+      />
       <h4>Bank Details :</h4>
       <Grid container>
         <Grid item xs={12} md={12}>
@@ -63,6 +95,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
               variant="contained"
               color="primary"
               onClick={() => navigate("/add-bank-details/" + id)}
+              sx={{marginTop:3}}
             >
               Add Bank Details
             </Button>
@@ -98,6 +131,15 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
               </Table>
               <Button variant="contained" color="primary" sx={{ marginTop: 3 }}>
                 Update Details
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={removeBankDetails}
+                sx={{ marginTop: 3, marginLeft: 3 }}
+                disabled={open}
+              >
+                Remove Details
               </Button>
             </TableContainer>
           )}

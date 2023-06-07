@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Grid, useStepContext } from "@mui/material";
 import useAxios from "../../customHook/useAxios";
 import * as API from "../../apiURL";
 import {
@@ -10,6 +10,8 @@ import {
   TableRow,
 } from "@mui/material";
 import useFetch from "../../customHook/useFetch";
+import { useNavigate } from "react-router";
+import ConfirmBox from "../confirmBox";
 interface family {
   name: string;
   gender: string;
@@ -18,6 +20,7 @@ interface family {
   id: number;
 }
 const FamilyDetails = ({ id }: { id: string | undefined }) => {
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const [familyList, setFamilyList] = useState<Array<family>>([]);
@@ -45,34 +48,50 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
   };
 
   return (
-    <TableContainer>
-      <Table
-        sx={{ maxWidth: 650, width: 100 + "%" }}
-        size="small"
-        aria-label="a dense table"
-      >
-        <TableHead>
-          {familyList.map((member, i) => {
-            return (
-              <TableRow>
-                <TableCell>{member.name}</TableCell>
-                <TableCell align="left">{member.relation}</TableCell>
-                <TableCell align="left">{member.contact}</TableCell>
-                <TableCell align="left">
-                  <Button
-                    color="error"
-                    variant="contained"
-                    onClick={() => deleteMember(member)}
-                  >
-                    Delete
-                  </Button>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableHead>
-      </Table>
-    </TableContainer>
+    <>
+      <h4>Family Details</h4>
+      <Grid container>
+        <Grid item xs={12} md={12}>
+          <TableContainer>
+            <Table
+              sx={{ maxWidth: 650, width: 100 + "%" }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                {familyList.map((member, i) => {
+                  return (
+                    <TableRow>
+                      <TableCell>{member.name}</TableCell>
+                      <TableCell align="left">{member.relation}</TableCell>
+                      <TableCell align="left">{member.contact}</TableCell>
+                      <TableCell align="left">
+                        <Button
+                          color="error"
+                          variant="contained"
+                          onClick={() => deleteMember(member)}
+                          sx={{ marginTop: 3 }}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableHead>
+            </Table>
+          </TableContainer>
+        </Grid>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/add-family-details/" + id)}
+          sx={{ marginTop: 3 }}
+        >
+          Add Memeber
+        </Button>
+      </Grid>
+    </>
   );
 };
 

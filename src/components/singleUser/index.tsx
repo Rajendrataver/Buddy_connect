@@ -1,8 +1,6 @@
 import {
   AppBar,
-  Avatar,
   Box,
-  Button,
   Grid,
   Paper,
   Typography,
@@ -22,6 +20,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import BankDetails from "../bankDetails";
+import useFetch from "../../customHook/useFetch";
+import SalaryDetails from "../salaryDetails";
 
 const data = {
   first_name: "",
@@ -33,21 +33,35 @@ const data = {
   contact: "",
   gender: "",
 };
-
+interface userInterface {
+  first_name: string;
+  email: string;
+  mobile: string;
+  city: string;
+  designation: string;
+  role: string;
+  contact: string;
+  gender: string;
+}
 const SingleUser = () => {
   const navigate = useNavigate();
   const params = useParams();
   const id = params.id;
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState(data);
+  const [user, setUser] = useState<userInterface>(data);
+  const fetch = useFetch();
+  const getUserDetails = () => {
+    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
+    response.then((res) => {
+      setUser(res.data.response);
+    });
+  };
 
   const axios = useAxios(API.GET_PERSONAL_DETAILS_URL + id, {}, "get", token);
 
   useEffect(() => {
-    if (axios.response) {
-      setUser(axios.response.response);
-    }
-  }, [axios.response]);
+    getUserDetails();
+  }, []);
 
   var src = "https://www.pngmart.com/files/22/User-Avatar-Profile-PNG.png";
   if (user.gender === "female") {
@@ -82,7 +96,10 @@ const SingleUser = () => {
                 variant="h4"
                 component="h2"
                 textAlign="center"
-                sx={{ backgroundColor: "whitesmoke" }}
+                sx={{
+                  backgroundColor: "whitesmoke",
+                  textTransform: "capitalize",
+                }}
               >
                 {user.first_name}
               </Typography>
@@ -133,7 +150,7 @@ const SingleUser = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Bank Details</Typography>
+                <Typography>Bank Details</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <BankDetails id={id} />
@@ -145,22 +162,10 @@ const SingleUser = () => {
                   aria-controls="panel2a-content"
                   id="panel2a-header"
                 >
-                  <Typography>Family Details</Typography>
+                <Typography>Family Details</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <h4>Family Details</h4>
-                  <Grid container>
-                    <Grid item xs={12} md={12}>
-                      <FamilyDetails id={id} />
-                    </Grid>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => navigate("/add-family-details/" + id)}
-                    >
-                      Add Memeber
-                    </Button>
-                  </Grid>
+                  <FamilyDetails id={id} />
                 </AccordionDetails>
               </Accordion>
               <Accordion>
@@ -171,7 +176,9 @@ const SingleUser = () => {
                 >
                   <Typography>Salary Details</Typography>
                 </AccordionSummary>
-                <AccordionDetails></AccordionDetails>
+                <AccordionDetails>
+                  <SalaryDetails id={id} />
+                </AccordionDetails>
               </Accordion>
             </Grid>
           </Grid>

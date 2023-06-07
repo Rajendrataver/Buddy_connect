@@ -23,6 +23,8 @@ import TextInput from "../TextInput";
 import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
+import { log } from "console";
+import PopUp from "../popUp";
 
 const designation = [
   "Project Manager",
@@ -79,6 +81,7 @@ const country = [
 ];
 const roles = ["admin", "hr", "associate"];
 const CreateUser = () => {
+  const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
   const [result, setResult] = useState("");
@@ -88,7 +91,7 @@ const CreateUser = () => {
     onSubmit: (values) => {
       setOnLoad(true);
       const token = localStorage.getItem("token");
-      console.log(values);
+
       axios({
         url: "https://buddy-connect.encoreskydev.com/api/register.php",
         method: "post",
@@ -98,21 +101,24 @@ const CreateUser = () => {
         },
       })
         .then((result) => {
+          console.log("result", result.data);
           if (result.data.success) {
-            navigate("/userlist");
+            setOpen(true);
           }
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
           if (error.response.data.message === "This email is already exist.") {
             setResult(formik.values.email + " Already Registered");
             formik.values.email = "";
+            formik.errors.email = error.response.data.message;
           }
           if (
             error.response.data.message === "This contact is already exist."
           ) {
             setResult(formik.values.contact + " Already Registered");
             formik.values.contact = "";
+            formik.errors.contact = error.response.data.message;
           }
           if (
             error.response.data.message ===
@@ -120,6 +126,7 @@ const CreateUser = () => {
           ) {
             setResult(formik.values.pan_card + " Already Registered");
             formik.values.pan_card = "";
+            formik.errors.pan_card = error.response.data.message;
           }
         })
         .finally(() => {
@@ -130,6 +137,16 @@ const CreateUser = () => {
   console.log(formik.values);
   return (
     <>
+      {open && (
+        <PopUp
+          msg={
+            formik.values.first_name.toUpperCase() +
+            " Has Registered Successfully"
+          }
+          path="/userlist"
+        />
+      )}
+
       <Paper
         sx={{
           maxWidth: 65 + "%",
@@ -153,7 +170,7 @@ const CreateUser = () => {
                 <TextInput name="first_name" type="text" label="First Name" />
                 <TextInput name="last_name" type="text" label="Last Name" />
                 <TextInput name="email" type="email" label="Email" />
-                <TextInput name="contact" type="number" label="Contact" />
+                <TextInput name="contact" type="text" label="Contact" />
                 <RadioInput
                   name="gender"
                   label="Gender"

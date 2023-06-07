@@ -4,37 +4,36 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useNavigate } from "react-router";
-const PopUp = ({ msg, path }: { msg: string; path: string }) => {
-  const navigate = useNavigate();
-  const handleClose = () => {
-    navigate(path);
-  };
+interface confirmInterface {
+  msg: string;
+  open: boolean;
+  handleOk: (member?: any) => void;
+  setOpen: (v: boolean) => void;
+}
+const ConfirmBox = ({ msg, open, handleOk, setOpen }: confirmInterface) => {
   return (
     <div>
       <Dialog
-        open={true}
-        onClose={handleClose}
+        open={open}
+        onClose={() => setOpen(false)}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
-        sx={{ width: 50 + "%", margin: "auto" }}
+        sx={{ width: 20 + "%", margin: "auto" }}
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <DialogContentText
-            id="alert-dialog-description"
-            sx={{ textTransform: "capitalize" }}
-          >
+          <DialogContentText id="alert-dialog-description">
             {msg}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={() => handleOk()}>Ok</Button>{" "}
         </DialogActions>
       </Dialog>
     </div>
   );
 };
 
-export default PopUp;
+export default ConfirmBox;

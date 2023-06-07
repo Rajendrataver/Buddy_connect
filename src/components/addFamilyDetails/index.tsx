@@ -6,7 +6,6 @@ import TextInput from "../TextInput";
 import SelectInput from "../SelectInput";
 import { useState } from "react";
 import axios from "axios";
-
 import RadioInput from "../RadioInput";
 import DateInput from "../DateInput";
 import * as API from "../../apiURL";
@@ -46,7 +45,7 @@ const AddFamilyDetail = () => {
     setOpen(false);
     navigate("/singleuser/" + id);
   };
-
+  
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -87,7 +86,7 @@ const AddFamilyDetail = () => {
       {open && (
         <PopUp
           msg={formik.values.name + " Added as " + formik.values.relation}
-          id={id}
+          path={"/singleuser/" + id}
         />
       )}
       <Paper

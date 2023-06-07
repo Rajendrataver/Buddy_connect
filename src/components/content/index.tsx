@@ -12,6 +12,7 @@ import { Box } from "@mui/material";
 import SideBar from "../sidebar";
 import AddBankDetails from "../addBankDetails";
 import AddFamilyDetail from "../addFamilyDetails";
+import AddSalaryDetails from "../addSalaryDetails";
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Content = () => {
           minWidth: 300,
         }}
       ></Box>
-      <Box sx={{ width: 100 + "%"}}>
+      <Box sx={{ width: 100 + "%" }}>
         <Header setSidebar={setSidebar} toggleSidebar={toggleSidebar} />
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
@@ -55,6 +56,10 @@ const Content = () => {
           <Route
             path="/add-family-details/:user_id"
             element={<AddFamilyDetail />}
+          />
+          <Route
+            path="/add-salary-details/:user_id"
+            element={<AddSalaryDetails />}
           />
         </Routes>
       </Box>

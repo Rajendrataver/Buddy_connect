@@ -8,8 +8,9 @@ import HelpIcon from "@mui/icons-material/Help";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Toolbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
+import ConfirmBox from "../confirmBox";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header({
@@ -19,8 +20,23 @@ export default function Header({
   setSidebar: (boolean: boolean) => void;
   toggleSidebar: boolean;
 }) {
+  const [open, setOpen] = React.useState<boolean>(false);
+  const navigate = useNavigate();
+  const confirmLogout = () => {
+    setOpen(false);
+    navigate("/logout");
+  };
+  const handleLogout = () => {
+    setOpen(true);
+  };
   return (
     <React.Fragment>
+      <ConfirmBox
+        msg="Do you want to Log-out ?"
+        open={open}
+        handleOk={confirmLogout}
+        setOpen={setOpen}
+      />
       <AppBar
         component="div"
         color="primary"
@@ -41,8 +57,9 @@ export default function Header({
                 variant="outlined"
                 color="inherit"
                 size="small"
+                onClick={handleLogout}
               >
-                <Link to={"/logout"}>Log-Out</Link>
+                Log-Out
               </Button>
             </Grid>
             <Grid item>

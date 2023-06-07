@@ -8,7 +8,7 @@ const familyDetailsSchema = Yup.object({
     relation: Yup.string().
         required('Relation is Required'),
     contact: Yup.string().
-        required("Conatact is Required").
+        required("Contact is Required").
         matches(/^((0)|([+]91 ))\d{10}$/, 'Enter valid Number'),
     dob: Yup.string().
         required('Date of Birth is Required'),
