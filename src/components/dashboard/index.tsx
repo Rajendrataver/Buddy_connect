@@ -1,21 +1,9 @@
-import { AppBar, Box, Paper, Typography } from "@mui/material";
-
+import { Card, CardContent, Grid } from "@mui/material";
+import Skeleton from "@mui/material/Skeleton";
 const Dashboard = () => {
   return (
     <>
-      {" "}
-      <Box
-        sx={{
-          maxWidth: 1100,
-          margin: "auto",
-          width: 100 + "%",
-          marginTop: 5,
-        }}
-      >
-        <Typography variant="h4">
-          Welcome: {localStorage.getItem("email")}
-        </Typography>
-      </Box>
+      <h1>Dashboard</h1>
     </>
   );
 };

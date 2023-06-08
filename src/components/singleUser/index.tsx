@@ -1,10 +1,4 @@
-import {
-  AppBar,
-  Box,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, Grid, Paper, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -73,6 +67,7 @@ const SingleUser = () => {
       <Paper
         sx={{
           maxWidth: 1100,
+
           margin: "auto",
           width: 100 + "%",
           marginTop: 5,
@@ -82,10 +77,10 @@ const SingleUser = () => {
           position="static"
           color="default"
           elevation={0}
-          sx={{ padding: 4 }}
+          sx={{ padding: 4, minHeight: 80 + "vh" }}
         >
-          <Grid container alignItems="center" textAlign={"center"}>
-            <Grid item xs={12} md={12}>
+          <Grid container alignItems={"center"}>
+            <Grid item xs={4} md={4} textAlign={"center"}>
               <img
                 src={src}
                 alt={"My Avatar"}
@@ -104,11 +99,7 @@ const SingleUser = () => {
                 {user.first_name}
               </Typography>
             </Grid>
-          </Grid>
-          <Box sx={{ marginTop: 5 }}></Box>
-          <h4>Personal Details :</h4>
-          <Grid container alignItems="center">
-            <Grid item xs={12} md={12}>
+            <Grid item xs={8} md={8}>
               <TableContainer>
                 <Table
                   sx={{ maxWidth: 650, width: 100 + "%" }}
@@ -150,24 +141,13 @@ const SingleUser = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                <Typography>Bank Details</Typography>
+                  <Typography>Bank Details</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <BankDetails id={id} />
                 </AccordionDetails>
               </Accordion>
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                <Typography>Family Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <FamilyDetails id={id} />
-                </AccordionDetails>
-              </Accordion>
+
               <Accordion>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -178,6 +158,18 @@ const SingleUser = () => {
                 </AccordionSummary>
                 <AccordionDetails>
                   <SalaryDetails id={id} />
+                </AccordionDetails>
+              </Accordion>
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel2a-content"
+                  id="panel2a-header"
+                >
+                  <Typography>Family Details</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <FamilyDetails id={id} />
                 </AccordionDetails>
               </Accordion>
             </Grid>

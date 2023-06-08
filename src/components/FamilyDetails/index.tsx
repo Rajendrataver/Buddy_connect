@@ -70,7 +70,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
                           color="error"
                           variant="contained"
                           onClick={() => deleteMember(member)}
-                          sx={{ marginTop: 3 }}
+                         
                         >
                           Delete
                         </Button>

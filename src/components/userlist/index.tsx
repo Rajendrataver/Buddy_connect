@@ -11,6 +11,8 @@ import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { Switch } from "@mui/material";
+
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -54,6 +56,7 @@ const UserList: React.FC = () => {
   }, []);
   const handleClick = (id: number, status: string) => {
     setOnLoad(true);
+    console.log("Handle Click");
     const token = localStorage.getItem("token");
     if (status === "active") {
       status = "deActive";
@@ -72,6 +75,7 @@ const UserList: React.FC = () => {
     })
       .then((result) => {
         console.log(result);
+        console.log("Handle Click");
         getUserList();
       })
       .catch((error) => {
@@ -104,6 +108,29 @@ const UserList: React.FC = () => {
       sortable: true,
     },
     {
+      name: <h4>Active</h4>,
+      cell: (row: userInterface) => {
+        if (row.status === "active")
+          return (
+            <Switch
+              checked
+              color="success"
+              onClick={() => handleClick(row.id, row.status)}
+            />
+          );
+        else {
+          return (
+            <Switch
+              color="success"
+              onClick={() => handleClick(row.id, row.status)}
+            />
+          );
+        }
+      },
+      sortable: true,
+    },
+
+    {
       name: <h4>Deatails</h4>,
       cell: (row: userInterface) => {
         return (
@@ -121,37 +148,6 @@ const UserList: React.FC = () => {
       },
       sortable: true,
     },
-    {
-      name: <h4>Action</h4>,
-      cell: (row: userInterface) => {
-        if (row.status === "active")
-          return (
-            <Button
-              key={row.id}
-              variant="contained"
-              color="warning"
-              onClick={() => handleClick(row.id, row.status)}
-              disabled={onLoad}
-            >
-              Deactivate
-            </Button>
-          );
-        else {
-          return (
-            <Button
-              key={row.id}
-              variant="contained"
-              color="success"
-              onClick={() => handleClick(row.id, row.status)}
-              disabled={onLoad}
-            >
-              &nbsp; &nbsp;Activate&nbsp;&nbsp;
-            </Button>
-          );
-        }
-      },
-      sortable: true,
-    },
   ];
 
   function handleFilter(event: any) {
@@ -165,7 +161,7 @@ const UserList: React.FC = () => {
   return (
     <Paper
       sx={{
-        maxWidth:1100,
+        maxWidth: 1100,
         margin: "auto",
         width: 100 + "%",
         marginTop: 5,
