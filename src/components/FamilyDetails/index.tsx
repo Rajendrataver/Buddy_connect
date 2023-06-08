@@ -49,12 +49,11 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
-      <h4>Family Details</h4>
-      <Grid container>
+      <Grid container sx={{ marginTop: 5 }}>
         <Grid item xs={12} md={12}>
           <TableContainer>
             <Table
-              sx={{ maxWidth: 650, width: 100 + "%" }}
+              sx={{ maxWidth: 800, width: 100 + "%" }}
               size="small"
               aria-label="a dense table"
             >
@@ -62,6 +61,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
                 {familyList.map((member, i) => {
                   return (
                     <TableRow>
+                      <TableCell>{i + 1} .</TableCell>
                       <TableCell>{member.name}</TableCell>
                       <TableCell align="left">{member.relation}</TableCell>
                       <TableCell align="left">{member.contact}</TableCell>
@@ -70,7 +70,6 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
                           color="error"
                           variant="contained"
                           onClick={() => deleteMember(member)}
-                         
                         >
                           Delete
                         </Button>

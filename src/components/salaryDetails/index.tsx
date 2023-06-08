@@ -49,7 +49,7 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
-      <h4>Salary Details :</h4>
+     
       <Grid container>
         <Grid item xs={12} md={12}>
           <Button

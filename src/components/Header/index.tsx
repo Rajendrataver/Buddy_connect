@@ -46,10 +46,21 @@ export default function Header({
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
+            <Grid item >
               <Typography color="inherit" variant="h5" component="h1">
                 {<MenuOutlined onClick={() => setSidebar(!toggleSidebar)} />}
               </Typography>
+            </Grid>
+            <Grid item xs>
+              <Link to="/dashboard" className="nav-links">
+                Dashboard
+              </Link>
+              <Link to="/userlist" className="nav-links">
+                User List
+              </Link>
+              <Link to="/createuser" className="nav-links">
+                Create User
+              </Link>
             </Grid>
             <Grid item>
               <Button
@@ -73,19 +84,7 @@ export default function Header({
           </Grid>
         </Toolbar>
 
-        <Grid container>
-          <Grid item>
-            <Link to="/dashboard" className="nav-links">
-              Dashboard
-            </Link>
-            <Link to="/userlist" className="nav-links">
-              User List
-            </Link>
-            <Link to="/createuser" className="nav-links">
-              Create User
-            </Link>
-          </Grid>
-        </Grid>
+        <Grid container></Grid>
       </AppBar>
     </React.Fragment>
   );

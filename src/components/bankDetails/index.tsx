@@ -7,7 +7,11 @@ import {
   Paper,
   Typography,
   Switch,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
+
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -18,6 +22,7 @@ import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import ConfirmBox from "../confirmBox";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const bankData = {
   account_number: "",
@@ -122,7 +127,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         setOpen={setOpen}
         handleOk={confirmRemove}
       />
-      <h4>Bank Details :</h4>
+
       <Grid container>
         <Grid item xs={4} md={4}>
           <Button
@@ -176,71 +181,92 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
             </TableContainer>
           </Grid>
         )}
-        <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
-          {accountList[0].bank_branch != "" && (
-            <Typography variant="h5">Other Account</Typography>
-          )}
-          {accountList.map((bankInfo: bankInterface, i) => {
-            if (i === 0) {
-              return null;
-            }
-            return (
-              <TableContainer key={i} sx={{ marginTop: 1 }}>
-                <Typography sx={{ marginLeft: 2 }}>{i}.</Typography>
-                <Table
-                  sx={{ maxWidth: 650, width: 100 + "%" }}
-                  size="small"
-                  aria-label="a dense table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Bank Name</TableCell>
-                      <TableCell align="left">{bankInfo.bank_name}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Account Number</TableCell>
-                      <TableCell align="left">
-                        {bankInfo.account_number}
-                      </TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Branch Name</TableCell>
-                      <TableCell align="left">{bankInfo.bank_branch}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>IFSC CODE</TableCell>
-                      <TableCell align="left">{bankInfo.ifsc_code}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>
-                        <Button
-                          disabled={onLoad}
-                          color="primary"
-                          variant="outlined"
-                          onClick={() =>
-                            setPrimary(bankInfo.id, bankInfo.type_account)
-                          }
+        {accountList[0].bank_branch != "" && (
+          <Grid item xs={8} md={8} sx={{ marginTop: 5 }}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Other Account</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
+                  {accountList.map((bankInfo: bankInterface, i) => {
+                    if (i === 0) {
+                      return null;
+                    }
+                    return (
+                      <TableContainer key={i} sx={{ marginTop: 1 }}>
+                        <Typography sx={{ marginLeft: 2 }}>{i}.</Typography>
+                        <Table
+                          sx={{ maxWidth: 650, width: 100 + "%" }}
+                          size="small"
+                          aria-label="a dense table"
                         >
-                          Set As Primary
-                        </Button>
-                      </TableCell>
-                      <TableCell align="left">
-                        <Button
-                          disabled={onLoad}
-                          variant="contained"
-                          color="error"
-                          onClick={() => removeBankDetails(bankInfo.id)}
-                        >
-                          Remove
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                </Table>
-              </TableContainer>
-            );
-          })}
-        </Grid>
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Bank Name</TableCell>
+                              <TableCell align="left">
+                                {bankInfo.bank_name}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Account Number</TableCell>
+                              <TableCell align="left">
+                                {bankInfo.account_number}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>Branch Name</TableCell>
+                              <TableCell align="left">
+                                {bankInfo.bank_branch}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>IFSC CODE</TableCell>
+                              <TableCell align="left">
+                                {bankInfo.ifsc_code}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <Button
+                                  disabled={onLoad}
+                                  color="primary"
+                                  variant="outlined"
+                                  onClick={() =>
+                                    setPrimary(
+                                      bankInfo.id,
+                                      bankInfo.type_account
+                                    )
+                                  }
+                                >
+                                  Set As Primary
+                                </Button>
+                              </TableCell>
+                              <TableCell align="left">
+                                <Button
+                                  disabled={onLoad}
+                                  variant="contained"
+                                  color="error"
+                                  onClick={() => removeBankDetails(bankInfo.id)}
+                                >
+                                  Remove
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                        </Table>
+                      </TableContainer>
+                    );
+                  })}
+                </Grid>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+        )}
       </Grid>
     </>
   );

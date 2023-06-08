@@ -1,4 +1,4 @@
-import { AppBar, Box, Grid, Paper, Typography } from "@mui/material";
+import { AppBar, Box, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -9,14 +9,13 @@ import { useNavigate, useParams } from "react-router";
 import useAxios from "../../customHook/useAxios";
 import { useEffect, useState } from "react";
 import * as API from "../../apiURL";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import MdPhone from "@mui/icons-material/Phone";
 import BankDetails from "../bankDetails";
 import useFetch from "../../customHook/useFetch";
 import SalaryDetails from "../salaryDetails";
-
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 const data = {
   first_name: "",
   email: "",
@@ -37,8 +36,14 @@ interface userInterface {
   contact: string;
   gender: string;
 }
+const tabs = {
+  BANK_DETAILS: "Bank Details",
+  SALARY_DETAILS: "Salary Details",
+  FAMILY_DETAILS: "Family Details",
+};
 const SingleUser = () => {
   const navigate = useNavigate();
+  const [tab, setTab] = useState(tabs.BANK_DETAILS);
   const params = useParams();
   const id = params.id;
   const token = localStorage.getItem("token");
@@ -61,23 +66,18 @@ const SingleUser = () => {
   if (user.gender === "female") {
     src = "https://freesvg.org/img/FaceWoman.png";
   }
-
+  const handleTabChange = (v: string) => {
+    setTab(v);
+    console.log(v);
+  };
   return (
     <>
-      <Paper
-        sx={{
-          maxWidth: 1100,
-
-          margin: "auto",
-          width: 100 + "%",
-          marginTop: 5,
-        }}
-      >
+      <Paper>
         <AppBar
           position="static"
           color="default"
           elevation={0}
-          sx={{ padding: 4, minHeight: 80 + "vh" }}
+          sx={{ padding: 4, minHeight: 100 + "vh" }}
         >
           <Grid container alignItems={"center"}>
             <Grid item xs={4} md={4} textAlign={"center"}>
@@ -133,45 +133,40 @@ const SingleUser = () => {
             </Grid>
           </Grid>
 
-          <Grid container sx={{ marginTop: 5 }}>
+          <Grid container>
             <Grid item xs={12} md={12}>
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography>Bank Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <BankDetails id={id} />
-                </AccordionDetails>
-              </Accordion>
-
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel3a-content"
-                  id="panel3a-header"
-                >
-                  <Typography>Salary Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <SalaryDetails id={id} />
-                </AccordionDetails>
-              </Accordion>
-              <Accordion>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel2a-content"
-                  id="panel2a-header"
-                >
-                  <Typography>Family Details</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <FamilyDetails id={id} />
-                </AccordionDetails>
-              </Accordion>
+              <Tabs
+                sx={{ maxWidth: 500 + "px" }}
+                value={tab}
+                indicatorColor="secondary"
+                textColor="inherit"
+                variant="fullWidth"
+                aria-label="full width tabs example"
+              >
+                <Tab
+                  label={tabs.BANK_DETAILS}
+                  icon={<AccountBalanceIcon />}
+                  value={tabs.BANK_DETAILS}
+                  onClick={() => handleTabChange(tabs.BANK_DETAILS)}
+                />
+                <Tab
+                  label={tabs.SALARY_DETAILS}
+                  icon={<CurrencyRupeeIcon />}
+                  value={tabs.SALARY_DETAILS}
+                  onClick={() => handleTabChange(tabs.SALARY_DETAILS)}
+                />
+                <Tab
+                  label={tabs.FAMILY_DETAILS}
+                  icon={<FamilyRestroomIcon />}
+                  value={tabs.FAMILY_DETAILS}
+                  onClick={() => handleTabChange(tabs.FAMILY_DETAILS)}
+                />
+              </Tabs>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {tab === tabs.BANK_DETAILS && <BankDetails id={id} />}
+              {tab === tabs.SALARY_DETAILS && <SalaryDetails id={id} />}
+              {tab === tabs.FAMILY_DETAILS && <FamilyDetails id={id} />}
             </Grid>
           </Grid>
         </AppBar>
