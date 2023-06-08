@@ -7,3 +7,4 @@ export const DELETE_BANK_DETAILS_URL = "https://buddy-connect.encoreskydev.com/a
 export const ADD_SALARY_DETAILS_URL = "https://buddy-connect.encoreskydev.com/api/salary/addSalaryDetail.php?user_id="
 export const GET_SALARY_DETAILS_URL = "https://buddy-connect.encoreskydev.com/api/salary/getSalaryDetails.php?user_id=";
 export const SET_ACCOUNT_TYPE_URL = "https://buddy-connect.encoreskydev.com/api/bank/setAccountType.php?user_id=";
+export const GET_USERS_URL = "https://buddy-connect.encoreskydev.com/api/user/users.php";

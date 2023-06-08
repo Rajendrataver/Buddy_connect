@@ -49,6 +49,14 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/add-family-details/" + id)}
+        sx={{ marginTop: 3 }}
+      >
+        Add Memeber
+      </Button>
       <Grid container sx={{ marginTop: 5 }}>
         <Grid item xs={12} md={12}>
           <TableContainer>
@@ -81,14 +89,6 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
             </Table>
           </TableContainer>
         </Grid>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate("/add-family-details/" + id)}
-          sx={{ marginTop: 3 }}
-        >
-          Add Memeber
-        </Button>
       </Grid>
     </>
   );
