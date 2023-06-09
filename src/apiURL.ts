@@ -8,3 +8,4 @@ export const ADD_SALARY_DETAILS_URL = "https://buddy-connect.encoreskydev.com/ap
 export const GET_SALARY_DETAILS_URL = "https://buddy-connect.encoreskydev.com/api/salary/getSalaryDetails.php?user_id=";
 export const SET_ACCOUNT_TYPE_URL = "https://buddy-connect.encoreskydev.com/api/bank/setAccountType.php?user_id=";
 export const GET_USERS_URL = "https://buddy-connect.encoreskydev.com/api/user/users.php";
+export const UPDATE_USER_DETAILS_URL ="https://buddy-connect.encoreskydev.com/api/user/updatePersonalDetail.php?id="

@@ -21,8 +21,8 @@ const RadioInput = ({
         onChange={formik.handleChange}
       >
         <InputLabel id="demo-simple-select-label" sx={{ marginTop: 1 }}>
-          {formik.touched.gender && formik.errors.gender ? (
-            <span className="input-error">{formik.errors.gender}</span>
+          {formik.touched[name] && formik.errors[name] ? (
+            <span className="input-error">{formik.errors[name]}</span>
           ) : (
             label
           )}
@@ -35,6 +35,7 @@ const RadioInput = ({
               control={<Radio />}
               label={item}
               key={i}
+              checked={formik.values[name] === item}
             />
           );
         })}

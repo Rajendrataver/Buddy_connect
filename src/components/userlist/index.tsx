@@ -12,7 +12,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Switch } from "@mui/material";
-
+import EditIcon from "@mui/icons-material/Edit";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -143,6 +143,24 @@ const UserList: React.FC = () => {
             }}
           >
             Details
+          </Button>
+        );
+      },
+      sortable: true,
+    },
+    {
+      name: <h4>Update</h4>,
+      cell: (row: userInterface) => {
+        return (
+          <Button
+            key={row.id}
+            color="warning"
+            variant="outlined"
+            onClick={() => {
+              navigate("/updateuser/" + row.id);
+            }}
+          >
+            <EditIcon />
           </Button>
         );
       },

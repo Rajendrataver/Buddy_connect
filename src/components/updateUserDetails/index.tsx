@@ -13,18 +13,20 @@ import {
   Typography,
 } from "@mui/material";
 
-import { createContext } from "react";
+import { createContext, useEffect } from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import validationSchema from "../../schemas/userDetailsSchema";
 import axios from "axios";
 import TextInput from "../TextInput";
 import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
-import { log } from "console";
+import * as API from "../../apiURL";
 import PopUp from "../popUp";
+import useFetch from "../../customHook/useFetch";
+import { userFormContext } from "../creatUser";
 
 const designation = [
   "Project Manager",
@@ -35,7 +37,7 @@ const designation = [
   "Trainee Engineer",
   "Intern",
 ];
-export const initialValues = {
+const userData = {
   first_name: "",
   last_name: "",
   email: "",
@@ -51,9 +53,9 @@ export const initialValues = {
   joining_date: "",
   country: "",
   state: "",
+  status: "",
 };
 
-const userFormContext = createContext<any>(0);
 const country = [
   "Afghanistan",
   "Guatemala",
@@ -80,71 +82,76 @@ const country = [
   "Zimbabwe",
 ];
 const roles = ["admin", "hr", "associate"];
-const CreateUser = () => {
+const UpdateUser = () => {
+  const params = useParams();
+  const id = params.id;
   const [open, setOpen] = useState<boolean>(false);
+  const [initialValues, setInitialValues] = useState(userData);
   const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
   const [result, setResult] = useState("");
+  const fetch = useFetch();
+
+  const getUsers = () => {
+    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
+    response.then((res) => {
+      const data = res.data.response;
+      formik.values.first_name = data.first_name;
+      formik.values.last_name = data.last_name;
+      formik.values.dob = data.dob;
+      formik.values.zip_code = data.zip_code;
+      formik.values.city = data.city;
+      formik.values.joining_date = data.joining_date;
+      formik.values.address = data.address;
+      formik.values.pan_card = data.pan_card;
+      formik.values.country = data.country;
+      formik.values.role = data.role;
+      formik.values.designation = data.designation;
+      formik.values.email = data.email;
+      formik.values.contact = data.contact;
+      formik.values.email = data.email;
+      formik.values.state = data.state;
+      formik.values.gender = data.gender;
+      formik.values.status = data.status;
+      setInitialValues(data);
+    });
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   const formik = useFormik({
-    initialValues,
+    initialValues: initialValues,
     validationSchema,
     onSubmit: (values) => {
       setOnLoad(true);
-      const token = localStorage.getItem("token");
+      const response = fetch(
+        API.UPDATE_USER_DETAILS_URL + id,
+        "put",
+        token,
+        values
+      );
+      response
+        .then((res) => {
+          console.log(res.data.respns);
 
-      axios({
-        url: "https://buddy-connect.encoreskydev.com/api/register.php",
-        method: "post",
-        data: values,
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-        .then((result) => {
-          console.log("result", result.data);
-          if (result.data.success) {
-            setOpen(true);
-          }
+          setOpen(true);
         })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.data.message === "This email is already exist.") {
-            setResult(formik.values.email + " Already Registered");
-            formik.values.email = "";
-            formik.errors.email = error.response.data.message;
-          }
-          if (
-            error.response.data.message === "This contact is already exist."
-          ) {
-            setResult(formik.values.contact + " Already Registered");
-            formik.values.contact = "";
-            formik.errors.contact = error.response.data.message;
-          }
-          if (
-            error.response.data.message ===
-            "This PAN_CARD number is already exist."
-          ) {
-            setResult(formik.values.pan_card + " Already Registered");
-            formik.values.pan_card = "";
-            formik.errors.pan_card = error.response.data.message;
-          }
+        .catch((err) => {
+          console.log(err);
         })
         .finally(() => {
           setOnLoad(false);
         });
     },
   });
-  console.log(formik.values);
+
   return (
     <>
       {open && (
-        <PopUp
-          msg={
-            formik.values.first_name.toUpperCase() +
-            " Has Registered Successfully"
-          }
-          path="/userlist"
-        />
+        <PopUp msg={"Updated SuccessFully"} path={"/singleuser/" + id} />
       )}
 
       <Paper
@@ -156,11 +163,9 @@ const CreateUser = () => {
           overflow: "hidden",
         }}
       >
-        <Typography
-          sx={{ mx: 2, fontSize: 25 }}
-          color="red"
-          align="left"
-        ></Typography>
+        <Typography sx={{ mx: 2, fontSize: 25 }} color="black" align="left">
+          Update User
+        </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container>
@@ -169,7 +174,12 @@ const CreateUser = () => {
                 <hr />
                 <TextInput name="first_name" type="text" label="First Name" />
                 <TextInput name="last_name" type="text" label="Last Name" />
-                <TextInput name="email" type="email" label="Email" />
+                <TextInput
+                  name="email"
+                  type="email"
+                  label="Email"
+                  readOnly={true}
+                />
                 <TextInput name="contact" type="text" label="Contact" />
                 <RadioInput
                   name="gender"
@@ -202,15 +212,24 @@ const CreateUser = () => {
                 <TextInput type="text" label="City" name="city" />
                 <TextInput type="text" label="Address" name="address" />
                 <TextInput type="number" label="Zip Code" name="zip_code" />
+              </Grid>
+              <Grid item sm={4} textAlign={"center"}>
+                <Button disabled={onLoad} variant="contained" color="warning"
+                 onClick={()=>{navigate('/singleuser/'+id)}}
+                  fullWidth>
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item sm={4}></Grid>
+              <Grid item sm={4}>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   fullWidth
-                  sx={{ marginTop: 6 }}
                   disabled={onLoad}
                 >
-                  Register
+                  Update
                 </Button>
               </Grid>
             </Grid>
@@ -221,4 +240,4 @@ const CreateUser = () => {
   );
 };
 export { userFormContext };
-export default CreateUser;
+export default UpdateUser;

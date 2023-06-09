@@ -5,13 +5,14 @@ const TextInput = ({
   name,
   label,
   type,
+  readOnly = false,
 }: {
   name: string;
   label: string;
   type: string;
+  readOnly?: boolean;
 }) => {
   const formik = useContext(userFormContext);
-  const value = formik.values["first_name"];
   return (
     <TextField
       type={type}
@@ -21,6 +22,7 @@ const TextInput = ({
       sx={{ mb: 1 }}
       placeholder={label}
       name={name}
+      disabled={readOnly}
       value={formik.values[name]}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}

@@ -1,4 +1,14 @@
-import { AppBar, Box, Grid, Paper, Tab, Tabs, Typography } from "@mui/material";
+import {
+  AppBar,
+  Box,
+  Button,
+  Dialog,
+  Grid,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -16,6 +26,8 @@ import SalaryDetails from "../salaryDetails";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
+import EditIcon from "@mui/icons-material/Edit";
+import UpdateUser from "../updateUserDetails";
 const data = {
   first_name: "",
   email: "",
@@ -72,6 +84,7 @@ const SingleUser = () => {
   };
   return (
     <>
+      
       <Paper>
         <AppBar
           position="static"
@@ -97,6 +110,13 @@ const SingleUser = () => {
                 }}
               >
                 {user.first_name}
+                <Button
+                  onClick={() => {
+                    navigate("/updateuser/" + id);
+                  }}
+                >
+                  <EditIcon />
+                </Button>
               </Typography>
             </Grid>
             <Grid item xs={8} md={8}>

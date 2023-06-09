@@ -18,7 +18,7 @@ const PopUp = ({ msg, path }: { msg: string; path: string }) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
-        sx={{ width: 50 + "%", margin: "auto" }}
+        sx={{ width: 100 + "%", margin: "auto" }}
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
