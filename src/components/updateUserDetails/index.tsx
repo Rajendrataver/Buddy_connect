@@ -135,8 +135,6 @@ const UpdateUser = () => {
       );
       response
         .then((res) => {
-          console.log(res.data.respns);
-
           setOpen(true);
         })
         .catch((err) => {
@@ -169,7 +167,7 @@ const UpdateUser = () => {
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container>
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Contact Details</h1>
                 <hr />
                 <TextInput name="first_name" type="text" label="First Name" />
@@ -189,7 +187,7 @@ const UpdateUser = () => {
                 <DateInput name="dob" label="Date of Birth" />
               </Grid>
 
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Job details</h1>
                 <hr />
                 <SelectInput
@@ -201,7 +199,7 @@ const UpdateUser = () => {
                 <DateInput name="joining_date" label="Joining Date" />
               </Grid>
 
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Address Details</h1>
                 <hr />
                 <TextInput type="text" label="Pan Card" name="pan_card" />
@@ -213,10 +211,16 @@ const UpdateUser = () => {
                 <TextInput type="text" label="Address" name="address" />
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
-              <Grid item sm={4} textAlign={"center"}>
-                <Button disabled={onLoad} variant="contained" color="warning"
-                 onClick={()=>{navigate('/singleuser/'+id)}}
-                  fullWidth>
+              <Grid item sm={4} xs={12} textAlign={"center"}>
+                <Button
+                  disabled={onLoad}
+                  variant="contained"
+                  color="warning"
+                  onClick={() => {
+                    navigate("/singleuser/" + id);
+                  }}
+                  fullWidth
+                >
                   Cancel
                 </Button>
               </Grid>

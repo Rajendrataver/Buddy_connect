@@ -27,7 +27,7 @@ const Dashboard = () => {
     const response = fetch(API.GET_USERS_URL, "get", token);
     response
       .then((res) => {
-        console.log(res.data.response);
+   
         setList(res.data.response);
       })
       .catch((err) => {

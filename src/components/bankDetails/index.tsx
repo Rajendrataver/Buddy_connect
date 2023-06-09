@@ -60,7 +60,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     response.then((res) => {
       if (res.data.response.length) {
         setBankInfo(res.data.response);
-        console.log(res.data.response);
+       
       }
     });
   };
@@ -69,13 +69,13 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   }, []);
   const setPrimary = (bank_id: string, type_account: string) => {
     setOnLoad(true);
-    console.log("Current type", type_account);
+   
 
     if (type_account === "secondary") {
-      console.log("Secodary type", type_account);
+
       type_account = "primary";
     } else if (type_account === "primary") {
-      console.log("Primary type", type_account);
+    
       type_account = "secondary";
     }
 
@@ -87,11 +87,11 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     );
     response
       .then((res) => {
-        console.log("type", res.data);
+      
         getBankdetails();
       })
       .catch((err) => {
-        console.log(err);
+      
       })
       .finally(() => {
         setOnLoad(false);
@@ -105,7 +105,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     );
     response
       .then((res) => {
-        console.log(res.data);
+    
         getBankdetails();
       })
       .catch((err) => {
@@ -129,7 +129,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
       />
 
       <Grid container>
-        <Grid item xs={4} md={4}>
+        <Grid item xs={12} md={4}>
           <Button
             variant="contained"
             color="primary"
@@ -182,7 +182,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
           </Grid>
         )}
         {accountList[0].bank_branch != "" && (
-          <Grid item xs={8} md={8} sx={{ marginTop: 5 }}>
+          <Grid item xs={12} md={8} sx={{ marginTop: 5 }}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

@@ -16,13 +16,13 @@
   color: red;
 }
 .avatar-male {
-      background: cornflowerblue;
-    
-    border-radius: 50%;
-    max-width: 250px;
-    max-height: 250px;
-    width: 100%;
-    height: 250px;
+  background: cornflowerblue;
+  object-fit: cover;
+  border-radius: 50%;
+  max-width: 250px;
+  max-height: 250px;
+  width: 100%;
+  height: 250px;
 }
 a {
   color: white;
@@ -43,6 +43,32 @@ hr {
   outline: none;
   font-size: 15px;
   font-weight: bold;
+}
+.avatar-profile {
+  position: relative;
+}
+.avatar-input {
+  position: absolute;
+  width: 42%;
+  height: 62%;
+  left: 30%;
+  top: 21%;
+  opacity: 0;
+  border-radius: 40px;
+}
+.avatar-profile:hover {
+  opacity: 0.7;
+    transition: 0.2s ease-in-out;
+}
+.edit {
+  opacity: 0;
+  position: absolute;
+  top: 45%;
+  right: 45%;
+}
+.avatar-profile:hover .edit {
+  opacity: 1;
+  transition: 0.2s ease-in-out;
 }
 .action-btn:hover {
   background-color: green;

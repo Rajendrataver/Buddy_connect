@@ -22,11 +22,11 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       setOnLoad(true);
-      console.log(values);
+    
       axios
         .post("https://buddy-connect.encoreskydev.com/api/login.php", values)
         .then((response) => {
-          console.log("role", response.data.response);
+       
           if (response.data.response.role === "superAdmin") {
             var info = response.data.response;
             localStorage.setItem("token", info.token);

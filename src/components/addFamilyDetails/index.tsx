@@ -29,28 +29,25 @@ const initialValues = {
   relation: "",
   address: "",
 };
-const AddFamilyDetail = () => {
+const AddFamilyDetail = ({
+  id,
+  setOpen,
+}: {
+  id: string | undefined;
+  setOpen: (v: boolean) => void;
+}) => {
   const navigate = useNavigate();
-
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
-  const params = useParams();
-  const id = params.user_id;
+
   const token = localStorage.getItem("token");
-  console.log(typeof id);
 
-  const [open, setOpen] = useState<boolean>(false);
 
-  const handleClose = () => {
-    setOpen(false);
-    navigate("/singleuser/" + id);
-  };
-  
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+
 
       setOnLoad(true);
       axios({
@@ -62,11 +59,10 @@ const AddFamilyDetail = () => {
         },
       })
         .then((res) => {
-          console.log(res);
-          setOpen(true);
+          setOpen(false);
         })
         .catch((err) => {
-          console.log(err);
+      
 
           if (err.response.data.message === "This relation is already exist.") {
             formik.errors.relation = err.response.data.message;
@@ -83,12 +79,6 @@ const AddFamilyDetail = () => {
   });
   return (
     <>
-      {open && (
-        <PopUp
-          msg={formik.values.name + " Added as " + formik.values.relation}
-          path={"/singleuser/" + id}
-        />
-      )}
       <Paper
         sx={{
           maxWidth: 500,
@@ -126,16 +116,33 @@ const AddFamilyDetail = () => {
                 <DateInput name="dob" label="Date of birth" />
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                fullWidth
-                sx={{ marginTop: 1 }}
-                disabled={onLoad}
-              >
-                Add member
-              </Button>
+              <Grid container mt={2}>
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    disabled={onLoad}
+                    variant="contained"
+                    color="warning"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                    fullWidth
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item xs={0} md={4} sm={4}></Grid>
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Add member
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </form>
         </userFormContext.Provider>

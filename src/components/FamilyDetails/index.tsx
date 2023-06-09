@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Grid, useStepContext } from "@mui/material";
+import { Button, Dialog, Grid, useStepContext } from "@mui/material";
 import useAxios from "../../customHook/useAxios";
 import * as API from "../../apiURL";
+import AddFamilyDetail from "../addFamilyDetails";
 import {
   Table,
   TableCell,
@@ -21,6 +22,7 @@ interface family {
 }
 const FamilyDetails = ({ id }: { id: string | undefined }) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const [familyList, setFamilyList] = useState<Array<family>>([]);
@@ -32,10 +34,9 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
   };
   useEffect(() => {
     getFamilyList();
-  }, []);
+  }, [open]);
 
   const deleteMember = (member: family) => {
-    console.log(member.id);
     const response = fetch(
       API.DELETE_FAMILY_DETAILS_URL + id + "&&family_id=" + member.id,
       "delete",
@@ -49,10 +50,14 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <AddFamilyDetail id={id} setOpen={setOpen} />
+      </Dialog>
+
       <Button
         variant="contained"
         color="primary"
-        onClick={() => navigate("/add-family-details/" + id)}
+        onClick={() => setOpen(true)}
         sx={{ marginTop: 3 }}
       >
         Add Memeber

@@ -1,5 +1,6 @@
 import {
   Button,
+  Dialog,
   Grid,
   Table,
   TableCell,
@@ -25,7 +26,6 @@ interface salaryInterface {
   id: string;
 }
 
-
 const SalaryDetails = ({ id }: { id: string | undefined }) => {
   const navigate = useNavigate();
   const fetch = useFetch();
@@ -49,7 +49,7 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
-     
+      
       <Grid container>
         <Grid item xs={12} md={12}>
           <Button
@@ -65,8 +65,10 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
       <Grid container>
         {salaryList.map((salary: salaryInterface, i) => {
           return (
-            <Grid item xs={6} md={6} pr={8} sx={{ marginTop: 2 }}>
-              <Typography variant="h5" sx={{marginLeft:2}}>{i + 1}.</Typography>
+            <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
+              <Typography variant="h5" sx={{ marginLeft: 2 }}>
+                {i + 1}.
+              </Typography>
               <TableContainer>
                 <Table
                   sx={{ maxWidth: 650, width: 100 + "%" }}

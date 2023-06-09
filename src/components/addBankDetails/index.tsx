@@ -32,7 +32,7 @@ const AddBankDetails = () => {
   const params = useParams();
   const id = params.user_id;
   const token = localStorage.getItem("token");
-  console.log(typeof id);
+
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -60,7 +60,7 @@ const AddBankDetails = () => {
           setOpen(true);
         })
         .catch((err) => {
-          console.log(err);
+       
           formik.values.account_number = "";
           setResult("Account Number Already Exist");
           setTimeout(() => {

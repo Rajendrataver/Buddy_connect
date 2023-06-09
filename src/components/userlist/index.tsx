@@ -42,21 +42,18 @@ const UserList: React.FC = () => {
       .then((res) => {
         setUserlist(res.data.response);
         setData(res.data.response);
-        console.log(res.data.response);
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  const singleUser = (id: number) => {
-    console.log(id);
-  };
+  
   React.useEffect(() => {
     getUserList();
   }, []);
   const handleClick = (id: number, status: string) => {
     setOnLoad(true);
-    console.log("Handle Click");
+  
     const token = localStorage.getItem("token");
     if (status === "active") {
       status = "deActive";
@@ -74,8 +71,7 @@ const UserList: React.FC = () => {
       },
     })
       .then((result) => {
-        console.log(result);
-        console.log("Handle Click");
+
         getUserList();
       })
       .catch((error) => {
@@ -136,6 +132,7 @@ const UserList: React.FC = () => {
         return (
           <Button
             key={row.id}
+             fullWidth
             color="info"
             variant="contained"
             onClick={() => {

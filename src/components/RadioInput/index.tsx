@@ -1,4 +1,10 @@
-import { FormControlLabel, InputLabel, Radio, RadioGroup } from "@mui/material";
+import {
+  FormControlLabel,
+  Grid,
+  InputLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
 import { useContext } from "react";
 import { userFormContext } from "../creatUser";
 
@@ -28,17 +34,21 @@ const RadioInput = ({
           )}
         </InputLabel>
         &nbsp;&nbsp; &nbsp;
-        {items.map((item, i) => {
-          return (
-            <FormControlLabel
-              value={item}
-              control={<Radio />}
-              label={item}
-              key={i}
-              checked={formik.values[name] === item}
-            />
-          );
-        })}
+        <Grid container>
+          {items.map((item, i) => {
+            return (
+              <Grid xs={12} md={4} sm={6}>
+                <FormControlLabel
+                  value={item}
+                  control={<Radio />}
+                  label={item}
+                  key={i}
+                  checked={formik.values[name] === item}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
       </RadioGroup>
     </>
   );

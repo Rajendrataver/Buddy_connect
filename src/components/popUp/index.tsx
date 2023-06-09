@@ -5,7 +5,17 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router";
-const PopUp = ({ msg, path }: { msg: string; path: string }) => {
+const PopUp = ({
+  title = "Notification",
+  msg,
+  path,
+  setOpenAlert,
+}: {
+  title?: string;
+  msg: string;
+  path: string;
+  setOpenAlert?: (v: boolean) => void;
+}) => {
   const navigate = useNavigate();
   const handleClose = () => {
     navigate(path);
@@ -20,7 +30,7 @@ const PopUp = ({ msg, path }: { msg: string; path: string }) => {
         fullWidth
         sx={{ width: 100 + "%", margin: "auto" }}
       >
-        <DialogTitle id="alert-dialog-title"></DialogTitle>
+        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
         <DialogContent>
           <DialogContentText
             id="alert-dialog-description"
@@ -30,7 +40,11 @@ const PopUp = ({ msg, path }: { msg: string; path: string }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Ok</Button>
+          <Button
+            onClick={() => (setOpenAlert ? setOpenAlert(false) : handleClose)}
+          >
+            Ok
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

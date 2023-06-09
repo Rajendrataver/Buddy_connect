@@ -23,7 +23,6 @@ import TextInput from "../TextInput";
 import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
-import { log } from "console";
 import PopUp from "../popUp";
 
 const designation = [
@@ -101,13 +100,12 @@ const CreateUser = () => {
         },
       })
         .then((result) => {
-          console.log("result", result.data);
           if (result.data.success) {
             setOpen(true);
           }
         })
         .catch((error) => {
-          console.log(error);
+      
           if (error.response.data.message === "This email is already exist.") {
             setResult(formik.values.email + " Already Registered");
             formik.values.email = "";
@@ -134,7 +132,7 @@ const CreateUser = () => {
         });
     },
   });
-  console.log(formik.values);
+
   return (
     <>
       {open && (
@@ -164,7 +162,7 @@ const CreateUser = () => {
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <Grid container>
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Contact Details</h1>
                 <hr />
                 <TextInput name="first_name" type="text" label="First Name" />
@@ -179,7 +177,7 @@ const CreateUser = () => {
                 <DateInput name="dob" label="Date of Birth" />
               </Grid>
 
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Job details</h1>
                 <hr />
                 <SelectInput
@@ -191,7 +189,7 @@ const CreateUser = () => {
                 <DateInput name="joining_date" label="Joining Date" />
               </Grid>
 
-              <Grid item sm={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} p={1}>
                 <h1>Address Details</h1>
                 <hr />
                 <TextInput type="text" label="Pan Card" name="pan_card" />

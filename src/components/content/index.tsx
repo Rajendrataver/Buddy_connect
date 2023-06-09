@@ -23,8 +23,6 @@ const Content = () => {
   }
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      console.log(localStorage.getItem("token"));
-
       navigate("/");
     }
   });
@@ -53,10 +51,6 @@ const Content = () => {
           <Route
             path="/add-bank-details/:user_id"
             element={<AddBankDetails />}
-          />
-          <Route
-            path="/add-family-details/:user_id"
-            element={<AddFamilyDetail />}
           />
           <Route
             path="/add-salary-details/:user_id"

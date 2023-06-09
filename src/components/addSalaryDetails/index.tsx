@@ -10,6 +10,7 @@ import * as API from "../../apiURL";
 import { useState } from "react";
 import PopUp from "../popUp";
 import validationSchema from "./salaryDetailsSchema";
+import { useNavigate } from "react-router";
 
 const initialValues = {
   basic_salary: "",
@@ -26,6 +27,7 @@ const initialValues = {
 };
 
 const AddSalaryDetails = () => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const params = useParams();
@@ -50,7 +52,7 @@ const AddSalaryDetails = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+      
           formik.values.appraisal_date = "";
           formik.errors.appraisal_date = "Please Enter A Correct Date";
         })
@@ -174,21 +176,38 @@ const AddSalaryDetails = () => {
                 </Grid>
                 <h3>Appraisal Date</h3>
                 <Grid container>
-                  <Grid item sm={4} xs={4}>
+                  <Grid item sm={4} xs={12}>
                     <DateInput name="appraisal_date" label="" />
                   </Grid>
                 </Grid>
               </Grid>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                fullWidth
-                disabled={onLoad}
-                sx={{ marginTop: 1 }}
-              >
-                Add Details
-              </Button>
+              <Grid container>
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    disabled={onLoad}
+                    variant="contained"
+                    color="warning"
+                    onClick={() => {
+                      navigate("/singleuser/" + id);
+                    }}
+                    fullWidth
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
+                <Grid item xs={0} md={4} sm={4}></Grid>
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Submit Details
+                  </Button>
+                </Grid>
+              </Grid>
             </Grid>
           </form>
         </userFormContext.Provider>

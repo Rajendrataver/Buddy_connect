@@ -1,6 +1,6 @@
-import { RsvpOutlined } from "@mui/icons-material";
+
 import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
-import { count } from "console";
+
 
 const RationCard = ({
   percentage,
