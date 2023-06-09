@@ -20,6 +20,8 @@ const PopUp = ({
   const handleClose = () => {
     navigate(path);
   };
+  console.log(setOpenAlert);
+
   return (
     <div>
       <Dialog
@@ -41,7 +43,13 @@ const PopUp = ({
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => (setOpenAlert ? setOpenAlert(false) : handleClose)}
+            onClick={() => {
+              if (setOpenAlert) {
+                setOpenAlert(false);
+              } else {
+                handleClose();
+              }
+            }}
           >
             Ok
           </Button>
