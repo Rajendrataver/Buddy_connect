@@ -19,7 +19,7 @@ const ConfirmBox = ({ msg, open, handleOk, setOpen }: confirmInterface) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
-        sx={{ width: 20 + "%", margin: "auto" }}
+        sx={{ margin: "auto" }}
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>

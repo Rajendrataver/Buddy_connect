@@ -1,4 +1,5 @@
 import * as React from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -13,12 +14,16 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Switch } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteUser from "../deleteUser";
+import ConfirmBox from "../confirmBox";
+import useFetch from "../../customHook/useFetch";
+import * as API from "../../apiURL";
 interface userInterface {
   first_name: string;
   last_name: string;
   status: string;
   token: string;
-  id: number;
+  id: string;
   email: string;
   contact: string;
   designation: string;
@@ -27,10 +32,13 @@ interface userInterface {
 
 const UserList: React.FC = () => {
   const token = localStorage.getItem("token");
+  const [user_id, setuser_id] = useState<string>();
   const navigate = useNavigate();
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
   const [onLoad, setOnLoad] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
+  const fetch = useFetch();
   const getUserList = () => {
     axios({
       method: "get", //you can set what request you want to be
@@ -47,13 +55,13 @@ const UserList: React.FC = () => {
         console.log(error);
       });
   };
-  
+
   React.useEffect(() => {
     getUserList();
   }, []);
-  const handleClick = (id: number, status: string) => {
+  const handleClick = (id: string, status: string) => {
     setOnLoad(true);
-  
+
     const token = localStorage.getItem("token");
     if (status === "active") {
       status = "deActive";
@@ -71,7 +79,6 @@ const UserList: React.FC = () => {
       },
     })
       .then((result) => {
-
         getUserList();
       })
       .catch((error) => {
@@ -123,27 +130,6 @@ const UserList: React.FC = () => {
           );
         }
       },
-      sortable: true,
-    },
-
-    {
-      name: <h4>Deatails</h4>,
-      cell: (row: userInterface) => {
-        return (
-          <Button
-            key={row.id}
-             fullWidth
-            color="info"
-            variant="contained"
-            onClick={() => {
-              navigate("/singleuser/" + row.id);
-            }}
-          >
-            Details
-          </Button>
-        );
-      },
-      sortable: true,
     },
     {
       name: <h4>Update</h4>,
@@ -161,9 +147,55 @@ const UserList: React.FC = () => {
           </Button>
         );
       },
-      sortable: true,
+    },
+    {
+      name: <h4>Remove</h4>,
+      cell: (row: userInterface) => {
+        return (
+          <DeleteIcon
+            sx={{ cursor: "pointer" }}
+            onClick={() => {
+              setOpen(true);
+              setuser_id(row.id);
+            }}
+          />
+        );
+      },
+    },
+    {
+      name: <h4>Deatails</h4>,
+      cell: (row: userInterface) => {
+        return (
+          <Button
+            key={row.id}
+            fullWidth
+            color="info"
+            variant="contained"
+            onClick={() => {
+              navigate("/singleuser/" + row.id);
+            }}
+          >
+            Details
+          </Button>
+        );
+      },
     },
   ];
+
+  const deletUser = () => {
+    console.log(user_id);
+    const response = fetch(API.DELTE_USER_URL + user_id, "delete", token);
+    response
+      .then((res) => {
+        getUserList();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setOpen(false);
+      });
+  };
 
   function handleFilter(event: any) {
     const newData = userList.filter((row) => {
@@ -174,57 +206,67 @@ const UserList: React.FC = () => {
     setData(newData);
   }
   return (
-    <Paper
-      sx={{
-        maxWidth: 1100,
-        margin: "auto",
-        width: 100 + "%",
-        marginTop: 5,
-        overflow: "hidden",
-      }}
-    >
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
+    <>
+      <ConfirmBox
+        msg="Do you want to Delete ?"
+        open={open}
+        handleOk={deletUser}
+        setOpen={setOpen}
+      />
+
+      <Paper
+        className="userlist-section"
+        sx={{
+          maxWidth: 1100,
+          margin: "auto",
+          width: 100 + "%",
+          marginTop: 5,
+          overflow: "hidden",
+        }}
       >
-        <Toolbar>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item>
-              <SearchIcon color="inherit" sx={{ display: "block" }} />
+        <AppBar
+          position="static"
+          color="default"
+          elevation={0}
+          sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
+        >
+          <Toolbar>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item>
+                <SearchIcon color="inherit" sx={{ display: "block" }} />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  fullWidth
+                  placeholder="Search Name"
+                  InputProps={{
+                    disableUnderline: true,
+                    sx: { fontSize: "default" },
+                  }}
+                  onChange={handleFilter}
+                  variant="standard"
+                />
+              </Grid>
+              <Grid item>
+                <Button variant="contained" sx={{ mr: 1 }}>
+                  <Link to="/createuser">Crete User</Link>
+                </Button>
+              </Grid>
             </Grid>
-            <Grid item xs>
-              <TextField
-                fullWidth
-                placeholder="Search Name"
-                InputProps={{
-                  disableUnderline: true,
-                  sx: { fontSize: "default" },
-                }}
-                onChange={handleFilter}
-                variant="standard"
-              />
-            </Grid>
-            <Grid item>
-              <Button variant="contained" sx={{ mr: 1 }}>
-                <Link to="/createuser">Crete User</Link>
-              </Button>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <Typography sx={{ mx: 2 }} color="text.secondary" align="center">
-        <Table
-          striped
-          className="table"
-          pagination
-          columns={columns}
-          data={data}
-          fixedHeader
-        />
-      </Typography>
-    </Paper>
+          </Toolbar>
+        </AppBar>
+        <Typography sx={{ mx: 2 }} color="text.secondary" align="center">
+          <Table
+            striped
+            className="table"
+            pagination
+            columns={columns}
+            data={data}
+            fixedHeader
+          />
+        </Typography>
+      </Paper>
+    </>
   );
 };
 

@@ -4,13 +4,12 @@ import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import HelpIcon from "@mui/icons-material/Help";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Toolbar } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
-import ConfirmBox from "../confirmBox";
+import LogoutButton from "../logOutButton";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header({
@@ -20,23 +19,8 @@ export default function Header({
   setSidebar: (boolean: boolean) => void;
   toggleSidebar: boolean;
 }) {
-  const [open, setOpen] = React.useState<boolean>(false);
-  const navigate = useNavigate();
-  const confirmLogout = () => {
-    setOpen(false);
-    navigate("/logout");
-  };
-  const handleLogout = () => {
-    setOpen(true);
-  };
   return (
     <React.Fragment>
-      <ConfirmBox
-        msg="Do you want to Log-out ?"
-        open={open}
-        handleOk={confirmLogout}
-        setOpen={setOpen}
-      />
       <AppBar
         component="div"
         color="primary"
@@ -46,8 +30,13 @@ export default function Header({
       >
         <Toolbar>
           <Grid container alignItems="center" spacing={1}>
-            <Grid item >
-              <Typography color="inherit" variant="h5" component="h1">
+            <Grid item>
+              <Typography
+                color="inherit"
+                variant="h5"
+                component="h1"
+                sx={{ cursor: "pointer" }}
+              >
                 {<MenuOutlined onClick={() => setSidebar(!toggleSidebar)} />}
               </Typography>
             </Grid>
@@ -68,11 +57,11 @@ export default function Header({
                 variant="outlined"
                 color="inherit"
                 size="small"
-                onClick={handleLogout}
               >
-                Log-Out
+                <LogoutButton />
               </Button>
             </Grid>
+
             <Grid item>
               <IconButton color="inherit" sx={{ p: 0.5 }}>
                 <Avatar

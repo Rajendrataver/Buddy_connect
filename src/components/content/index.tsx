@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import UserList from "../userlist";
 import Dashboard from "../dashboard";
 import CreateUser from "../creatUser";
-import Logout from "../logout";
 import SingleUser from "../singleUser";
 import { Box } from "@mui/material";
 import SideBar from "../sidebar";
@@ -46,7 +45,6 @@ const Content = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/userlist" element={<UserList />} />
           <Route path="/createuser" element={<CreateUser />} />
-          <Route path="/logout" element={<Logout />} />
           <Route path="/singleuser/:id" element={<SingleUser />} />
           <Route
             path="/add-bank-details/:user_id"

@@ -7,6 +7,8 @@ import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { Button } from "@mui/material";
+import LogoutButton from "../logOutButton";
 const SideBar = () => {
   return (
     <>
@@ -37,9 +39,9 @@ const SideBar = () => {
           <Link to="/dashboard" className="sidebar-link">
             <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
           </Link>
-          <Link to="/logout" className="sidebar-link">
-            <MenuItem icon={<LogoutIcon />}> Log-out</MenuItem>
-          </Link>
+          <MenuItem icon={<LogoutIcon />}>
+            <LogoutButton fullWidth={true} />
+          </MenuItem>
         </Menu>
       </Sidebar>
     </>
