@@ -58,7 +58,7 @@ hr {
 }
 .avatar-profile:hover {
   opacity: 0.7;
-    transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 .edit {
   opacity: 0;
@@ -94,6 +94,15 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-.userlist-section h4{
-   text-align: center;
+.userlist-section h4 {
+  text-align: center;
+}
+.file-ipload-input {
+  opacity: 0;
+  width: 20px;
+}
+@media (max-width: 800px) {
+  .nav-bar {
+    display: none;
+  }
 }

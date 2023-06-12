@@ -8,6 +8,7 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { Button } from "@mui/material";
+import PersonOffIcon from "@mui/icons-material/PersonOff";
 import LogoutButton from "../logOutButton";
 const SideBar = () => {
   return (
@@ -36,12 +37,13 @@ const SideBar = () => {
           <Link to="/userlist" className="sidebar-link">
             <MenuItem icon={<ReceiptOutlinedIcon />}>User List</MenuItem>
           </Link>
-          <Link to="/dashboard" className="sidebar-link">
-            <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
-          </Link>
+          
           <MenuItem icon={<LogoutIcon />}>
             <LogoutButton fullWidth={true} />
           </MenuItem>
+          <Link to="/removeduserlist" className="sidebar-link">
+            <MenuItem icon={<PersonOffIcon />}>Removed Users</MenuItem>
+          </Link>
         </Menu>
       </Sidebar>
     </>

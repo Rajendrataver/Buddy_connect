@@ -18,6 +18,10 @@ import DeleteUser from "../deleteUser";
 import ConfirmBox from "../confirmBox";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
+import TextInput from "../TextInput";
+import { Label } from "@mui/icons-material";
+import { log } from "console";
+import PopUp from "../popUp";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -31,8 +35,11 @@ interface userInterface {
 }
 
 const UserList: React.FC = () => {
+  const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [file, setFile] = useState<any>();
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
+  const [openUpload, setOpenUpload] = useState<boolean>(false);
   const navigate = useNavigate();
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
@@ -50,6 +57,7 @@ const UserList: React.FC = () => {
       .then((res) => {
         setUserlist(res.data.response);
         setData(res.data.response);
+        console.log(res.data.response);
       })
       .catch((error) => {
         console.log(error);
@@ -153,6 +161,7 @@ const UserList: React.FC = () => {
       cell: (row: userInterface) => {
         return (
           <DeleteIcon
+            color="error"
             sx={{ cursor: "pointer" }}
             onClick={() => {
               setOpen(true);
@@ -196,6 +205,24 @@ const UserList: React.FC = () => {
         setOpen(false);
       });
   };
+  const uploadFile = () => {
+    console.log(file);
+    setOpenUpload(false);
+  };
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log(file);
+      const extension = file.name.split(".").pop();
+      if (extension === "csv") {
+        console.log(extension);
+        setFile(file);
+        setOpenUpload(true);
+      } else {
+        setOpenAlert(true);
+      }
+    }
+  };
 
   function handleFilter(event: any) {
     const newData = userList.filter((row) => {
@@ -208,12 +235,23 @@ const UserList: React.FC = () => {
   return (
     <>
       <ConfirmBox
+        msg={"Upload  File ?"}
+        open={openUpload}
+        handleOk={uploadFile}
+        setOpen={setOpenUpload}
+      />
+      <ConfirmBox
         msg="Do you want to Delete ?"
         open={open}
         handleOk={deletUser}
         setOpen={setOpen}
       />
-
+      {openAlert && (
+        <PopUp
+          msg="Invalid File Type Select CSV file"
+          setOpenAlert={setOpenAlert}
+        />
+      )}
       <Paper
         className="userlist-section"
         sx={{
@@ -235,7 +273,7 @@ const UserList: React.FC = () => {
               <Grid item>
                 <SearchIcon color="inherit" sx={{ display: "block" }} />
               </Grid>
-              <Grid item xs>
+              <Grid item sm={12} md={7} xs={12}>
                 <TextField
                   fullWidth
                   placeholder="Search Name"
@@ -247,7 +285,24 @@ const UserList: React.FC = () => {
                   variant="standard"
                 />
               </Grid>
-              <Grid item>
+              <Grid item md={2} sm={2}>
+                <Button
+                  sx={{ mr: 1, ta: "center", bgcolor: "primary" }}
+                  variant="outlined"
+                >
+                  <label>
+                    Upload File
+                    <input
+                      type="file"
+                      title="Upload File"
+                      alt="Upload File"
+                      className="file-ipload-input"
+                      onChange={(e) => handleFileChange(e)}
+                    />
+                  </label>
+                </Button>
+              </Grid>
+              <Grid item md={2} sm={2}>
                 <Button variant="contained" sx={{ mr: 1 }}>
                   <Link to="/createuser">Crete User</Link>
                 </Button>

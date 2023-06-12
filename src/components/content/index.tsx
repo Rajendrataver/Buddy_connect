@@ -13,6 +13,7 @@ import AddBankDetails from "../addBankDetails";
 import AddFamilyDetail from "../addFamilyDetails";
 import AddSalaryDetails from "../addSalaryDetails";
 import UpdateUser from "../updateUserDetails";
+import RemovedUser from "../removedUser";
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
@@ -55,6 +56,7 @@ const Content = () => {
             element={<AddSalaryDetails />}
           />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
+          <Route path="/removeduserlist" element={<RemovedUser />} />
         </Routes>
       </Box>
     </Box>

@@ -1,5 +1,6 @@
 
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import {  Card ,Typography,CardContent,CardActions, Button } from "@mui/material";
+import { useNavigate } from "react-router";
 
 
 const RationCard = ({
@@ -7,48 +8,33 @@ const RationCard = ({
   title,
   count,
   msg,
+  path
 }: {
   msg: string;
-  percentage: number;
+    percentage: number;
+    path: string;
   count: number;
   title: string;
-}) => {
+  }) => {
+  const navigate = useNavigate();
   return (
-    <Box
-      sx={{
-        p: 2.25,
-        backgroundColor: "white",
-      
-        maxWidth: 300,
-        borderRadius: 4,
-              textAlign: "center",
-        boxShadow: 'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'
-      }}
-    >
-      <Stack spacing={0.5}>
-        <Typography variant="h6" color="textSecondary">
+    <Card sx={{ minWidth: 275,margin:2 }}>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {title}
         </Typography>
-        <Grid container alignItems="center" textAlign={"center"}>
-          <Grid item>
-            <Typography variant="h4" color="inherit" sx={{ color: "black" }}>
-              {count}
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            <Chip
-              variant="filled"
-              color={"success"}
-              label={`${percentage}%`}
-              sx={{ ml: 1.25, pl: 1 }}
-              size="small"
-            />
-          </Grid>
-        </Grid>
-        <Typography sx={{ fontSize: 18, color: "gray" }} textAlign={'left'}>{msg}</Typography>
-      </Stack>
-    </Box>
+        <Typography variant="h5" component="div">
+          {msg}
+        </Typography>
+        <Typography sx={{ mb: 1.5,fontSize:25 }} color="text.secondary" >
+         {count+ " Members"} 
+        </Typography>
+       
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={()=>navigate(path)}>Learn More</Button>
+      </CardActions>
+    </Card>
   );
 };
 

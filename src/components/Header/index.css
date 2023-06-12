@@ -1,15 +1,39 @@
-.nav-links{
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-     padding: 30px;
-     font-family: "Roboto","Helvetica","Arial",sans-serif;
-    font-weight: 500;
-    font-size: 0.875rem;
-    line-height: 1.25;
-    letter-spacing: 0.02857em;
-    
+.nav-links {
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 18px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  letter-spacing: 0.02857em;
 }
-.nav-links:hover{
-    color: rgba(240, 248, 255, 0.795);
+.hamburger-link {
+  color: white;
+}
+.nav-links:hover {
+  color: rgba(240, 248, 255, 0.795);
+}
+.hamburger {
+  display: none;
+  position: relative;
+}
+@media (max-width: 800px) {
+  .nav-bar {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+  }
+}
+.links {
+  display: none;
+  position: absolute;
+  padding: 2%;
+  z-index: 2;
+  background: #0076efbf;
+  /* opacity: 0.7; */
+  width: -webkit-fill-available;
+  color: white;
 }

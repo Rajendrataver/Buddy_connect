@@ -13,12 +13,14 @@ const PopUp = ({
 }: {
   title?: string;
   msg: string;
-  path: string;
+  path?: string;
   setOpenAlert?: (v: boolean) => void;
 }) => {
   const navigate = useNavigate();
   const handleClose = () => {
-    navigate(path);
+    if (path) {
+      navigate(path);
+    }
   };
   console.log(setOpenAlert);
 

@@ -27,7 +27,6 @@ const Dashboard = () => {
     const response = fetch(API.GET_USERS_URL, "get", token);
     response
       .then((res) => {
-   
         setList(res.data.response);
       })
       .catch((err) => {
@@ -37,18 +36,36 @@ const Dashboard = () => {
   useEffect(() => {
     getUserList();
   }, []);
+  useEffect(() => {
+    const newData = list.filter((row) => {
+      return row.status === "active";
+    });
+    setActive(newData.length);
+  }, [list]);
 
   return (
     <>
-      <Box sx={{ padding: 5 }}>
+      <Box sx={{ padding: 5 }} justifyContent={"space-between"}>
         <Grid container>
-          <Grid item xs={4} md={4}>
+          <Grid item xs={12} md={5} sm={12}>
             <RationCard
               count={list.length}
               percentage={100}
-              title="Total user"
+              title={"Hello " + localStorage.getItem("email")}
+              path="/userlist"
               key={1}
-              msg="This is user list"
+              msg="We are"
+            />
+          </Grid>
+          <Grid item xs={0} md={0.3} sm={0}></Grid>
+          <Grid item xs={12} md={5} sm={12}>
+            <RationCard
+              count={active}
+              percentage={100}
+              title={"Active User"}
+              path="/userlist"
+              key={1}
+              msg="We Have Active"
             />
           </Grid>
         </Grid>

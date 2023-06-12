@@ -186,24 +186,16 @@ const SingleUser = () => {
                   }}
                 />
               </Box>
-              <Typography
-                variant="h4"
-                component="h2"
-                textAlign="center"
-                sx={{
-                  backgroundColor: "whitesmoke",
-                  textTransform: "capitalize",
+
+              <Button
+                variant="outlined"
+                sx={{ mt: 2 }}
+                onClick={() => {
+                  navigate("/updateuser/" + id);
                 }}
               >
-                {user.first_name}
-                <Button
-                  onClick={() => {
-                    navigate("/updateuser/" + id);
-                  }}
-                >
-                  <EditIcon />
-                </Button>
-              </Typography>
+                Update Details <EditIcon />
+              </Button>
             </Grid>
             <Grid item xs={12} md={8}>
               <TableContainer>
