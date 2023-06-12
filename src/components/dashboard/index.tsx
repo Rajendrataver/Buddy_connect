@@ -47,25 +47,35 @@ const Dashboard = () => {
     <>
       <Box sx={{ padding: 5 }} justifyContent={"space-between"}>
         <Grid container>
-          <Grid item xs={12} md={5} sm={12}>
+          <Grid item xs={12} md={4} sm={12} mr={1}>
             <RationCard
               count={list.length}
               percentage={100}
               title={"Hello " + localStorage.getItem("email")}
               path="/userlist"
               key={1}
-              msg="We are"
+              msg="Total User"
             />
           </Grid>
-          <Grid item xs={0} md={0.3} sm={0}></Grid>
-          <Grid item xs={12} md={5} sm={12}>
+         
+          <Grid item xs={12} md={4} sm={12} mr={1}>
             <RationCard
               count={active}
               percentage={100}
               title={"Active User"}
               path="/userlist"
               key={1}
-              msg="We Have Active"
+              msg="Total Active User"
+            />
+          </Grid>
+          <Grid item xs={12} md={4} sm={12}   >
+            <RationCard
+              count={list.length-active}
+              percentage={100}
+              title={"Active User"}
+              path="/userlist"
+              key={1}
+              msg="Total Deactive User"
             />
           </Grid>
         </Grid>

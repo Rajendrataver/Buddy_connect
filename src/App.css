@@ -106,3 +106,18 @@ input::-webkit-inner-spin-button {
     display: none;
   }
 }
+.active {
+  background-color: #4688ff8a;
+}
+.active:hover {
+  background-color: #1051c98a;
+}
+
+.active-link {
+  color: white;
+  padding: 18px;
+}
+.inactive {
+  color: #ffffffa6;
+  padding: 18px;
+}

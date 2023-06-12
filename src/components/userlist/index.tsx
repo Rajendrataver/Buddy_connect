@@ -1,26 +1,29 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Paper,
+  Grid,
+  Button,
+  TextField,
+  Switch,
+} from "@mui/material";
+
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Switch } from "@mui/material";
+import {} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteUser from "../deleteUser";
+
 import ConfirmBox from "../confirmBox";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
-import TextInput from "../TextInput";
-import { Label } from "@mui/icons-material";
-import { log } from "console";
+
 import PopUp from "../popUp";
 interface userInterface {
   first_name: string;
@@ -57,7 +60,6 @@ const UserList: React.FC = () => {
       .then((res) => {
         setUserlist(res.data.response);
         setData(res.data.response);
-        console.log(res.data.response);
       })
       .catch((error) => {
         console.log(error);
@@ -127,6 +129,7 @@ const UserList: React.FC = () => {
               checked
               color="success"
               onClick={() => handleClick(row.id, row.status)}
+              disabled={onLoad}
             />
           );
         else {
@@ -134,6 +137,7 @@ const UserList: React.FC = () => {
             <Switch
               color="success"
               onClick={() => handleClick(row.id, row.status)}
+              disabled={onLoad}
             />
           );
         }
@@ -192,7 +196,6 @@ const UserList: React.FC = () => {
   ];
 
   const deletUser = () => {
-    console.log(user_id);
     const response = fetch(API.DELTE_USER_URL + user_id, "delete", token);
     response
       .then((res) => {
@@ -206,16 +209,13 @@ const UserList: React.FC = () => {
       });
   };
   const uploadFile = () => {
-    console.log(file);
     setOpenUpload(false);
   };
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
     if (file) {
-      console.log(file);
       const extension = file.name.split(".").pop();
       if (extension === "csv") {
-        console.log(extension);
         setFile(file);
         setOpenUpload(true);
       } else {

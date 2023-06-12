@@ -22,7 +22,7 @@ const PopUp = ({
       navigate(path);
     }
   };
-  console.log(setOpenAlert);
+
 
   return (
     <div>

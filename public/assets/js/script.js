@@ -6,7 +6,7 @@ const body = document.querySelector("body");
 console.log("hamburger", hamburger);
 
 const toggelchange = () => {
-  console.log("hamburger");
+
   $("#links").toggel(1000);
 };
 body.addEventListener("wheel");

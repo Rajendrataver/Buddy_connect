@@ -27,7 +27,7 @@ const RationCard = ({
           {msg}
         </Typography>
         <Typography sx={{ mb: 1.5,fontSize:25 }} color="text.secondary" >
-         {count+ " Members"} 
+         {count} 
         </Typography>
        
       </CardContent>

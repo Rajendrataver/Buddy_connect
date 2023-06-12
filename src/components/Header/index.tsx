@@ -7,7 +7,7 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
 import { boolean } from "yup";
@@ -35,7 +35,6 @@ export default function Header({
   const body = document.querySelector("body");
   if (body) {
     body.addEventListener("wheel", () => {
-      console.log("calling");
       const element = document.getElementById("links");
       if (element) {
         element.style.display = "none";
@@ -66,15 +65,32 @@ export default function Header({
                 </Typography>
               </Grid>
               <Grid item xs>
-                <Link to="/dashboard" className="nav-links">
-                  Dashboard
-                </Link>
-                <Link to="/userlist" className="nav-links">
+                <NavLink
+                  to="/dashboard"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : "inactive"
+                  }
+                >
+                  DashBoard
+                </NavLink>
+
+                <NavLink
+                  to="/userlist"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : "inactive"
+                  }
+                >
                   User List
-                </Link>
-                <Link to="/createuser" className="nav-links">
+                </NavLink>
+                <NavLink
+                  to="/createuser"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : "inactive"
+                  }
+                >
                   Create User
-                </Link>
+                </NavLink>
+                
               </Grid>
               <Grid item>
                 <Button
@@ -124,7 +140,7 @@ export default function Header({
           <Link to="/userlist" className="hamburger-link">
             <MenuItem>User List</MenuItem>
           </Link>
-         
+
           <MenuItem>
             <LogoutButton fullWidth={true} />
           </MenuItem>

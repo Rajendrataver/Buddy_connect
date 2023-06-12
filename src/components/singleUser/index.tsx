@@ -75,8 +75,6 @@ const SingleUser = () => {
   const getUserDetails = () => {
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
     response.then((res) => {
-      console.log("called", res.data.response);
-
       setUser(res.data.response);
     });
   };
