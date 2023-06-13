@@ -243,7 +243,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
                                     )
                                   }
                                 >
-                                  Set As Primary
+                                  Set Primary
                                 </Button>
                               </TableCell>
                               <TableCell align="left">

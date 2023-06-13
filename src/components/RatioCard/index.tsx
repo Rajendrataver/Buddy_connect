@@ -1,24 +1,28 @@
-
-import {  Card ,Typography,CardContent,CardActions, Button } from "@mui/material";
+import {
+  Card,
+  Typography,
+  CardContent,
+  CardActions,
+  Button,
+} from "@mui/material";
 import { useNavigate } from "react-router";
-
 
 const RationCard = ({
   percentage,
   title,
   count,
   msg,
-  path
+  path,
 }: {
   msg: string;
-    percentage: number;
-    path: string;
+  percentage: number;
+  path: string;
   count: number;
   title: string;
-  }) => {
+}) => {
   const navigate = useNavigate();
   return (
-    <Card sx={{ minWidth: 275,margin:2 }}>
+    <Card sx={{ width:100+'%',maxWidth:500 }}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {title}
@@ -26,13 +30,14 @@ const RationCard = ({
         <Typography variant="h5" component="div">
           {msg}
         </Typography>
-        <Typography sx={{ mb: 1.5,fontSize:25 }} color="text.secondary" >
-         {count} 
+        <Typography sx={{ mb: 1.5, fontSize: 25 }} color="text.secondary">
+          {count}
         </Typography>
-       
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={()=>navigate(path)}>Learn More</Button>
+        <Button size="small" onClick={() => navigate(path)}>
+          View List
+        </Button>
       </CardActions>
     </Card>
   );

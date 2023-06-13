@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   FormControl,
   FormControlLabel,
   Grid,
@@ -221,7 +222,7 @@ const UpdateUser = () => {
                   }}
                   fullWidth
                 >
-                  Cancel
+                  "Cancel"
                 </Button>
               </Grid>
               <Grid item sm={4}></Grid>
@@ -233,7 +234,7 @@ const UpdateUser = () => {
                   fullWidth
                   disabled={onLoad}
                 >
-                  Update
+                  {onLoad ? <CircularProgress color="inherit" /> : "Update"}
                 </Button>
               </Grid>
             </Grid>

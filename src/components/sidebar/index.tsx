@@ -23,14 +23,6 @@ const SideBar = () => {
         }}
       >
         <Menu>
-          <NavLink
-            to="/createuser"
-            className={({ isActive }) =>
-              isActive ? "active-link" : "inactive"
-            }
-          >
-            Create User
-          </NavLink>
           <MenuItem style={{ textAlign: "center" }}>
             <h2>Buddy Connect</h2>
           </MenuItem>{" "}
@@ -44,15 +36,30 @@ const SideBar = () => {
               Dashboard
             </MenuItem>
           </NavLink>
-          <Link to="/createuser" className="sidebar-link">
+          <NavLink
+            to="/createuser"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link-active" : "sidebar-link"
+            }
+          >
             <MenuItem icon={<ContactsOutlinedIcon />}>Create New User</MenuItem>
-          </Link>
-          <Link to="/userlist" className="sidebar-link">
+          </NavLink>
+          <NavLink
+            to="/userlist"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link-active" : "sidebar-link"
+            }
+          >
             <MenuItem icon={<ReceiptOutlinedIcon />}>User List</MenuItem>
-          </Link>
-          <Link to="/removeduserlist" className="sidebar-link">
+          </NavLink>
+          <NavLink
+            to="/removeduserlist"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link-active" : "sidebar-link"
+            }
+          >
             <MenuItem icon={<PersonOffIcon />}>Removed Users</MenuItem>
-          </Link>
+          </NavLink>
           <MenuItem icon={<LogoutIcon />}>
             <LogoutButton fullWidth={true} />
           </MenuItem>

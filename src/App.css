@@ -121,3 +121,6 @@ input::-webkit-inner-spin-button {
   color: #ffffffa6;
   padding: 18px;
 }
+.inactive:hover {
+  color: rgb(255, 255, 255);
+}

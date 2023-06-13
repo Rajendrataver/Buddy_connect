@@ -42,13 +42,10 @@ const AddFamilyDetail = ({
 
   const token = localStorage.getItem("token");
 
-
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => {
-
-
       setOnLoad(true);
       axios({
         url: API.ADD_FAMILY_DETAILS_URL + id,
@@ -62,8 +59,6 @@ const AddFamilyDetail = ({
           setOpen(false);
         })
         .catch((err) => {
-      
-
           if (err.response.data.message === "This relation is already exist.") {
             formik.errors.relation = err.response.data.message;
             formik.values.relation = "";
@@ -83,9 +78,8 @@ const AddFamilyDetail = ({
         sx={{
           maxWidth: 500,
           margin: "auto",
-          marginTop: 5,
-          padding: 5,
-          overflow: "hidden",
+          padding: 4,
+          overflow: "auto",
         }}
       >
         <Typography
@@ -95,7 +89,7 @@ const AddFamilyDetail = ({
         ></Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container p={1}>
+            <Grid container>
               <Grid item sm={12} xs={12}>
                 <h1>Family Details</h1>
                 <hr />
@@ -117,7 +111,19 @@ const AddFamilyDetail = ({
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
               <Grid container mt={2}>
-                <Grid item xs={12} md={4} sm={4}>
+                <Grid item xs={12} md={4} sm={4} mt={1}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Add member
+                  </Button>
+                </Grid>
+                <Grid item xs={0} md={4} sm={4}></Grid>
+                <Grid item xs={12} md={4} sm={4} mt={1}>
                   <Button
                     disabled={onLoad}
                     variant="contained"
@@ -128,18 +134,6 @@ const AddFamilyDetail = ({
                     fullWidth
                   >
                     Cancel
-                  </Button>
-                </Grid>
-                <Grid item xs={0} md={4} sm={4}></Grid>
-                <Grid item xs={12} md={4} sm={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    disabled={onLoad}
-                  >
-                    Add member
                   </Button>
                 </Grid>
               </Grid>

@@ -90,7 +90,14 @@ export default function Header({
                 >
                   Create User
                 </NavLink>
-                
+                <NavLink
+                  to="/removeduserlist"
+                  className={({ isActive }) =>
+                    isActive ? "active-link" : "inactive"
+                  }
+                >
+                  Removed User
+                </NavLink>
               </Grid>
               <Grid item>
                 <Button
@@ -140,13 +147,12 @@ export default function Header({
           <Link to="/userlist" className="hamburger-link">
             <MenuItem>User List</MenuItem>
           </Link>
-
-          <MenuItem>
-            <LogoutButton fullWidth={true} />
-          </MenuItem>
           <Link to="/removeduserlist" className="hamburger-link">
             <MenuItem>Removed Users</MenuItem>
           </Link>
+          <MenuItem>
+            <LogoutButton fullWidth={true} />
+          </MenuItem>
         </div>
       </div>
       <Grid></Grid>

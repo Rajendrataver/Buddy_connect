@@ -1,5 +1,7 @@
 import {
   Button,
+  CircularProgress,
+  Dialog,
   FormControl,
   FormControlLabel,
   Grid,
@@ -24,7 +26,7 @@ import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
-
+import { Box } from "@mui/material";
 const designation = [
   "Project Manager",
   "Team Lead",
@@ -105,7 +107,8 @@ const CreateUser = () => {
           }
         })
         .catch((error) => {
-      
+          console.log(error);
+
           if (error.response.data.message === "This email is already exist.") {
             setResult(formik.values.email + " Already Registered");
             formik.values.email = "";
@@ -135,15 +138,7 @@ const CreateUser = () => {
 
   return (
     <>
-      {open && (
-        <PopUp
-          msg={
-            formik.values.first_name.toUpperCase() +
-            " Has Registered Successfully"
-          }
-          path="/userlist"
-        />
-      )}
+      {open && <PopUp msg={"User Registered Successfully"} path="/userlist" />}
 
       <Paper
         sx={{
@@ -161,10 +156,10 @@ const CreateUser = () => {
         ></Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container>
-              <Grid item sm={12} md={4} xs={12} p={1}>
+            <Grid container spacing={2}>
+              <Grid item sm={12} md={4} xs={12} >
                 <h1>Contact Details</h1>
-                <hr />
+               
                 <TextInput name="first_name" type="text" label="First Name" />
                 <TextInput name="last_name" type="text" label="Last Name" />
                 <TextInput name="email" type="email" label="Email" />
@@ -177,9 +172,9 @@ const CreateUser = () => {
                 <DateInput name="dob" label="Date of Birth" />
               </Grid>
 
-              <Grid item sm={12} md={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} >
                 <h1>Job details</h1>
-                <hr />
+                
                 <SelectInput
                   name="designation"
                   items={designation}
@@ -189,9 +184,9 @@ const CreateUser = () => {
                 <DateInput name="joining_date" label="Joining Date" />
               </Grid>
 
-              <Grid item sm={12} md={4} xs={12} p={1}>
+              <Grid item sm={12} md={4} xs={12} >
                 <h1>Address Details</h1>
-                <hr />
+                
                 <TextInput type="text" label="Pan Card" name="pan_card" />
 
                 <SelectInput name="country" label="Country" items={country} />
@@ -208,7 +203,7 @@ const CreateUser = () => {
                   sx={{ marginTop: 6 }}
                   disabled={onLoad}
                 >
-                  Register
+                  {onLoad ? <CircularProgress color="inherit" /> : "Register"}
                 </Button>
               </Grid>
             </Grid>

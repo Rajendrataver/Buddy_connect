@@ -9,8 +9,6 @@ import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 interface userInterface {
@@ -117,11 +115,6 @@ const RemovedUser: React.FC = () => {
                   onChange={handleFilter}
                   variant="standard"
                 />
-              </Grid>
-              <Grid item>
-                <Button variant="contained" sx={{ mr: 1 }}>
-                  <Link to="/createuser">Create User</Link>
-                </Button>
               </Grid>
             </Grid>
           </Toolbar>

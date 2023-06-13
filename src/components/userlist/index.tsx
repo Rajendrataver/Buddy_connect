@@ -149,7 +149,7 @@ const UserList: React.FC = () => {
         return (
           <Button
             key={row.id}
-            color="warning"
+            color="primary"
             variant="outlined"
             onClick={() => {
               navigate("/updateuser/" + row.id);

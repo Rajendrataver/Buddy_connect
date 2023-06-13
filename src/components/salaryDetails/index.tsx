@@ -3,6 +3,7 @@ import {
   Dialog,
   Grid,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -49,7 +50,6 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
-      
       <Grid container>
         <Grid item xs={12} md={12}>
           <Button
@@ -63,41 +63,43 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
         </Grid>
       </Grid>
       <Grid container>
-        {salaryList.map((salary: salaryInterface, i) => {
-          return (
-            <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
-              <Typography variant="h5" sx={{ marginLeft: 2 }}>
-                {i + 1}.
-              </Typography>
-              <TableContainer>
-                <Table
-                  sx={{ maxWidth: 650, width: 100 + "%" }}
-                  size="small"
-                  aria-label="a dense table"
-                >
-                  <TableHead>
+        <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
+          <TableContainer>
+            <Table
+              sx={{ maxWidth: 650, width: 100 + "%" }}
+              size="small"
+              aria-label="a dense table"
+            >
+              <TableHead>
+                <TableRow>
+                  <TableCell>Sno.</TableCell>
+                  <TableCell>Basic Salary</TableCell>
+
+                  <TableCell>Provident Fund</TableCell>
+
+                  <TableCell>ESIC Amount</TableCell>
+
+                  <TableCell>Income Tax</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {salaryList.map((salary, i) => {
+                  return (
                     <TableRow>
-                      <TableCell>Basic Salary</TableCell>
-                      <TableCell align="left">{salary.basic_salary}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Provident Fund</TableCell>
-                      <TableCell align="left">{salary.pf_amount}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>ESIC Amount</TableCell>
+                      <TableCell align="left" sx={{ padding: 2 }}>
+                        {i + 1}
+                      </TableCell>
+                      <TableCell align="left">{salary.basic_salary}</TableCell>{" "}
+                      <TableCell align="left">{salary.pf_amount}</TableCell>{" "}
                       <TableCell align="left">{salary.esic_amount}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Income Tax</TableCell>
                       <TableCell align="left">{salary.income_tax}</TableCell>
                     </TableRow>
-                  </TableHead>
-                </Table>
-              </TableContainer>
-            </Grid>
-          );
-        })}
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Grid>
       </Grid>
     </>
   );
