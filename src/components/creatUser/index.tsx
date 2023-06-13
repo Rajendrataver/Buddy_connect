@@ -123,7 +123,7 @@ const CreateUser = () => {
         .finally(() => {
           setOnLoad(false);
           setTimeout(() => {
-            setResult("Create User");
+            setResult("Register User");
           }, 3000);
         });
     },

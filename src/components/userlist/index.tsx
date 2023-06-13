@@ -1,5 +1,6 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import papa from "papaparse";
 
 import {
   AppBar,
@@ -208,8 +209,21 @@ const UserList: React.FC = () => {
         setOpen(false);
       });
   };
+  const [filedata, setFileData] = useState<any>([]);
   const uploadFile = () => {
-    setOpenUpload(false);
+    console.log(file);
+    const reader = new FileReader();
+
+    // Event listener on reader when the file
+    // loads, we parse it and set the data.
+    papa.parse(file, {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        setFileData(results.data);
+      },
+    });
+    console.log(filedata);
   };
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -296,6 +310,7 @@ const UserList: React.FC = () => {
                       type="file"
                       title="Upload File"
                       alt="Upload File"
+                      accept=".csv"
                       className="file-ipload-input"
                       onChange={(e) => handleFileChange(e)}
                     />
