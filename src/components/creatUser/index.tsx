@@ -1,20 +1,11 @@
 import {
   Button,
   CircularProgress,
-  Dialog,
-  FormControl,
-  FormControlLabel,
   Grid,
-  InputLabel,
-  MenuItem,
   Paper,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
   Typography,
 } from "@mui/material";
-
+import "./index.css";
 import { createContext } from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
@@ -26,7 +17,6 @@ import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
-import { Box } from "@mui/material";
 const designation = [
   "Project Manager",
   "Team Lead",
@@ -85,7 +75,7 @@ const CreateUser = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("Register User");
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -113,25 +103,28 @@ const CreateUser = () => {
             setResult(formik.values.email + " Already Registered");
             formik.values.email = "";
             formik.errors.email = error.response.data.message;
-          }
-          if (
+          } else if (
             error.response.data.message === "This contact is already exist."
           ) {
             setResult(formik.values.contact + " Already Registered");
             formik.values.contact = "";
             formik.errors.contact = error.response.data.message;
-          }
-          if (
+          } else if (
             error.response.data.message ===
             "This PAN_CARD number is already exist."
           ) {
             setResult(formik.values.pan_card + " Already Registered");
             formik.values.pan_card = "";
             formik.errors.pan_card = error.response.data.message;
+          } else {
+            setResult(error.response.data.message);
           }
         })
         .finally(() => {
           setOnLoad(false);
+          setTimeout(() => {
+            setResult("Create User");
+          }, 3000);
         });
     },
   });
@@ -142,68 +135,107 @@ const CreateUser = () => {
 
       <Paper
         sx={{
-          maxWidth: 65 + "%",
+          maxWidth: 700,
           margin: "auto",
           marginTop: 5,
           padding: 5,
           overflow: "hidden",
         }}
+        className="create-user"
       >
-        <Typography
-          sx={{ mx: 2, fontSize: 25 }}
-          color="red"
-          align="left"
-        ></Typography>
+        <Typography sx={{ mx: 2, fontSize: 25 }} color="black" align="left">
+          {result}
+        </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container spacing={2}>
-              <Grid item sm={12} md={4} xs={12} >
-                <h1>Contact Details</h1>
-               
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6} sm={12}>
                 <TextInput name="first_name" type="text" label="First Name" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput name="last_name" type="text" label="Last Name" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput name="email" type="email" label="Email" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput name="contact" type="text" label="Contact" />
+              </Grid>
+
+              <Grid item sm={12} md={6} xs={12}>
+                <DateInput name="dob" label="Date of Birth" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
+                <DateInput name="joining_date" label="Joining Date" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <RadioInput
                   name="gender"
                   label="Gender"
                   items={["male", "female"]}
                 />
-                <DateInput name="dob" label="Date of Birth" />
               </Grid>
+            </Grid>
 
-              <Grid item sm={12} md={4} xs={12} >
-                <h1>Job details</h1>
-                
+            <Grid container spacing={1}>
+              <Grid item sm={12} md={6} xs={12}>
                 <SelectInput
                   name="designation"
                   items={designation}
                   label="Designation"
                 />
-                <SelectInput name="role" items={roles} label="Role" />
-                <DateInput name="joining_date" label="Joining Date" />
               </Grid>
+              <Grid item sm={12} md={6} xs={12}>
+                <SelectInput name="role" items={roles} label="Role" />
+              </Grid>
+            </Grid>
 
-              <Grid item sm={12} md={4} xs={12} >
-                <h1>Address Details</h1>
-                
+            <Grid container spacing={1}>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="Pan Card" name="pan_card" />
-
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <SelectInput name="country" label="Country" items={country} />
-
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="State" name="state" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="City" name="city" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="Address" name="address" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="number" label="Zip Code" name="zip_code" />
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item sm={12} md={4} xs={12}>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   fullWidth
-                  sx={{ marginTop: 6 }}
+                  sx={{ marginTop: 1 }}
                   disabled={onLoad}
                 >
                   {onLoad ? <CircularProgress color="inherit" /> : "Register"}
+                </Button>
+              </Grid>
+              <Grid item sm={0} md={4} xs={0}></Grid>
+              <Grid item sm={12} md={4} xs={12}>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  onClick={() => {
+                    navigate("/dashboard/");
+                  }}
+                  disabled={onLoad}
+                >
+                  Cancel
                 </Button>
               </Grid>
             </Grid>

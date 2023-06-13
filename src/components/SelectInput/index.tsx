@@ -15,7 +15,7 @@ const SelectInput = ({
   const formik: any = useContext(userFormContext);
 
   return (
-    <FormControl fullWidth sx={{ mb: 1 }}>
+    <FormControl fullWidth sx={{ mb: 3 }}>
       <InputLabel id={name}>
         {formik.touched[name] && formik.errors[name] ? (
           <span className="input-error">{formik.errors[name]}</span>
@@ -38,6 +38,7 @@ const SelectInput = ({
             label
           )
         }
+        error={formik.touched[name] && formik.errors[name] ? true : false}
       >
         <MenuItem value="">Select </MenuItem>
         {items.map((item, i) => {

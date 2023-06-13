@@ -144,7 +144,14 @@ const SingleUser = () => {
           sx={{ width: 200, height: 200, margin: "auto" }}
         />
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button
+            onClick={() => {
+              setOpen(false);
+              setImage(null);
+            }}
+          >
+            Cancel
+          </Button>
           <Button onClick={() => handleUploadImage()}>Upload</Button>
         </DialogActions>
       </Dialog>

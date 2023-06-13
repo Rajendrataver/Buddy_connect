@@ -25,25 +25,17 @@ interface userInterface {
   role: string;
   image: string;
 }
-const Row = ({ user }: { user: userInterface }) => {
+const Row = ({ user, sNo }: { user: userInterface; sNo: number }) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const navigate = useNavigate();
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-        <TableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
+        <TableCell>{sNo}</TableCell>
         <TableCell>
           <Avatar
             src={IMAGE_SRC_URL + user.image}
-            sx={{ width: 55, height: 55 }}
+            sx={{ width: 55, height: 55, objectFit: "cover" }}
           />
         </TableCell>
         <TableCell
@@ -56,7 +48,7 @@ const Row = ({ user }: { user: userInterface }) => {
         <TableCell align="left">{user.email}</TableCell>
         <TableCell align="left">
           <FiberManualRecordIcon
-            color={user.status === "active" ? "success" : "warning"}
+            color={user.status === "active" ? "success" : "error"}
           />
         </TableCell>
         <TableCell align="left" sx={{ textTransform: "capitalize" }}>
@@ -70,35 +62,6 @@ const Row = ({ user }: { user: userInterface }) => {
           >
             Profile
           </Button>
-        </TableCell>
-      </TableRow>
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 2 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 2 }}>
-              <Typography variant="h6" gutterBottom component="div">
-                Info
-              </Typography>
-              <Table size="small" aria-label="purchases">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Full Name</TableCell>
-                    <TableCell>
-                      {user.first_name + " " + user.last_name}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Contact</TableCell>
-                    <TableCell>{user.contact}</TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell align="left">Designation</TableCell>
-                    <TableCell align="left">{user.designation}</TableCell>
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </Box>
-          </Collapse>
         </TableCell>
       </TableRow>
     </React.Fragment>

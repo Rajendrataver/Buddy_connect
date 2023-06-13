@@ -22,14 +22,17 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       setOnLoad(true);
-    
+
       axios
         .post("https://buddy-connect.encoreskydev.com/api/login.php", values)
         .then((response) => {
-       
           if (response.data.response.role === "superAdmin") {
             var info = response.data.response;
             localStorage.setItem("token", info.token);
+            localStorage.setItem(
+              "name",
+              info.first_name + " " + info.last_name
+            );
             localStorage.setItem("email", info.email);
             localStorage.setItem("role", info.role);
             navigate("/dashboard");
@@ -45,9 +48,10 @@ const Login = () => {
           setTimeout(() => {
             setResultMSG("result");
           }, 4000);
-        }).finally(() => {
-           setOnLoad(false);
         })
+        .finally(() => {
+          setOnLoad(false);
+        });
     },
   });
 

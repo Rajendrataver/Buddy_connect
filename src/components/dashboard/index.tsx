@@ -52,9 +52,8 @@ const Dashboard = () => {
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={list.length}
-              percentage={100}
+              percentage={(list.length * 100) / list.length}
               title={"Hello " + localStorage.getItem("email")}
-              path="/userlist"
               key={1}
               msg="Total Listed User"
             />
@@ -63,9 +62,8 @@ const Dashboard = () => {
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={active}
-              percentage={100}
+              percentage={(active * 100) / list.length}
               title={"Active User"}
-              path="/userlist"
               key={1}
               msg="Total Active User"
             />
@@ -73,9 +71,8 @@ const Dashboard = () => {
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={list.length - active}
-              percentage={100}
+              percentage={((list.length - active) * 100) / list.length}
               title={"Active User"}
-              path="/userlist"
               key={1}
               msg="Total Deactive User"
             />

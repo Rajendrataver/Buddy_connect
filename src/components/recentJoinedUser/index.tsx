@@ -1,4 +1,5 @@
 import {
+  Box,
   Table,
   TableBody,
   TableCell,
@@ -22,21 +23,26 @@ interface userInterface {
 }
 const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
   return (
-    <>
-      <Typography
-        sx={{ mt: 5, fontWeight: "bold", fontFamily: "sans-serif" }}
-        variant="h5"
-      >
-        Recent Joined
-      </Typography>
+    <Box sx={{ maxWidth: 1000, mt: 5 }}>
       <TableContainer
-        sx={{ padding: 2, backgroundColor: "snow", maxWidth: 1000 }}
+        sx={{
+          padding: 2,
+          backgroundColor: "snow",
+
+          margin: "auto",
+        }}
       >
+        <Typography
+          sx={{ fontWeight: "bold", fontFamily: "sans-serif" }}
+          variant="h5"
+        >
+          Recent Joined
+        </Typography>
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell />
-              <TableCell align="left">Profile</TableCell>
+              <TableCell>SNo.</TableCell>
+              <TableCell align="left">Profile Image</TableCell>
               <TableCell align="left">Name</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Status</TableCell>
@@ -49,12 +55,12 @@ const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
               if (i >= 5) {
                 return null;
               }
-              return <Row user={user} />;
+              return <Row user={user} sNo={i + 1} />;
             })}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

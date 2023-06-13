@@ -91,32 +91,36 @@ const UpdateUser = () => {
   const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("Update User");
   const fetch = useFetch();
 
   const getUsers = () => {
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
-    response.then((res) => {
-      const data = res.data.response;
-      formik.values.first_name = data.first_name;
-      formik.values.last_name = data.last_name;
-      formik.values.dob = data.dob;
-      formik.values.zip_code = data.zip_code;
-      formik.values.city = data.city;
-      formik.values.joining_date = data.joining_date;
-      formik.values.address = data.address;
-      formik.values.pan_card = data.pan_card;
-      formik.values.country = data.country;
-      formik.values.role = data.role;
-      formik.values.designation = data.designation;
-      formik.values.email = data.email;
-      formik.values.contact = data.contact;
-      formik.values.email = data.email;
-      formik.values.state = data.state;
-      formik.values.gender = data.gender;
-      formik.values.status = data.status;
-      setInitialValues(data);
-    });
+    response
+      .then((res) => {
+        const data = res.data.response;
+        formik.values.first_name = data.first_name;
+        formik.values.last_name = data.last_name;
+        formik.values.dob = data.dob;
+        formik.values.zip_code = data.zip_code;
+        formik.values.city = data.city;
+        formik.values.joining_date = data.joining_date;
+        formik.values.address = data.address;
+        formik.values.pan_card = data.pan_card;
+        formik.values.country = data.country;
+        formik.values.role = data.role;
+        formik.values.designation = data.designation;
+        formik.values.email = data.email;
+        formik.values.contact = data.contact;
+        formik.values.email = data.email;
+        formik.values.state = data.state;
+        formik.values.gender = data.gender;
+        formik.values.status = data.status;
+        setInitialValues(data);
+      })
+      .catch(() => {
+        console.log("error");
+      });
   };
 
   useEffect(() => {
@@ -138,11 +142,14 @@ const UpdateUser = () => {
         .then((res) => {
           setOpen(true);
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          setResult(error.response.data.message);
         })
         .finally(() => {
           setOnLoad(false);
+          setTimeout(() => {
+            setResult("Update User");
+          }, 3000);
         });
     },
   });
@@ -150,91 +157,112 @@ const UpdateUser = () => {
   return (
     <>
       {open && (
-        <PopUp msg={"Updated SuccessFully"} path={"/singleuser/" + id} />
+        <PopUp msg={"User Updated Successfully"} path={"/singleuser/" + id} />
       )}
 
       <Paper
         sx={{
-          maxWidth: 65 + "%",
+          maxWidth: 700,
           margin: "auto",
           marginTop: 5,
           padding: 5,
           overflow: "hidden",
         }}
+        className="create-user"
       >
         <Typography sx={{ mx: 2, fontSize: 25 }} color="black" align="left">
-          Update User
+          {result}
         </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container>
-              <Grid item sm={12} md={4} xs={12} p={1}>
-                <h1>Contact Details</h1>
-                <hr />
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6} sm={12}>
                 <TextInput name="first_name" type="text" label="First Name" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput name="last_name" type="text" label="Last Name" />
-                <TextInput
-                  name="email"
-                  type="email"
-                  label="Email"
-                  readOnly={true}
-                />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
+                <TextInput name="email" type="email" label="Email" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput name="contact" type="text" label="Contact" />
+              </Grid>
+
+              <Grid item sm={12} md={6} xs={12}>
+                <DateInput name="dob" label="Date of Birth" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
+                <DateInput name="joining_date" label="Joining Date" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <RadioInput
                   name="gender"
                   label="Gender"
                   items={["male", "female"]}
                 />
-                <DateInput name="dob" label="Date of Birth" />
               </Grid>
+            </Grid>
 
-              <Grid item sm={12} md={4} xs={12} p={1}>
-                <h1>Job details</h1>
-                <hr />
+            <Grid container spacing={1}>
+              <Grid item sm={12} md={6} xs={12}>
                 <SelectInput
                   name="designation"
                   items={designation}
                   label="Designation"
                 />
-                <SelectInput name="role" items={roles} label="Role" />
-                <DateInput name="joining_date" label="Joining Date" />
               </Grid>
+              <Grid item sm={12} md={6} xs={12}>
+                <SelectInput name="role" items={roles} label="Role" />
+              </Grid>
+            </Grid>
 
-              <Grid item sm={12} md={4} xs={12} p={1}>
-                <h1>Address Details</h1>
-                <hr />
+            <Grid container spacing={1}>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="Pan Card" name="pan_card" />
-
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <SelectInput name="country" label="Country" items={country} />
-
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="State" name="state" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="City" name="city" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="Address" name="address" />
+              </Grid>
+              <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
-              <Grid item sm={4} xs={12} textAlign={"center"}>
-                <Button
-                  disabled={onLoad}
-                  variant="contained"
-                  color="warning"
-                  onClick={() => {
-                    navigate("/singleuser/" + id);
-                  }}
-                  fullWidth
-                >
-                  "Cancel"
-                </Button>
-              </Grid>
-              <Grid item sm={4}></Grid>
-              <Grid item sm={4}>
+            </Grid>
+            <Grid container>
+              <Grid item sm={12} md={4} xs={12}>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   fullWidth
+                  sx={{ marginTop: 1 }}
                   disabled={onLoad}
                 >
                   {onLoad ? <CircularProgress color="inherit" /> : "Update"}
+                </Button>
+              </Grid>
+              <Grid item sm={0} md={4} xs={0}></Grid>
+              <Grid item sm={12} md={4} xs={12}>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  onClick={() => {
+                    navigate("/singleuser/" + id);
+                  }}
+                  disabled={onLoad}
+                >
+                  Cancel
                 </Button>
               </Grid>
             </Grid>

@@ -8,9 +8,10 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
-import { MenuOutlined } from "@mui/icons-material";
+import { DevicesFoldRounded, MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
 import { boolean } from "yup";
+import LogoutIcon from "@mui/icons-material/Logout";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header({
@@ -20,7 +21,10 @@ export default function Header({
   setSidebar: (boolean: boolean) => void;
   toggleSidebar: boolean;
 }) {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [openHamburger, setOpenHamburger] = React.useState<boolean>(false);
+  const open = Boolean(anchorEl);
+
   const toggleHamburger = () => {
     const element = document.getElementById("links");
     if (element) {
@@ -99,25 +103,80 @@ export default function Header({
                   Removed User
                 </NavLink>
               </Grid>
-              <Grid item>
-                <Button
-                  sx={{ borderColor: lightColor }}
-                  variant="outlined"
-                  color="inherit"
-                  size="small"
-                >
-                  <LogoutButton />
-                </Button>
-              </Grid>
 
-              <Grid item>
-                <IconButton color="inherit" sx={{ p: 0.5 }}>
+              <Grid
+                item
+                onClick={(event) => {
+                  setAnchorEl(event.currentTarget);
+                }}
+              >
+                <IconButton
+                  color="inherit"
+                  sx={{ p: 0.5, alignItems: "center" }}
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                >
                   <Avatar
                     src="https://cdn2.vectorstock.com/i/1000x1000/72/96/emotion-avatar-man-happy-successful-face-vector-13577296.jpg"
                     alt="My Avatar"
                   />
+                  &nbsp;
+                  <Typography
+                    sx={{
+                      display: "block",
+                      textAlign: "left",
+                      margin: 0,
+                      fontSize: 18 + "px",
+                      lineHeight: 0.5,
+                    }}
+                  >
+                    {localStorage.getItem("name")}
+                  </Typography>
                 </IconButton>
               </Grid>
+              <Menu
+                id="basic-menu"
+                open={open}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+                MenuListProps={{
+                  "aria-labelledby": "basic-button",
+                }}
+              >
+                <MenuItem>
+                  <IconButton
+                    color="inherit"
+                    sx={{ p: 0.5, alignItems: "center" }}
+                  >
+                    <Avatar
+                      src="https://cdn2.vectorstock.com/i/1000x1000/72/96/emotion-avatar-man-happy-successful-face-vector-13577296.jpg"
+                      alt="My Avatar"
+                    />
+                    &nbsp;
+                    <Typography
+                      sx={{
+                        display: "block",
+                        textAlign: "left",
+                        margin: 0,
+                        fontSize: 18 + "px",
+                        lineHeight: 0.5,
+                      }}
+                    >
+                      {localStorage.getItem("name")}
+                      <Typography sx={{ color: "#00000091", margin: 0 }}>
+                        {localStorage.getItem("email")}
+                      </Typography>
+                    </Typography>
+                  </IconButton>
+                </MenuItem>
+                <hr />
+                <MenuItem>
+                  <LogoutIcon />
+                  &nbsp;&nbsp;
+                  <LogoutButton fullWidth={true} />
+                </MenuItem>
+              </Menu>
             </Grid>
           </Toolbar>
 
