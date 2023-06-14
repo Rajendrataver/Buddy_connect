@@ -52,7 +52,6 @@ const AddSalaryDetails = () => {
           }
         })
         .catch((err) => {
-      
           formik.values.appraisal_date = "";
           formik.errors.appraisal_date = "Please Enter A Correct Date";
         })
@@ -65,35 +64,28 @@ const AddSalaryDetails = () => {
   return (
     <div className="add-salary-section">
       {open && (
-        <PopUp
-          msg="Salary Details Added Successfully"
-          path={"/singleuser/" + id}
-        />
+        <PopUp msg="Salary Details Added Successfully" path={"/user/" + id} />
       )}
       <Paper
         sx={{
           maxWidth: 700,
           margin: "auto",
           marginTop: 5,
-          padding: 5,
+          mb: 5,
+          padding: 3,
           overflow: "hidden",
         }}
       >
-        <Typography
-          sx={{ mx: 2, fontSize: 25 }}
-          color="red"
-          align="left"
-        ></Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
+            <h1>Salary Details</h1>
+            <hr />
+
             <Grid container p={1}>
               <Grid item sm={12} xs={12}>
-                <h1>Salary Details</h1>
-                <hr />
-                <br />
                 <h3>Salary</h3>
                 <Grid container>
-                  <Grid item sm={6} xs={6}>
+                  <Grid item sm={12} xs={12} md={6}>
                     <TextInput
                       name="basic_salary"
                       type="number"
@@ -103,15 +95,15 @@ const AddSalaryDetails = () => {
                 </Grid>
 
                 <h3>EPF/ESI</h3>
-                <Grid container>
-                  <Grid item sm={6} xs={6} pr={1}>
+                <Grid container columnSpacing={1}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="pf_amount"
                       type="number"
                       label="Provident Fund"
                     />
                   </Grid>
-                  <Grid item sm={6} xs={6} pl={2}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="esic_amount"
                       type="number"
@@ -120,15 +112,15 @@ const AddSalaryDetails = () => {
                   </Grid>
                 </Grid>
                 <h3>Taxes</h3>
-                <Grid container>
-                  <Grid item sm={6} xs={6} pr={1}>
+                <Grid container columnSpacing={1}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="pt_amount"
                       type="text"
                       label="Professional Tax(PT)"
                     />
                   </Grid>
-                  <Grid item sm={6} xs={6} pl={2}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="income_tax"
                       type="number"
@@ -137,22 +129,22 @@ const AddSalaryDetails = () => {
                   </Grid>
                 </Grid>
                 <h3>Allowances</h3>
-                <Grid container>
-                  <Grid item sm={4} xs={4} pr={1}>
+                <Grid container columnSpacing={1}>
+                  <Grid item sm={4} xs={12} md={4}>
                     <TextInput
                       name="conveyance_allowance"
                       type="number"
                       label="Conveyance"
                     />
                   </Grid>
-                  <Grid item sm={4} xs={4}>
+                  <Grid item sm={4} xs={12} md={4}>
                     <TextInput
                       name="utility_allowance"
                       type="number"
                       label="Utility"
                     />
                   </Grid>
-                  <Grid item sm={4} xs={4} pl={1}>
+                  <Grid item sm={4} xs={12} md={4}>
                     <TextInput
                       name="home_rent_allowances"
                       type="number"
@@ -161,12 +153,12 @@ const AddSalaryDetails = () => {
                   </Grid>
                 </Grid>
                 <h3>Other</h3>
-                <Grid container>
-                  <Grid item sm={5} xs={5} pr={1}>
+                <Grid container columnSpacing={1}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput name="laon" type="number" label="Loan" />
                   </Grid>
 
-                  <Grid item sm={4} xs={4} pl={1}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="health_insurance"
                       type="number"
@@ -181,14 +173,14 @@ const AddSalaryDetails = () => {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid container>
+              <Grid container spacing={1}>
                 <Grid item xs={12} md={4} sm={4}>
                   <Button
                     disabled={onLoad}
                     variant="contained"
                     color="warning"
                     onClick={() => {
-                      navigate("/singleuser/" + id);
+                      navigate("/user/" + id);
                     }}
                     fullWidth
                   >

@@ -28,7 +28,6 @@ const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
         sx={{
           padding: 2,
           backgroundColor: "snow",
-
           margin: "auto",
         }}
       >
@@ -55,7 +54,7 @@ const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
               if (i >= 5) {
                 return null;
               }
-              return <Row user={user} sNo={i + 1} />;
+              return <Row user={user} sNo={i + 1} key={i} />;
             })}
           </TableBody>
         </Table>

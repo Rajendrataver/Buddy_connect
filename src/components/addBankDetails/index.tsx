@@ -38,7 +38,7 @@ const AddBankDetails = () => {
 
   const handleClose = () => {
     setOpen(false);
-    navigate("/singleuser/" + id);
+    navigate("/user/" + id);
   };
 
   const formik = useFormik({
@@ -77,7 +77,7 @@ const AddBankDetails = () => {
       {open && (
         <PopUp
           msg="Bank Details Added Successfully"
-          path={"/singleuser/" + id}
+          path={"/user/" + id}
         />
       )}
       <Paper

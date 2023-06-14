@@ -37,30 +37,30 @@ const SideBar = () => {
             </MenuItem>
           </NavLink>
           <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              isActive ? "sidebar-link-active" : "sidebar-link"
+            }
+          >
+            <MenuItem icon={<ReceiptOutlinedIcon />}>Users</MenuItem>
+          </NavLink>
+          <NavLink
             to="/createuser"
             className={({ isActive }) =>
               isActive ? "sidebar-link-active" : "sidebar-link"
             }
           >
-            <MenuItem icon={<ContactsOutlinedIcon />}>Create New User</MenuItem>
+            <MenuItem icon={<ContactsOutlinedIcon />}>Create User</MenuItem>
           </NavLink>
           <NavLink
-            to="/userlist"
+            to="/formerusers"
             className={({ isActive }) =>
               isActive ? "sidebar-link-active" : "sidebar-link"
             }
           >
-            <MenuItem icon={<ReceiptOutlinedIcon />}>User List</MenuItem>
+            <MenuItem icon={<PersonOffIcon />}>Former Users</MenuItem>
           </NavLink>
-          <NavLink
-            to="/removeduserlist"
-            className={({ isActive }) =>
-              isActive ? "sidebar-link-active" : "sidebar-link"
-            }
-          >
-            <MenuItem icon={<PersonOffIcon />}>Removed Users</MenuItem>
-          </NavLink>
-          <MenuItem icon={<LogoutIcon />}>
+          <MenuItem className="sidebar-link">
             <LogoutButton fullWidth={true} />
           </MenuItem>
         </Menu>

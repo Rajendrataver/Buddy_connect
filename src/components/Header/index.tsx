@@ -12,6 +12,7 @@ import { DevicesFoldRounded, MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
 import { boolean } from "yup";
 import LogoutIcon from "@mui/icons-material/Logout";
+import * as API from "../../apiURL";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 export default function Header({
@@ -79,12 +80,12 @@ export default function Header({
                 </NavLink>
 
                 <NavLink
-                  to="/userlist"
+                  to="/users"
                   className={({ isActive }) =>
                     isActive ? "active-link" : "inactive"
                   }
                 >
-                  User List
+                  Users
                 </NavLink>
                 <NavLink
                   to="/createuser"
@@ -95,12 +96,12 @@ export default function Header({
                   Create User
                 </NavLink>
                 <NavLink
-                  to="/removeduserlist"
+                  to="/formerusers"
                   className={({ isActive }) =>
                     isActive ? "active-link" : "inactive"
                   }
                 >
-                  Removed User
+                  Former User
                 </NavLink>
               </Grid>
 
@@ -172,7 +173,6 @@ export default function Header({
                 </MenuItem>
                 <hr />
                 <MenuItem>
-                  <LogoutIcon />
                   &nbsp;&nbsp;
                   <LogoutButton fullWidth={true} />
                 </MenuItem>

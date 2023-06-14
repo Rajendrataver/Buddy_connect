@@ -43,7 +43,7 @@ const SelectInput = ({
         <MenuItem value="">Select </MenuItem>
         {items.map((item, i) => {
           return (
-            <MenuItem key={i} value={item}>
+            <MenuItem key={i} value={item} sx={{ textTransform: "capitalize" }}>
               {item}
             </MenuItem>
           );

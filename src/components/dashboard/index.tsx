@@ -1,10 +1,8 @@
-import { Box, Card, CardContent, Grid } from "@mui/material";
-import Skeleton from "@mui/material/Skeleton";
+import { Box, Grid } from "@mui/material";
 import RationCard from "../RatioCard";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
-import UserList from "../userlist";
 import RecentJoinedUser from "../recentJoinedUser";
 interface userInterface {
   first_name: string;
@@ -46,8 +44,8 @@ const Dashboard = () => {
   }, [list]);
 
   return (
-    <Box className="container">
-      <Box justifyContent={"space-between"} mt={2}>
+    <Box className="container" mt={2} mb={5}>
+      <Box justifyContent={"space-between"}>
         <Grid container spacing={2} display={"flex"} justifyContent={"center"}>
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
@@ -55,7 +53,7 @@ const Dashboard = () => {
               percentage={(list.length * 100) / list.length}
               title={"Hello " + localStorage.getItem("email")}
               key={1}
-              msg="Total Listed User"
+              msg="Users"
             />
           </Grid>
 
@@ -63,18 +61,18 @@ const Dashboard = () => {
             <RationCard
               count={active}
               percentage={(active * 100) / list.length}
-              title={"Active User"}
+              title={"Buddy Connect"}
               key={1}
-              msg="Total Active User"
+              msg="Active Users"
             />
           </Grid>
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={list.length - active}
               percentage={((list.length - active) * 100) / list.length}
-              title={"Active User"}
+              title={"Buddy Connect"}
               key={1}
-              msg="Total Deactive User"
+              msg="Deactive Users"
             />
           </Grid>
         </Grid>

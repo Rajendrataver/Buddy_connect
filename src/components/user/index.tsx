@@ -60,7 +60,7 @@ const tabs = {
   SALARY_DETAILS: "Salary Details",
   FAMILY_DETAILS: "Family Details",
 };
-const SingleUser = () => {
+const User = () => {
   const [image, setImage] = useState<any>();
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -74,9 +74,17 @@ const SingleUser = () => {
   const fetch = useFetch();
   const getUserDetails = () => {
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
-    response.then((res) => {
-      setUser(res.data.response);
-    });
+    response
+      .then((res) => {
+        if (!res.data.success) {
+          navigate("/dashboard");
+        } else {
+          setUser(res.data.response); 
+        }
+      })
+      .catch((err) => {
+        console.log(err.data.response.message);
+      });
   };
 
   const selectedImage = (e: any) => {
@@ -159,7 +167,7 @@ const SingleUser = () => {
         <PopUp
           msg="Invalid File Type !!!"
           title="Warning"
-          path={"/singleuser/" + id}
+          path={"/user/" + id}
           setOpenAlert={setOpenAlert}
         />
       )}
@@ -168,7 +176,7 @@ const SingleUser = () => {
           position="static"
           color="default"
           elevation={0}
-          sx={{ minHeight: 100 + "vh" }}
+          sx={{ minHeight: 100 + "vh",pt:5 }}
           className="container"
         >
           <Grid container alignItems={"center"}>
@@ -281,4 +289,4 @@ const SingleUser = () => {
   );
 };
 
-export default SingleUser;
+export default User;

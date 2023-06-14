@@ -17,14 +17,14 @@ const DateInput = ({ name, label }: { name: string; label: string }) => {
   return (
     <Box sx={{ position: "relative" }}>
       <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-      <FormControl fullWidth sx={{ mb: 1 }}>
+      <FormControl fullWidth sx={{ mb: 3 }}>
         <TextField
           type="date"
           variant="outlined"
           color="primary"
           name={name}
           fullWidth
-          sx={{ mb: 1 }}
+          
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched[name] && formik.errors[name] ? true : false}
@@ -35,7 +35,6 @@ const DateInput = ({ name, label }: { name: string; label: string }) => {
             position: "absolute",
             color: "red",
             bottom: -22,
-
             left: 5,
           }}
         >

@@ -13,6 +13,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useNavigate } from "react-router";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IMAGE_SRC_URL } from "../../apiURL";
+import { Link } from "react-router-dom";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -45,7 +46,9 @@ const Row = ({ user, sNo }: { user: userInterface; sNo: number }) => {
         >
           {user.first_name}
         </TableCell>
-        <TableCell align="left">{user.email}</TableCell>
+        <TableCell align="left" title={user.email}>
+          {user.email}
+        </TableCell>
         <TableCell align="left">
           <FiberManualRecordIcon
             color={user.status === "active" ? "success" : "error"}
@@ -55,13 +58,11 @@ const Row = ({ user, sNo }: { user: userInterface; sNo: number }) => {
           {user.role}
         </TableCell>
         <TableCell align="left">
-          <Button
-            onClick={() => navigate("/singleuser/" + user.id)}
-            variant="outlined"
-            color="primary"
-          >
-            Profile
-          </Button>
+          <Link to={"/user/" + user.id}>
+            <Button variant="outlined" color="primary">
+              Profile
+            </Button>
+          </Link>
         </TableCell>
       </TableRow>
     </React.Fragment>

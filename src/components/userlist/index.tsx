@@ -1,7 +1,7 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import papa from "papaparse";
-
+import useAxios from "../../customHook/useAxios";
 import {
   AppBar,
   Toolbar,
@@ -45,27 +45,20 @@ const UserList: React.FC = () => {
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
   const [openUpload, setOpenUpload] = useState<boolean>(false);
-  const navigate = useNavigate();
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const fetch = useFetch();
   const getUserList = () => {
-    axios({
-      method: "get", //you can set what request you want to be
-      url: "https://buddy-connect.encoreskydev.com/api/user/users.php",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => {
-        setUserlist(res.data.response);
-        setData(res.data.response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = fetch(API.GET_USERS_URL, "get", token);
+    response.then((res) => {
+      setUserlist(res.data.response);
+      setData(res.data.response);
+    });
+    response.catch((error) => {
+      console.log(error);
+    });
   };
 
   React.useEffect(() => {
@@ -81,9 +74,7 @@ const UserList: React.FC = () => {
       status = "active";
     }
     axios({
-      url:
-        "https://buddy-connect.encoreskydev.com/api/user/userStatus.php?user_id=" +
-        id,
+      url: API.SET_USER_STATUS_URL + id,
       method: "patch",
       data: { status },
       headers: {
@@ -91,7 +82,14 @@ const UserList: React.FC = () => {
       },
     })
       .then((result) => {
-        getUserList();
+        const newList = userList.map((item) => {
+          if (item.id === id) {
+            item.status = status;
+          }
+          return item;
+        });
+        setUserlist(newList);
+        console.log(newList);
       })
       .catch((error) => {
         console.log(error.response);
@@ -103,7 +101,13 @@ const UserList: React.FC = () => {
   const columns: TableColumn<userInterface>[] = [
     {
       name: <h4>Name</h4>,
-      selector: (row: userInterface) => row.first_name,
+      cell: (row: userInterface) => {
+        return (
+          <span style={{ textTransform: "capitalize", fontWeight: "bold" }}>
+            {row.first_name}
+          </span>
+        );
+      },
       sortable: true,
     },
     {
@@ -119,7 +123,9 @@ const UserList: React.FC = () => {
     },
     {
       name: <h4>Role</h4>,
-      selector: (row: userInterface) => row.role,
+      cell: (row: userInterface) => {
+        return <span style={{ textTransform: "capitalize" }}>{row.role}</span>;
+      },
       sortable: true,
     },
     {
@@ -149,16 +155,11 @@ const UserList: React.FC = () => {
       name: <h4>Update</h4>,
       cell: (row: userInterface) => {
         return (
-          <Button
-            key={row.id}
-            color="primary"
-            variant="outlined"
-            onClick={() => {
-              navigate("/updateuser/" + row.id);
-            }}
-          >
-            <EditIcon />
-          </Button>
+          <Link to={"/updateuser/" + row.id}>
+            <Button key={row.id} color="primary" variant="outlined">
+              <EditIcon />
+            </Button>
+          </Link>
         );
       },
     },
@@ -166,14 +167,21 @@ const UserList: React.FC = () => {
       name: <h4>Remove</h4>,
       cell: (row: userInterface) => {
         return (
-          <DeleteIcon
+          <Button
+            key={row.id}
             color="error"
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              setOpen(true);
-              setuser_id(row.id);
-            }}
-          />
+            variant="outlined"
+            disabled={onLoad}
+          >
+            <DeleteIcon
+              color="error"
+              sx={{ cursor: "pointer" }}
+              onClick={() => {
+                setOpen(true);
+                setuser_id(row.id);
+              }}
+            />
+          </Button>
         );
       },
     },
@@ -181,23 +189,18 @@ const UserList: React.FC = () => {
       name: <h4>Deatails</h4>,
       cell: (row: userInterface) => {
         return (
-          <Button
-            key={row.id}
-            fullWidth
-            color="info"
-            variant="contained"
-            onClick={() => {
-              navigate("/singleuser/" + row.id);
-            }}
-          >
-            Details
-          </Button>
+          <Link to={"/user/" + row.id}>
+            <Button key={row.id} fullWidth color="info" variant="contained">
+              Details
+            </Button>
+          </Link>
         );
       },
     },
   ];
 
   const deletUser = () => {
+    setOnLoad(true);
     const response = fetch(API.DELTE_USER_URL + user_id, "delete", token);
     response
       .then((res) => {
@@ -208,6 +211,7 @@ const UserList: React.FC = () => {
       })
       .finally(() => {
         setOpen(false);
+        setOnLoad(false);
       });
   };
   const [filedata, setFileData] = useState<any>([]);
@@ -271,10 +275,11 @@ const UserList: React.FC = () => {
       <Paper
         className="userlist-section"
         sx={{
-          maxWidth: 1100,
+          maxWidth: 1200,
           margin: "auto",
           width: 100 + "%",
           marginTop: 5,
+          mb: 5,
           overflow: "hidden",
         }}
       >
@@ -284,6 +289,10 @@ const UserList: React.FC = () => {
           elevation={0}
           sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
         >
+          {" "}
+          <Typography sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}>
+            Users
+          </Typography>
           <Toolbar>
             <Grid container alignItems="center">
               <Grid item>
@@ -295,7 +304,11 @@ const UserList: React.FC = () => {
                   placeholder="Search Name"
                   InputProps={{
                     disableUnderline: true,
-                    sx: { fontSize: "default" },
+                    sx: {
+                      fontSize: 18,
+                      borderBottom: " 0.5px solid gray",
+                      pl: 1,
+                    },
                   }}
                   onChange={handleFilter}
                   variant="standard"
@@ -319,7 +332,7 @@ const UserList: React.FC = () => {
                   </label>
                 </Button>
                 <Button variant="contained">
-                  <Link to="/createuser">Crete User</Link>
+                  <Link to="/createuser">Create User</Link>
                 </Button>
               </Grid>
             </Grid>

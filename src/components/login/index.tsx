@@ -7,6 +7,7 @@ import {
   Paper,
   Button,
   CircularProgress,
+  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -15,7 +16,7 @@ import { useEffect, useState } from "react";
 const Login = () => {
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const navigate = useNavigate();
-  const [resultMSG, setResultMSG] = useState<string>("result");
+  const [resultMSG, setResultMSG] = useState<string>();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,6 +37,8 @@ const Login = () => {
           if (response.data.response.role === "superAdmin") {
             var info = response.data.response;
             localStorage.setItem("token", info.token);
+            console.log(info);
+
             localStorage.setItem(
               "name",
               info.first_name + " " + info.last_name
@@ -44,17 +47,12 @@ const Login = () => {
             localStorage.setItem("role", info.role);
             navigate("/dashboard");
           } else {
-            throw new Error("Invalid user");
+            throw new Error("Invalid User");
           }
         })
         .catch((error) => {
-          console.log("error:", error);
-          setResultMSG("");
-          formik.values.email = "";
-          formik.values.password = "";
-          setTimeout(() => {
-            setResultMSG("result");
-          }, 4000);
+          console.log("error:", error.response.data.message);
+          setResultMSG(error.response.data.message);
         })
         .finally(() => {
           setOnLoad(false);
@@ -76,7 +74,7 @@ const Login = () => {
         <Box m={5} p={1}>
           <h1>Login</h1>
           <hr />
-          <p className={resultMSG}>Invalid user</p>
+          <Typography color={"error"}>{resultMSG}</Typography>
           <Box>
             <form className="form" onSubmit={formik.handleSubmit}>
               <TextField
@@ -119,6 +117,7 @@ const Login = () => {
                 color="primary"
                 fullWidth
                 disabled={onLoad}
+                sx={{ height: 40 }}
               >
                 {onLoad ? <CircularProgress color="inherit" /> : "Login"}
               </Button>

@@ -6,14 +6,13 @@ import { useEffect, useState } from "react";
 import UserList from "../userlist";
 import Dashboard from "../dashboard";
 import CreateUser from "../creatUser";
-import SingleUser from "../singleUser";
+import User from "../user";
 import { Box } from "@mui/material";
 import SideBar from "../sidebar";
 import AddBankDetails from "../addBankDetails";
-import AddFamilyDetail from "../addFamilyDetails";
 import AddSalaryDetails from "../addSalaryDetails";
 import UpdateUser from "../updateUserDetails";
-import RemovedUser from "../removedUser";
+import FormerUsers from "../formerUsers";
 import UnkonownPage from "../404";
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
@@ -45,9 +44,9 @@ const Content = () => {
         <Header setSidebar={setSidebar} toggleSidebar={toggleSidebar} />
         <Routes>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/userlist" element={<UserList />} />
+          <Route path="/users" element={<UserList />} />
           <Route path="/createuser" element={<CreateUser />} />
-          <Route path="/singleuser/:id" element={<SingleUser />} />
+          <Route path="/user/:id" element={<User />} />
           <Route
             path="/add-bank-details/:user_id"
             element={<AddBankDetails />}
@@ -57,7 +56,7 @@ const Content = () => {
             element={<AddSalaryDetails />}
           />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
-          <Route path="/removeduserlist" element={<RemovedUser />} />
+          <Route path="/formerusers" element={<FormerUsers />} />
           <Route path="*" element={<UnkonownPage />}></Route>
         </Routes>
       </Box>

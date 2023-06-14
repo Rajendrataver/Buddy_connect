@@ -14,7 +14,7 @@ const TextInput = ({
 }) => {
   const formik = useContext(userFormContext);
   return (
-    <Box sx={{ position: "relative", mb: 3 }}>
+    <Box sx={{ position: "relative", mb: 2 }}>
       <TextField
         type={type}
         variant="outlined"

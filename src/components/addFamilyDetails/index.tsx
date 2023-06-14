@@ -89,25 +89,34 @@ const AddFamilyDetail = ({
         ></Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
+            <h1>Family Details</h1>
+            {result}
+            <hr />
             <Grid container>
               <Grid item sm={12} xs={12}>
-                <h1>Family Details</h1>
-                <hr />
-                {result}
                 <TextInput name="name" type="text" label="Name" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="contact" type="text" label="Contact" />
-
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <RadioInput
                   name="gender"
                   items={["male", "female"]}
                   label="Gender"
                 />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <SelectInput
                   name="relation"
                   label="Relation"
                   items={relations}
                 />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <DateInput name="dob" label="Date of birth" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
               <Grid container mt={2}>

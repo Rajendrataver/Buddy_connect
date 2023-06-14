@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import ConfirmBox from "../confirmBox";
 import { useState } from "react";
-
+import LogoutIcon from "@mui/icons-material/Logout";
 const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -19,9 +19,18 @@ const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
         handleOk={confirmLogout}
         setOpen={setOpen}
       />
-      <span onClick={() => setOpen(true)} style={{ width: 100 + "%" }}>
-        Log-Out
-      </span>
+      <div
+        onClick={() => setOpen(true)}
+        style={{
+          width: 100 + "%",
+          height: 100 + "%",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        &nbsp;&nbsp;
+        <LogoutIcon /> &nbsp;&nbsp;&nbsp;<span>Log-Out</span>
+      </div>
     </>
   );
 };

@@ -99,6 +99,9 @@ const UpdateUser = () => {
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
     response
       .then((res) => {
+        if (!res.data.success) {
+          navigate("/dashboard");
+        }
         const data = res.data.response;
         formik.values.first_name = data.first_name;
         formik.values.last_name = data.last_name;
@@ -157,15 +160,14 @@ const UpdateUser = () => {
 
   return (
     <Box className="container">
-      {open && (
-        <PopUp msg={"User Updated Successfully"} path={"/singleuser/" + id} />
-      )}
+      {open && <PopUp msg={"User Updated Successfully"} path={"/user/" + id} />}
 
       <Paper
         sx={{
           maxWidth: 700,
           margin: "auto",
           marginTop: 5,
+          mb: 5,
           padding: 4,
           overflow: "hidden",
         }}
@@ -262,7 +264,7 @@ const UpdateUser = () => {
                   fullWidth
                   sx={{ marginTop: 1 }}
                   onClick={() => {
-                    navigate("/singleuser/" + id);
+                    navigate("/user/" + id);
                   }}
                   disabled={onLoad}
                 >

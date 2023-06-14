@@ -132,13 +132,14 @@ const CreateUser = () => {
 
   return (
     <Box className="container">
-      {open && <PopUp msg={"User Registered Successfully"} path="/userlist" />}
+      {open && <PopUp msg={"User Registered Successfully"} path="/users" />}
 
       <Paper
         sx={{
           maxWidth: 700,
           margin: "auto",
           marginTop: 5,
+          mb: 5,
           padding: 4,
 
           overflow: "hidden",

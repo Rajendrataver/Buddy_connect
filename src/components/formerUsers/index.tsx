@@ -24,13 +24,13 @@ interface userInterface {
   role: string;
 }
 
-const RemovedUser: React.FC = () => {
+const FormerUsers: React.FC = () => {
   const token = localStorage.getItem("token");
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
   const fetch = useFetch();
   const getUserList = () => {
-    const response = fetch(API.GET_REMOVED_USERS_URL, "get", token);
+    const response = fetch(API.GET_FORMER_USERS_URL, "get", token);
     response.then((res) => {
       setUserlist(res.data.response);
       setData(res.data.response);
@@ -53,7 +53,7 @@ const RemovedUser: React.FC = () => {
     },
     {
       name: <h4>Name</h4>,
-      selector: (row: userInterface) => row.first_name,
+      selector: (row: userInterface) =>row.first_name.toLocaleUpperCase(),
       sortable: true,
     },
     {
@@ -69,7 +69,7 @@ const RemovedUser: React.FC = () => {
     },
     {
       name: <h4>Role</h4>,
-      selector: (row: userInterface) => row.role,
+      selector: (row: userInterface) => row.role.toLocaleUpperCase(),
       sortable: true,
     },
   ];
@@ -87,10 +87,11 @@ const RemovedUser: React.FC = () => {
       <Paper
         className="userlist-section"
         sx={{
-          maxWidth: 1100,
+          maxWidth: 1200,
           margin: "auto",
           width: 100 + "%",
           marginTop: 5,
+          mb:5,
           overflow: "hidden",
         }}
       >
@@ -100,6 +101,9 @@ const RemovedUser: React.FC = () => {
           elevation={0}
           sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
         >
+          <Typography sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}>
+            Former Users
+          </Typography>
           <Toolbar>
             <Grid container spacing={2} alignItems="center">
               <Grid item>
@@ -111,7 +115,11 @@ const RemovedUser: React.FC = () => {
                   placeholder="Search Name"
                   InputProps={{
                     disableUnderline: true,
-                    sx: { fontSize: "default" },
+                    sx: {
+                      fontSize: 18,
+                      borderBottom: " 0.5px solid gray",
+                      pl: 1,
+                    },
                   }}
                   onChange={handleFilter}
                   variant="standard"
@@ -135,4 +143,4 @@ const RemovedUser: React.FC = () => {
   );
 };
 
-export default RemovedUser;
+export default FormerUsers;
