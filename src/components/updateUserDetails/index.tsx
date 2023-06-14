@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CircularProgress,
   FormControl,
@@ -155,7 +156,7 @@ const UpdateUser = () => {
   });
 
   return (
-    <>
+    <Box className="container">
       {open && (
         <PopUp msg={"User Updated Successfully"} path={"/singleuser/" + id} />
       )}
@@ -165,12 +166,15 @@ const UpdateUser = () => {
           maxWidth: 700,
           margin: "auto",
           marginTop: 5,
-          padding: 5,
+          padding: 4,
           overflow: "hidden",
         }}
         className="create-user"
       >
-        <Typography sx={{ mx: 2, fontSize: 25 }} color="black" align="left">
+        <Typography
+          sx={{ fontWeight: "bold", color: "#422626d4", fontSize: 25, mb: 1 }}
+          align="left"
+        >
           {result}
         </Typography>
         <userFormContext.Provider value={formik}>
@@ -269,7 +273,7 @@ const UpdateUser = () => {
           </form>
         </userFormContext.Provider>
       </Paper>
-    </>
+    </Box>
   );
 };
 export { userFormContext };

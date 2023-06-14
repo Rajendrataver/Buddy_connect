@@ -11,6 +11,7 @@ import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
+import { Box } from "@mui/material";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -82,7 +83,7 @@ const RemovedUser: React.FC = () => {
     setData(newData);
   }
   return (
-    <>
+    <Box className="container">
       <Paper
         className="userlist-section"
         sx={{
@@ -130,7 +131,7 @@ const RemovedUser: React.FC = () => {
           />
         </Typography>
       </Paper>
-    </>
+    </Box>
   );
 };
 

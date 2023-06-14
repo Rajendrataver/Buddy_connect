@@ -11,6 +11,7 @@ import {
   Button,
   TextField,
   Switch,
+  Box,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -224,6 +225,7 @@ const UserList: React.FC = () => {
       },
     });
     console.log(filedata);
+    setOpenUpload(false);
   };
   const handleFileChange = (e: any) => {
     const file = e.target.files[0];
@@ -247,7 +249,7 @@ const UserList: React.FC = () => {
     setData(newData);
   }
   return (
-    <>
+    <Box className={"container"}>
       <ConfirmBox
         msg={"Upload  File ?"}
         open={openUpload}
@@ -283,11 +285,11 @@ const UserList: React.FC = () => {
           sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
         >
           <Toolbar>
-            <Grid container spacing={2} alignItems="center">
+            <Grid container alignItems="center">
               <Grid item>
                 <SearchIcon color="inherit" sx={{ display: "block" }} />
               </Grid>
-              <Grid item sm={12} md={7} xs={12}>
+              <Grid item sm={12} md={7.7}>
                 <TextField
                   fullWidth
                   placeholder="Search Name"
@@ -299,12 +301,12 @@ const UserList: React.FC = () => {
                   variant="standard"
                 />
               </Grid>
-              <Grid item md={2} sm={2}>
+              <Grid item md={4} sm={2} textAlign={"right"}>
                 <Button
                   sx={{ mr: 1, ta: "center", bgcolor: "primary" }}
                   variant="outlined"
                 >
-                  <label>
+                  <label style={{ textAlign: "center" }}>
                     Upload File
                     <input
                       type="file"
@@ -316,9 +318,7 @@ const UserList: React.FC = () => {
                     />
                   </label>
                 </Button>
-              </Grid>
-              <Grid item md={2} sm={2}>
-                <Button variant="contained" sx={{ mr: 1 }}>
+                <Button variant="contained">
                   <Link to="/createuser">Crete User</Link>
                 </Button>
               </Grid>
@@ -329,14 +329,13 @@ const UserList: React.FC = () => {
           <Table
             striped
             className="table"
-            pagination
             columns={columns}
             data={data}
-            fixedHeader
+            pagination
           />
         </Typography>
       </Paper>
-    </>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CircularProgress,
   Grid,
@@ -130,7 +131,7 @@ const CreateUser = () => {
   });
 
   return (
-    <>
+    <Box className="container">
       {open && <PopUp msg={"User Registered Successfully"} path="/userlist" />}
 
       <Paper
@@ -138,12 +139,16 @@ const CreateUser = () => {
           maxWidth: 700,
           margin: "auto",
           marginTop: 5,
-          padding: 5,
+          padding: 4,
+
           overflow: "hidden",
         }}
         className="create-user"
       >
-        <Typography sx={{ mx: 2, fontSize: 25 }} color="black" align="left">
+        <Typography
+          sx={{ fontSize: 25, fontWeight: "bold", color: "#422626d4", mb: 1 }}
+          align="left"
+        >
           {result}
         </Typography>
         <userFormContext.Provider value={formik}>
@@ -242,7 +247,7 @@ const CreateUser = () => {
           </form>
         </userFormContext.Provider>
       </Paper>
-    </>
+    </Box>
   );
 };
 export { userFormContext };

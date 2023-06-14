@@ -136,7 +136,7 @@ const SingleUser = () => {
       });
   };
   return (
-    <>
+    <Box>
       <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
         <DialogTitle id="alert-dialog-title">Upload Profile</DialogTitle>
         <Avatar
@@ -168,7 +168,8 @@ const SingleUser = () => {
           position="static"
           color="default"
           elevation={0}
-          sx={{ padding: 4, minHeight: 100 + "vh" }}
+          sx={{ minHeight: 100 + "vh" }}
+          className="container"
         >
           <Grid container alignItems={"center"}>
             <Grid item xs={12} md={4} textAlign={"center"}>
@@ -276,7 +277,7 @@ const SingleUser = () => {
           </Grid>
         </AppBar>
       </Paper>
-    </>
+    </Box>
   );
 };
 

@@ -46,8 +46,8 @@ const Dashboard = () => {
   }, [list]);
 
   return (
-    <>
-      <Box sx={{ padding: 5 }} justifyContent={"space-between"}>
+    <Box className="container">
+      <Box justifyContent={"space-between"} mt={2}>
         <Grid container spacing={2} display={"flex"} justifyContent={"center"}>
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
@@ -80,7 +80,7 @@ const Dashboard = () => {
         </Grid>
         <RecentJoinedUser userList={list} />
       </Box>
-    </>
+    </Box>
   );
 };
 
