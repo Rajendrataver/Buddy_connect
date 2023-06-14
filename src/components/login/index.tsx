@@ -1,10 +1,17 @@
 import "./index.css";
 import axios from "axios";
-import { TextField, Box, Grid, Paper, Button } from "@mui/material";
+import {
+  TextField,
+  Box,
+  Grid,
+  Paper,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const Login = () => {
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -54,71 +61,71 @@ const Login = () => {
         });
     },
   });
+  useEffect(() => {
+    if (
+      localStorage.getItem("role") === "superAdmin" &&
+      localStorage.getItem("token")
+    ) {
+      navigate("/dashboard");
+    }
+  });
 
   return (
     <section className="login-section">
-      <Grid container className="container">
-        <Grid item sm={4} xs={false}></Grid>
-        <Grid item sm={4} xs={12}>
-          <Paper sx={{ background: "transparent" }}>
-            <Box m={5} p={2}>
-              <h1>Login</h1>
-              <hr />
-              <p className={resultMSG}>Invalid user</p>
-              <Box>
-                <form className="form" onSubmit={formik.handleSubmit}>
-                  <TextField
-                    name="email"
-                    fullWidth
-                    variant="outlined"
-                    margin="dense"
-                    placeholder="Email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    label={
-                      formik.touched.email && formik.errors.email ? (
-                        <span className="input-error">
-                          {formik.errors.email}
-                        </span>
-                      ) : null
-                    }
-                  />
+      <Paper sx={{ background: "transparent", m: "auto", maxWidth: 450 }}>
+        <Box m={5} p={1}>
+          <h1>Login</h1>
+          <hr />
+          <p className={resultMSG}>Invalid user</p>
+          <Box>
+            <form className="form" onSubmit={formik.handleSubmit}>
+              <TextField
+                name="email"
+                fullWidth
+                variant="outlined"
+                margin="dense"
+                placeholder="Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                label={
+                  formik.touched.email && formik.errors.email ? (
+                    <span className="input-error">{formik.errors.email}</span>
+                  ) : null
+                }
+              />
 
-                  <TextField
-                    type="password"
-                    name="password"
-                    fullWidth
-                    variant="outlined"
-                    margin="dense"
-                    placeholder="Password"
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    label={
-                      formik.touched.password && formik.errors.password ? (
-                        <span className="input-error">
-                          {formik.errors.password}
-                        </span>
-                      ) : null
-                    }
-                  />
-                  <Button
-                    variant="contained"
-                    type="submit"
-                    color="primary"
-                    fullWidth
-                    disabled={onLoad}
-                  >
-                    Login
-                  </Button>
-                </form>
-              </Box>
-            </Box>
-          </Paper>
-        </Grid>
-        <Grid item sm={4} xs={false}></Grid>
-      </Grid>
+              <TextField
+                type="password"
+                name="password"
+                fullWidth
+                variant="outlined"
+                margin="dense"
+                placeholder="Password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                label={
+                  formik.touched.password && formik.errors.password ? (
+                    <span className="input-error">
+                      {formik.errors.password}
+                    </span>
+                  ) : null
+                }
+              />
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                fullWidth
+                disabled={onLoad}
+              >
+                {onLoad ? <CircularProgress color="inherit" /> : "Login"}
+              </Button>
+            </form>
+          </Box>
+        </Box>
+      </Paper>
     </section>
   );
 };

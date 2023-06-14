@@ -14,6 +14,7 @@ import AddFamilyDetail from "../addFamilyDetails";
 import AddSalaryDetails from "../addSalaryDetails";
 import UpdateUser from "../updateUserDetails";
 import RemovedUser from "../removedUser";
+import UnkonownPage from "../404";
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
@@ -57,6 +58,7 @@ const Content = () => {
           />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/removeduserlist" element={<RemovedUser />} />
+          <Route path="*" element={<UnkonownPage />}></Route>
         </Routes>
       </Box>
     </Box>
