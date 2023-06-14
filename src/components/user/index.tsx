@@ -6,6 +6,7 @@ import {
   Dialog,
   Grid,
   Paper,
+  Switch,
   Tab,
   Tabs,
   Typography,
@@ -43,6 +44,7 @@ const data = {
   contact: "",
   gender: "",
   image: "",
+  status: "",
 };
 interface userInterface {
   first_name: string;
@@ -54,6 +56,7 @@ interface userInterface {
   contact: string;
   gender: string;
   image: string | null;
+  status: string;
 }
 const tabs = {
   BANK_DETAILS: "Bank Details",
@@ -61,6 +64,7 @@ const tabs = {
   FAMILY_DETAILS: "Family Details",
 };
 const User = () => {
+  const [onLoad, setOnLoad] = useState<boolean>(false);
   const [image, setImage] = useState<any>();
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
@@ -79,7 +83,7 @@ const User = () => {
         if (!res.data.success) {
           navigate("/dashboard");
         } else {
-          setUser(res.data.response); 
+          setUser(res.data.response);
         }
       })
       .catch((err) => {
@@ -107,6 +111,7 @@ const User = () => {
   };
   useEffect(() => {
     getUserDetails();
+    console.log(user);
   }, []);
   var src = "";
   if (user.image) {
@@ -143,6 +148,29 @@ const User = () => {
         setOpen(false);
       });
   };
+  const changeStatus = () => {
+    var status = "";
+    setOnLoad(true);
+    if (user.status === "active") {
+      status = "deActive";
+    } else {
+      status = "active";
+    }
+
+    const response = fetch(API.SET_USER_STATUS_URL + id, "patch", token, {
+      status,
+    });
+    response
+      .then((res) => {
+        user.status = status;
+      })
+      .catch((err) => {
+        console.log(err.data.response.message);
+      })
+      .finally(() => {
+        setOnLoad(false);
+      });
+  };
   return (
     <Box>
       <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
@@ -176,7 +204,7 @@ const User = () => {
           position="static"
           color="default"
           elevation={0}
-          sx={{ minHeight: 100 + "vh",pt:5 }}
+          sx={{ minHeight: 100 + "vh", pt: 5 }}
           className="container"
         >
           <Grid container alignItems={"center"}>
@@ -238,6 +266,17 @@ const User = () => {
                     <TableRow>
                       <TableCell>Email</TableCell>
                       <TableCell align="left">{user.email}</TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell>Status</TableCell>
+                      <TableCell align="left">
+                        <Switch
+                          color="success"
+                          checked={user.status === "active" ? true : false}
+                          onChange={changeStatus}
+                          disabled={onLoad}
+                        />
+                      </TableCell>
                     </TableRow>
                   </TableHead>
                 </Table>

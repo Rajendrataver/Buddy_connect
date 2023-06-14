@@ -27,6 +27,7 @@ import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 
 import PopUp from "../popUp";
+import { setMaxIdleHTTPParsers } from "http";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -44,6 +45,7 @@ const UserList: React.FC = () => {
   const [file, setFile] = useState<any>();
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
+  const [userName, setUserName] = useState<string>();
   const [openUpload, setOpenUpload] = useState<boolean>(false);
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
@@ -63,6 +65,8 @@ const UserList: React.FC = () => {
 
   React.useEffect(() => {
     getUserList();
+    console.log(userList);
+    
   }, []);
   const handleClick = (id: string, status: string) => {
     setOnLoad(true);
@@ -179,6 +183,7 @@ const UserList: React.FC = () => {
               onClick={() => {
                 setOpen(true);
                 setuser_id(row.id);
+                setUserName(row.first_name + " " + row.last_name);
               }}
             />
           </Button>
@@ -261,7 +266,7 @@ const UserList: React.FC = () => {
         setOpen={setOpenUpload}
       />
       <ConfirmBox
-        msg="Do you want to Delete ?"
+        msg={"Do you want to Delete " + userName + " ?"}
         open={open}
         handleOk={deletUser}
         setOpen={setOpen}
