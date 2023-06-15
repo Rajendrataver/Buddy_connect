@@ -9,6 +9,8 @@ import { useState } from "react";
 import axios from "axios";
 import PopUp from "../popUp";
 import * as API from "../../apiURL";
+import * as SELECT from "../../selectListCollection";
+import Loader from "../loader";
 
 const accountType = ["primary", "secondary"];
 const initialValues = {
@@ -20,17 +22,19 @@ const initialValues = {
   cif_code: "",
   type_account: "",
 };
-const AddBankDetails = () => {
+const AddBankDetails = ({
+  id,
+  setOpenBank,
+}: {
+  id: string | undefined;
+  setOpenBank: (v: boolean) => void;
+}) => {
   const navigate = useNavigate();
 
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
-  const params = useParams();
-  const id = params.user_id;
   const token = localStorage.getItem("token");
-
   const [open, setOpen] = useState<boolean>(false);
-
   const handleClose = () => {
     setOpen(false);
     navigate("/user/" + id);
@@ -50,14 +54,11 @@ const AddBankDetails = () => {
         },
       })
         .then((res) => {
-          setOpen(true);
+          setOpenBank(false);
         })
         .catch((err) => {
-          formik.values.account_number = "";
-          setResult("Account Number Already Exist");
-          setTimeout(() => {
-            setResult(" ");
-          }, 3000);
+          console.log(err);
+          setResult(err.response.data.message);
         })
         .finally(() => {
           setOnLoad(false);
@@ -66,28 +67,24 @@ const AddBankDetails = () => {
   });
   return (
     <>
-      {open && (
-        <PopUp msg="Bank Details Added Successfully" path={"/user/" + id} />
-      )}
       <Paper
         sx={{
           maxWidth: 500,
           margin: "auto",
-          marginTop: 5,
-          padding: 5,
-          overflow: "hidden",
+          
+          padding:4,
+          overflow: "auto",
         }}
       >
-        <Typography
-          sx={{ mx: 2, fontSize: 25 }}
-          color="red"
-          align="left"
-        ></Typography>
+        <Loader open={onLoad} />
+        <Typography sx={{ mx: 2, fontSize: 25 }} color="red" align="left">
+          {result}
+        </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <h1>Bank Details</h1>
             <hr />
-            {result}
+
             <Grid container p={1} spacing={0.5}>
               <Grid item sm={12} xs={12}>
                 <TextInput
@@ -115,7 +112,7 @@ const AddBankDetails = () => {
                 <SelectInput
                   name="type_account"
                   label="Account Type"
-                  items={accountType}
+                  items={SELECT.ACCOUNT_TYPE}
                 />
               </Grid>
               <Grid item sm={12} xs={12}>
@@ -132,7 +129,7 @@ const AddBankDetails = () => {
                 <Button
                   variant="contained"
                   color="warning"
-                  onClick={() => navigate("/user/" + id)}
+                  onClick={() => setOpenBank(false)}
                   fullWidth
                   sx={{ marginTop: 1 }}
                   disabled={onLoad}

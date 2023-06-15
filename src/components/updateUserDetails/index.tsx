@@ -30,16 +30,8 @@ import PopUp from "../popUp";
 import useFetch from "../../customHook/useFetch";
 import { userFormContext } from "../creatUser";
 import Loader from "../loader";
+import * as SELECT from "../../selectListCollection";
 
-const designation = [
-  "Project Manager",
-  "Team Lead",
-  "Senior Software Engineer",
-  "Associate Engineer",
-  "Junior Software Engineer",
-  "Trainee Engineer",
-  "Intern",
-];
 const userData = {
   first_name: "",
   last_name: "",
@@ -59,32 +51,6 @@ const userData = {
   status: "",
 };
 
-const country = [
-  "Afghanistan",
-  "Guatemala",
-  "Guernsey",
-  "Guinea",
-  "Guinea-Bissau",
-  "Guyana",
-  "Haiti",
-  "Heard Island and McDonald Islands",
-  "Holy See (the)",
-  "Honduras",
-  "Hong Kong",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Portugal",
-  "Puerto Rico",
-  "Qatar",
-  "Republic of North Macedonia",
-  "Western Sahara",
-  "Yemen",
-  "Zambia",
-  "Zimbabwe",
-];
-const roles = ["admin", "hr", "associate"];
 const UpdateUser = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const params = useParams();
@@ -204,11 +170,11 @@ const UpdateUser = () => {
               <Grid item sm={12} md={6} xs={12}>
                 <DateInput name="joining_date" label="Joining Date" />
               </Grid>
-              <Grid item sm={12} md={6} xs={12}>
+              <Grid item sm={12} md={12} xs={12}>
                 <RadioInput
                   name="gender"
                   label="Gender"
-                  items={["male", "female"]}
+                  items={SELECT.GENDERS}
                 />
               </Grid>
             </Grid>
@@ -217,12 +183,12 @@ const UpdateUser = () => {
               <Grid item sm={12} md={6} xs={12}>
                 <SelectInput
                   name="designation"
-                  items={designation}
+                  items={SELECT.DESIGNATIONS}
                   label="Designation"
                 />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
-                <SelectInput name="role" items={roles} label="Role" />
+                <SelectInput name="role" items={SELECT.ROLES} label="Role" />
               </Grid>
             </Grid>
 
@@ -231,7 +197,11 @@ const UpdateUser = () => {
                 <TextInput type="text" label="Pan Card" name="pan_card" />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
-                <SelectInput name="country" label="Country" items={country} />
+                <SelectInput
+                  name="country"
+                  label="Country"
+                  items={SELECT.COUNTRIES}
+                />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="State" name="state" />

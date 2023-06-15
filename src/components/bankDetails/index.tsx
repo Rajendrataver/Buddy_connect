@@ -10,6 +10,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Dialog,
 } from "@mui/material";
 
 import Table from "@mui/material/Table";
@@ -23,6 +24,8 @@ import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import ConfirmBox from "../confirmBox";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AddFamilyDetail from "../addFamilyDetails";
+import AddBankDetails from "../addBankDetails";
 
 const bankData = {
   account_number: "",
@@ -47,6 +50,7 @@ interface bankInterface {
 }
 
 const BankDetails = ({ id }: { id: string | undefined }) => {
+  const [openAddBankDetails, setOpenAddBankDetails] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [bank_id, setBank_id] = useState<string>();
@@ -60,22 +64,18 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     response.then((res) => {
       if (res.data.response.length) {
         setBankInfo(res.data.response);
-       
       }
     });
   };
   useEffect(() => {
     getBankdetails();
-  }, []);
+  }, [openAddBankDetails]);
   const setPrimary = (bank_id: string, type_account: string) => {
     setOnLoad(true);
-   
 
     if (type_account === "secondary") {
-
       type_account = "primary";
     } else if (type_account === "primary") {
-    
       type_account = "secondary";
     }
 
@@ -87,12 +87,9 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     );
     response
       .then((res) => {
-      
         getBankdetails();
       })
-      .catch((err) => {
-      
-      })
+      .catch((err) => {})
       .finally(() => {
         setOnLoad(false);
       });
@@ -105,7 +102,6 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     );
     response
       .then((res) => {
-    
         getBankdetails();
       })
       .catch((err) => {
@@ -127,13 +123,19 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         setOpen={setOpen}
         handleOk={confirmRemove}
       />
+      <Dialog
+        open={openAddBankDetails}
+        onClose={() => setOpenAddBankDetails(false)}
+      >
+        <AddBankDetails id={id} setOpenBank={setOpenAddBankDetails} />
+      </Dialog>
 
       <Grid container>
         <Grid item xs={12} md={4}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/add-bank-details/" + id)}
+            onClick={() => setOpenAddBankDetails(true)}
             sx={{ marginTop: 3, marginBottom: 3 }}
             disabled={onLoad}
           >

@@ -18,15 +18,7 @@ import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
-const designation = [
-  "Project Manager",
-  "Team Lead",
-  "Senior Software Engineer",
-  "Associate Engineer",
-  "Junior Software Engineer",
-  "Trainee Engineer",
-  "Intern",
-];
+import * as SELECT from "../../selectListCollection";
 export const initialValues = {
   first_name: "",
   last_name: "",
@@ -44,34 +36,8 @@ export const initialValues = {
   country: "",
   state: "",
 };
-
 const userFormContext = createContext<any>(0);
-const country = [
-  "Afghanistan",
-  "Guatemala",
-  "Guernsey",
-  "Guinea",
-  "Guinea-Bissau",
-  "Guyana",
-  "Haiti",
-  "Heard Island and McDonald Islands",
-  "Holy See (the)",
-  "Honduras",
-  "Hong Kong",
-  "Hungary",
-  "Iceland",
-  "India",
-  "Indonesia",
-  "Portugal",
-  "Puerto Rico",
-  "Qatar",
-  "Republic of North Macedonia",
-  "Western Sahara",
-  "Yemen",
-  "Zambia",
-  "Zimbabwe",
-];
-const roles = ["admin", "hr", "associate"];
+
 const CreateUser = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState(false);
@@ -174,11 +140,11 @@ const CreateUser = () => {
               <Grid item sm={12} md={6} xs={12}>
                 <DateInput name="joining_date" label="Joining Date" />
               </Grid>
-              <Grid item sm={12} md={6} xs={12}>
+              <Grid item sm={12} md={12} xs={12}>
                 <RadioInput
                   name="gender"
                   label="Gender"
-                  items={["male", "female"]}
+                  items={SELECT.GENDERS}
                 />
               </Grid>
             </Grid>
@@ -187,12 +153,12 @@ const CreateUser = () => {
               <Grid item sm={12} md={6} xs={12}>
                 <SelectInput
                   name="designation"
-                  items={designation}
+                  items={SELECT.DESIGNATIONS}
                   label="Designation"
                 />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
-                <SelectInput name="role" items={roles} label="Role" />
+                <SelectInput name="role" items={SELECT.ROLES} label="Role" />
               </Grid>
             </Grid>
 
@@ -201,7 +167,11 @@ const CreateUser = () => {
                 <TextInput type="text" label="Pan Card" name="pan_card" />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
-                <SelectInput name="country" label="Country" items={country} />
+                <SelectInput
+                  name="country"
+                  label="Country"
+                  items={SELECT.COUNTRIES}
+                />
               </Grid>
               <Grid item sm={12} md={6} xs={12}>
                 <TextInput type="text" label="State" name="state" />

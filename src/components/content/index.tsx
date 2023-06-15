@@ -48,10 +48,6 @@ const Content = () => {
           <Route path="/createuser" element={<CreateUser />} />
           <Route path="/user/:id" element={<User />} />
           <Route
-            path="/add-bank-details/:user_id"
-            element={<AddBankDetails />}
-          />
-          <Route
             path="/add-salary-details/:user_id"
             element={<AddSalaryDetails />}
           />

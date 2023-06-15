@@ -64,41 +64,42 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
       </Grid>
       <Grid container>
         <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
-          <TableContainer>
-            <Table
-              sx={{ maxWidth: 650, width: 100 + "%" }}
-              size="small"
-              aria-label="a dense table"
-            >
-              <TableHead>
-                <TableRow>
-                  <TableCell>Sno.</TableCell>
-                  <TableCell>Basic Salary</TableCell>
-
-                  <TableCell>Provident Fund</TableCell>
-
-                  <TableCell>ESIC Amount</TableCell>
-
-                  <TableCell>Income Tax</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {salaryList.map((salary, i) => {
-                  return (
-                    <TableRow>
-                      <TableCell align="left" sx={{ padding: 2 }}>
-                        {i + 1}
-                      </TableCell>
-                      <TableCell align="left">{salary.basic_salary}</TableCell>{" "}
-                      <TableCell align="left">{salary.pf_amount}</TableCell>{" "}
-                      <TableCell align="left">{salary.esic_amount}</TableCell>
-                      <TableCell align="left">{salary.income_tax}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
+          {salaryList.length !== 0 && (
+            <TableContainer>
+              <Table
+                sx={{ maxWidth: 650, width: 100 + "%" }}
+                size="small"
+                aria-label="a dense table"
+              >
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Sno.</TableCell>
+                    <TableCell>Basic Salary</TableCell>
+                    <TableCell>Provident Fund</TableCell>
+                    <TableCell>ESIC Amount</TableCell>
+                    <TableCell>Income Tax</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {salaryList.map((salary, i) => {
+                    return (
+                      <TableRow>
+                        <TableCell align="left" sx={{ padding: 2 }}>
+                          {i + 1}
+                        </TableCell>
+                        <TableCell align="left">
+                          {salary.basic_salary}
+                        </TableCell>{" "}
+                        <TableCell align="left">{salary.pf_amount}</TableCell>{" "}
+                        <TableCell align="left">{salary.esic_amount}</TableCell>
+                        <TableCell align="left">{salary.income_tax}</TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Grid>
       </Grid>
     </>

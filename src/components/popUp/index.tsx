@@ -23,7 +23,6 @@ const PopUp = ({
     }
   };
 
-
   return (
     <div>
       <Dialog

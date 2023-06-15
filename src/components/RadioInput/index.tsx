@@ -28,21 +28,27 @@ const RadioInput = ({
         onChange={formik.handleChange}
         sx={{ position: "relative", mb: 2 }}
       >
-        <InputLabel id="demo-simple-select-label" sx={{ marginTop: 1 }}>
-          {label}
-        </InputLabel>
-        &nbsp;&nbsp; &nbsp;
-        {items.map((item, i) => {
-          return (
-            <FormControlLabel
-              value={item}
-              control={<Radio />}
-              label={item}
-              key={i}
-              checked={formik.values[name] === item}
-            />
-          );
-        })}
+        <Grid container>
+          <Grid item xs={12} md={1.5} sm={1.5}>
+            <InputLabel id="demo-simple-select-label" sx={{ marginTop: 1 }}>
+              {label}
+            </InputLabel>
+          </Grid>
+          <Grid item xs={12} md={10.5} sm={10.5}>
+            {items.map((item, i) => {
+              return (
+                <FormControlLabel
+                  value={item}
+                  control={<Radio />}
+                  label={item}
+                  key={i}
+                  checked={formik.values[name] === item}
+                />
+              );
+            })}
+          </Grid>
+        </Grid>
+
         <Typography
           sx={{
             margin: 0,

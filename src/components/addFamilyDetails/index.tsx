@@ -10,17 +10,9 @@ import RadioInput from "../RadioInput";
 import DateInput from "../DateInput";
 import * as API from "../../apiURL";
 import validationSchema from "./familyDetailsSchema";
-import PopUp from "../popUp";
+import * as SELECT from "../../selectListCollection";
+import Loader from "../loader";
 
-const relations = [
-  "father",
-  "mother",
-  "brother",
-  "sister",
-  "spouse",
-  "son",
-  "daughter",
-];
 const initialValues = {
   name: "",
   contact: "",
@@ -36,7 +28,6 @@ const AddFamilyDetail = ({
   id: string | undefined;
   setOpen: (v: boolean) => void;
 }) => {
-  const navigate = useNavigate();
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
 
@@ -74,6 +65,7 @@ const AddFamilyDetail = ({
   });
   return (
     <>
+      <Loader open={onLoad} />
       <Paper
         sx={{
           maxWidth: 500,
@@ -102,7 +94,7 @@ const AddFamilyDetail = ({
               <Grid item sm={12} xs={12}>
                 <RadioInput
                   name="gender"
-                  items={["male", "female"]}
+                  items={SELECT.GENDERS}
                   label="Gender"
                 />
               </Grid>
@@ -110,7 +102,7 @@ const AddFamilyDetail = ({
                 <SelectInput
                   name="relation"
                   label="Relation"
-                  items={relations}
+                  items={SELECT.RELATIONS}
                 />
               </Grid>
               <Grid item sm={12} xs={12}>
