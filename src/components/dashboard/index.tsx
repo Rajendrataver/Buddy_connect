@@ -4,6 +4,7 @@ import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import RecentJoinedUser from "../recentJoinedUser";
+import Loader from "../loader";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -21,6 +22,7 @@ const Dashboard = () => {
   const [list, setList] = useState<Array<userInterface>>([]);
   const [active, setActive] = useState<number>(0);
   const [nonActive, setNonActive] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const token = localStorage.getItem("token");
   const getUserList = () => {
@@ -31,6 +33,9 @@ const Dashboard = () => {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   useEffect(() => {
@@ -45,6 +50,7 @@ const Dashboard = () => {
 
   return (
     <Box className="container" mt={2} mb={5}>
+      <Loader open={loading} />
       <Box justifyContent={"space-between"}>
         <Grid container spacing={2} display={"flex"} justifyContent={"center"}>
           <Grid item xs={12} md={4} sm={12}>

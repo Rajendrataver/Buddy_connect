@@ -34,6 +34,7 @@ import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import PopUp from "../popUp";
+import Loader from "../loader";
 const data = {
   first_name: "",
   email: "",
@@ -64,6 +65,7 @@ const tabs = {
   FAMILY_DETAILS: "Family Details",
 };
 const User = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [image, setImage] = useState<any>();
   const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -77,6 +79,7 @@ const User = () => {
   const [user, setUser] = useState<userInterface>(data);
   const fetch = useFetch();
   const getUserDetails = () => {
+    setLoading(true);
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
     response
       .then((res) => {
@@ -88,6 +91,9 @@ const User = () => {
       })
       .catch((err) => {
         console.log(err.data.response.message);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -173,6 +179,7 @@ const User = () => {
   };
   return (
     <Box>
+      <Loader open={loading} />
       <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
         <DialogTitle id="alert-dialog-title">Upload Profile</DialogTitle>
         <Avatar

@@ -28,6 +28,7 @@ import * as API from "../../apiURL";
 
 import PopUp from "../popUp";
 import { setMaxIdleHTTPParsers } from "http";
+import Loader from "../loader";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -42,6 +43,7 @@ interface userInterface {
 
 const UserList: React.FC = () => {
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [file, setFile] = useState<any>();
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
@@ -58,15 +60,18 @@ const UserList: React.FC = () => {
       setUserlist(res.data.response);
       setData(res.data.response);
     });
-    response.catch((error) => {
-      console.log(error);
-    });
+    response
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   React.useEffect(() => {
     getUserList();
     console.log(userList);
-    
   }, []);
   const handleClick = (id: string, status: string) => {
     setOnLoad(true);
@@ -265,6 +270,7 @@ const UserList: React.FC = () => {
         handleOk={uploadFile}
         setOpen={setOpenUpload}
       />
+      <Loader open={loading} />
       <ConfirmBox
         msg={"Do you want to Delete " + userName + " ?"}
         open={open}

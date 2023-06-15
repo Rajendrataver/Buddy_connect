@@ -12,6 +12,7 @@ import { useState } from "react";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { Box } from "@mui/material";
+import Loader from "../loader";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -26,18 +27,24 @@ interface userInterface {
 
 const FormerUsers: React.FC = () => {
   const token = localStorage.getItem("token");
+  const [loading, setLoading] = useState<boolean>(false);
   const [userList, setUserlist] = useState<Array<userInterface>>([]);
   const [data, setData] = useState<Array<userInterface>>([]);
   const fetch = useFetch();
   const getUserList = () => {
+    setLoading(true);
     const response = fetch(API.GET_FORMER_USERS_URL, "get", token);
     response.then((res) => {
       setUserlist(res.data.response);
       setData(res.data.response);
     });
-    response.catch((error) => {
-      console.log(error);
-    });
+    response
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   React.useEffect(() => {
@@ -53,7 +60,7 @@ const FormerUsers: React.FC = () => {
     },
     {
       name: <h4>Name</h4>,
-      selector: (row: userInterface) =>row.first_name.toLocaleUpperCase(),
+      selector: (row: userInterface) => row.first_name.toLocaleUpperCase(),
       sortable: true,
     },
     {
@@ -84,6 +91,7 @@ const FormerUsers: React.FC = () => {
   }
   return (
     <Box className="container">
+      <Loader open={loading} />
       <Paper
         className="userlist-section"
         sx={{
@@ -91,7 +99,7 @@ const FormerUsers: React.FC = () => {
           margin: "auto",
           width: 100 + "%",
           marginTop: 5,
-          mb:5,
+          mb: 5,
           overflow: "hidden",
         }}
       >

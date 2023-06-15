@@ -7,12 +7,8 @@ import SelectInput from "../SelectInput";
 import validationSchema from "./bankDetailsSchema";
 import { useState } from "react";
 import axios from "axios";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import PopUp from "../popUp";
+import * as API from "../../apiURL";
 
 const accountType = ["primary", "secondary"];
 const initialValues = {
@@ -33,7 +29,6 @@ const AddBankDetails = () => {
   const id = params.user_id;
   const token = localStorage.getItem("token");
 
-
   const [open, setOpen] = useState<boolean>(false);
 
   const handleClose = () => {
@@ -47,9 +42,7 @@ const AddBankDetails = () => {
     onSubmit: (values) => {
       setOnLoad(true);
       axios({
-        url:
-          "https://buddy-connect.encoreskydev.com/api/bank/addBankDetail.php?user_id=" +
-          id,
+        url: API.ADD_BANK_DETAULS_URL + id,
         data: values,
         method: "post",
         headers: {
@@ -60,7 +53,6 @@ const AddBankDetails = () => {
           setOpen(true);
         })
         .catch((err) => {
-       
           formik.values.account_number = "";
           setResult("Account Number Already Exist");
           setTimeout(() => {
@@ -75,10 +67,7 @@ const AddBankDetails = () => {
   return (
     <>
       {open && (
-        <PopUp
-          msg="Bank Details Added Successfully"
-          path={"/user/" + id}
-        />
+        <PopUp msg="Bank Details Added Successfully" path={"/user/" + id} />
       )}
       <Paper
         sx={{
@@ -96,37 +85,61 @@ const AddBankDetails = () => {
         ></Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <Grid container p={1}>
+            <h1>Bank Details</h1>
+            <hr />
+            {result}
+            <Grid container p={1} spacing={0.5}>
               <Grid item sm={12} xs={12}>
-                <h1>Bank Details</h1>
-                <hr />
-                {result}
                 <TextInput
                   name="account_number"
                   type="number"
                   label="Account Number"
                 />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="bank_name" type="text" label="Bank Name" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="bank_branch" type="text" label="Branch" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="ifsc_code" type="text" label="IFSC Code" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="micr_code" type="number" label="MICR Code" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <TextInput name="cif_code" type="number" label="CIF Code" />
+              </Grid>
+              <Grid item sm={12} xs={12}>
                 <SelectInput
                   name="type_account"
                   label="Account Type"
                   items={accountType}
                 />
               </Grid>
-              <Button
-                variant="contained"
-                color="primary"
-                type="submit"
-                fullWidth
-                sx={{ marginTop: 1 }}
-                disabled={onLoad}
-              >
-                Add
-              </Button>
+              <Grid item sm={12} xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  disabled={onLoad}
+                >
+                  Add
+                </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={() => navigate("/user/" + id)}
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  disabled={onLoad}
+                >
+                  Cancel
+                </Button>
+              </Grid>
             </Grid>
           </form>
         </userFormContext.Provider>

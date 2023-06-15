@@ -29,6 +29,7 @@ import * as API from "../../apiURL";
 import PopUp from "../popUp";
 import useFetch from "../../customHook/useFetch";
 import { userFormContext } from "../creatUser";
+import Loader from "../loader";
 
 const designation = [
   "Project Manager",
@@ -85,6 +86,7 @@ const country = [
 ];
 const roles = ["admin", "hr", "associate"];
 const UpdateUser = () => {
+  const [loading, setLoading] = useState<boolean>(true);
   const params = useParams();
   const id = params.id;
   const [open, setOpen] = useState<boolean>(false);
@@ -124,6 +126,9 @@ const UpdateUser = () => {
       })
       .catch(() => {
         console.log("error");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -151,15 +156,13 @@ const UpdateUser = () => {
         })
         .finally(() => {
           setOnLoad(false);
-          setTimeout(() => {
-            setResult("Update User");
-          }, 3000);
         });
     },
   });
 
   return (
     <Box className="container">
+      <Loader open={loading} />
       {open && <PopUp msg={"User Updated Successfully"} path={"/user/" + id} />}
 
       <Paper
@@ -264,6 +267,9 @@ const UpdateUser = () => {
                   fullWidth
                   sx={{ marginTop: 1 }}
                   onClick={() => {
+                    formik.resetForm({
+                      values: formik.values,
+                    });
                     navigate("/user/" + id);
                   }}
                   disabled={onLoad}

@@ -15,3 +15,4 @@ export const IMAGE_SRC_URL = "https://buddy-connect.encoreskydev.com/upload/user
 export const DEFUALT_USER_AVATAR_URL = "https://d2ln1xbi067hum.cloudfront.net/assets/default_user-951af10295a22e5f7fa2fa6165613c14.png";
 export const GET_FORMER_USERS_URL = "https://buddy-connect.encoreskydev.com/api/user/deletedUsers.php";
 export const SET_USER_STATUS_URL = "https://buddy-connect.encoreskydev.com/api/user/userStatus.php?user_id=";
+export const ADD_BANK_DETAULS_URL = "https://buddy-connect.encoreskydev.com/api/bank/addBankDetail.php?user_id=";
