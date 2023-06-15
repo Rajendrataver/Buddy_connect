@@ -8,6 +8,7 @@ import Loader from "../loader";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
+import { useNavigate } from "react-router";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -26,16 +27,18 @@ const Dashboard = () => {
   const [active, setActive] = useState<number>(0);
   const [nonActive, setNonActive] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const getUserList = () => {
     const response = fetch(API.GET_USERS_URL, "get", token);
     response
       .then((res) => {
         setList(res.data.response);
+       
       })
       .catch((err) => {
-        console.log(err);
+        localStorage.clear();
+        navigate("/");
       })
       .finally(() => {
         setLoading(false);
@@ -62,7 +65,10 @@ const Dashboard = () => {
               key={1}
               msg={
                 <span style={{ display: "flex", alignItems: "center" }}>
-                  <SupervisedUserCircleIcon sx={{ fontSize: 50 }} color='primary' />
+                  <SupervisedUserCircleIcon
+                    sx={{ fontSize: 50 }}
+                    color="primary"
+                  />
                   Users
                 </span>
               }
@@ -75,7 +81,7 @@ const Dashboard = () => {
               key={1}
               msg={
                 <span style={{ display: "flex", alignItems: "center" }}>
-                  <BookmarkAddedIcon sx={{ fontSize: 50 }} color="success"/>
+                  <BookmarkAddedIcon sx={{ fontSize: 50 }} color="success" />
                   Active Users
                 </span>
               }
@@ -87,7 +93,7 @@ const Dashboard = () => {
               key={1}
               msg={
                 <span style={{ display: "flex", alignItems: "center" }}>
-                  <BookmarkAddIcon sx={{ fontSize: 50 }} color={'warning'} />
+                  <BookmarkAddIcon sx={{ fontSize: 50 }} color={"warning"} />
                   Deactive Users
                 </span>
               }

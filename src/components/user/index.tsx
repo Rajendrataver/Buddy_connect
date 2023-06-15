@@ -65,6 +65,7 @@ const tabs = {
   FAMILY_DETAILS: "Family Details",
 };
 const User = () => {
+  const [validUser, setValidUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [image, setImage] = useState<any>();
@@ -84,7 +85,7 @@ const User = () => {
     response
       .then((res) => {
         if (!res.data.success) {
-          navigate("/dashboard");
+          setValidUser(true);
         } else {
           setUser(res.data.response);
         }
@@ -179,6 +180,7 @@ const User = () => {
   };
   return (
     <Box>
+      {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
       <Loader open={loading} />
       <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
         <DialogTitle id="alert-dialog-title">Upload Profile</DialogTitle>
@@ -201,7 +203,6 @@ const User = () => {
       {openAlert && (
         <PopUp
           msg="Invalid File Type !!!"
-         
           path={"/user/" + id}
           setOpenAlert={setOpenAlert}
         />

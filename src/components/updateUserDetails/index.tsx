@@ -35,6 +35,7 @@ const userData = {
 };
 
 const UpdateUser = () => {
+  const [validUser, setValidUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const params = useParams();
   const id = params.id;
@@ -52,7 +53,7 @@ const UpdateUser = () => {
     response
       .then((res) => {
         if (!res.data.success) {
-          navigate("/dashboard");
+          setValidUser(true);
         }
         const data = res.data.response;
         formik.values.first_name = data.first_name;
@@ -112,12 +113,13 @@ const UpdateUser = () => {
 
   return (
     <Box className="container">
+      {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
       <Loader open={loading} />
       {open && (
         <PopUp
           msg={"User Updated Successfully"}
           path={"/user/" + id}
-          title={<ThumbUpAltIcon color="success" sx={{fontSize:45}} />}
+          title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
         />
       )}
 
