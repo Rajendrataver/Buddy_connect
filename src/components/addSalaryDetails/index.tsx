@@ -11,7 +11,7 @@ import { useState } from "react";
 import PopUp from "../popUp";
 import validationSchema from "./salaryDetailsSchema";
 import { useNavigate } from "react-router";
-
+import CheckIcon from "@mui/icons-material/Check";
 const initialValues = {
   basic_salary: "",
   pf_amount: "",
@@ -64,7 +64,11 @@ const AddSalaryDetails = () => {
   return (
     <div className="add-salary-section">
       {open && (
-        <PopUp msg="Salary Details Added Successfully" path={"/user/" + id} />
+        <PopUp
+          msg="Salary Details Added Successfully"
+          path={"/user/" + id}
+          title={<CheckIcon sx={{ fontSize: 45 }} color="success" />}
+        />
       )}
       <Paper
         sx={{
@@ -174,7 +178,18 @@ const AddSalaryDetails = () => {
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
-                <Grid item xs={12} md={4} sm={4}>
+                <Grid item xs={12} md={3} sm={3}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Submit Details
+                  </Button>
+                </Grid>
+                <Grid item xs={12} md={3} sm={3}>
                   <Button
                     disabled={onLoad}
                     variant="contained"
@@ -185,18 +200,6 @@ const AddSalaryDetails = () => {
                     fullWidth
                   >
                     Cancel
-                  </Button>
-                </Grid>
-                <Grid item xs={0} md={4} sm={4}></Grid>
-                <Grid item xs={12} md={4} sm={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    disabled={onLoad}
-                  >
-                    Submit Details
                   </Button>
                 </Grid>
               </Grid>

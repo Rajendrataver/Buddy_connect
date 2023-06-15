@@ -19,6 +19,7 @@ import DateInput from "../DateInput";
 import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
 import * as SELECT from "../../selectListCollection";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 export const initialValues = {
   first_name: "",
   last_name: "",
@@ -98,7 +99,13 @@ const CreateUser = () => {
 
   return (
     <Box className="container">
-      {open && <PopUp msg={"User Registered Successfully"} path="/users" />}
+      {open && (
+        <PopUp
+          msg={"User Registered Successfully"}
+          path="/users"
+          title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
+        />
+      )}
 
       <Paper
         sx={{
@@ -186,8 +193,8 @@ const CreateUser = () => {
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item sm={12} md={4} xs={12}>
+            <Grid container columnSpacing={1}>
+              <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -199,8 +206,8 @@ const CreateUser = () => {
                   {onLoad ? <CircularProgress color="inherit" /> : "Register"}
                 </Button>
               </Grid>
-              <Grid item sm={0} md={4} xs={0}></Grid>
-              <Grid item sm={12} md={4} xs={12}>
+
+              <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
                   color="warning"

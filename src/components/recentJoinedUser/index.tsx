@@ -29,7 +29,9 @@ const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
           padding: 2,
           backgroundColor: "snow",
           margin: "auto",
+          width: " -webkit-fill-available",
         }}
+        
       >
         <Typography
           sx={{ fontWeight: "bold", fontFamily: "sans-serif" }}

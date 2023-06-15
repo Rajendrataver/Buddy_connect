@@ -2,38 +2,24 @@ import {
   Card,
   Typography,
   CardContent,
-  CardActions,
-  Button,
+ 
 } from "@mui/material";
+import { ReactHTMLElement } from "react";
 import { useNavigate } from "react-router";
 
-const RationCard = ({
-  percentage,
-  title,
-  count,
-  msg,
-}: {
-  msg: string;
-  percentage: number;
-
-  count: number;
-  title: string;
-}) => {
+const RationCard = ({ count, msg }: { msg: any; count: number }) => {
   const navigate = useNavigate();
   return (
-    <Card sx={{ width: 100 + "%", maxWidth: 500 }}>
-      <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {title}
-        </Typography>
+    <Card sx={{ width: 100 + "%" }}>
+      <CardContent sx={{display:'flex',justifyContent:'space-between' ,alignItems:'center'}}>
         <Typography variant="h5" component="div">
           {msg}
-        </Typography>
-        <Typography sx={{ mb: 1.5, fontSize: 25 }} color="text.secondary">
-          {count}
-          <Typography sx={{ color: "black" }}>
-            {" " + percentage.toFixed(2) + "%"}
-          </Typography>
+        </Typography>{" "}
+        <Typography
+          sx={{ fontSize: 25 }}
+          color="text.secondary"
+        >
+          {count.toString().length===1?'0'+count:count}  
         </Typography>
       </CardContent>
     </Card>

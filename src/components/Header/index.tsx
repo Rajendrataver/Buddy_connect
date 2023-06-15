@@ -8,10 +8,9 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
-import { DevicesFoldRounded, MenuOutlined } from "@mui/icons-material";
+import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
-import { boolean } from "yup";
-import LogoutIcon from "@mui/icons-material/Logout";
+
 import * as API from "../../apiURL";
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
@@ -101,7 +100,7 @@ export default function Header({
                     isActive ? "active-link" : "inactive"
                   }
                 >
-                  Former User
+                  Former Users
                 </NavLink>
               </Grid>
 
@@ -119,7 +118,7 @@ export default function Header({
                   aria-expanded={open ? "true" : undefined}
                 >
                   <Avatar
-                    src="https://cdn2.vectorstock.com/i/1000x1000/72/96/emotion-avatar-man-happy-successful-face-vector-13577296.jpg"
+                    src={API.LOGIN_USER_DEFAULT_AVATAR_URL}
                     alt="My Avatar"
                   />
                   &nbsp;
@@ -200,14 +199,14 @@ export default function Header({
           <Link to="/dashboard" className="hamburger-link">
             <MenuItem>Dashboard</MenuItem>
           </Link>
+          <Link to="/users" className="hamburger-link">
+            <MenuItem>Users</MenuItem>
+          </Link>
           <Link to="/createuser" className="hamburger-link">
-            <MenuItem>Create New User</MenuItem>
+            <MenuItem>Create User</MenuItem>
           </Link>
-          <Link to="/userlist" className="hamburger-link">
-            <MenuItem>User List</MenuItem>
-          </Link>
-          <Link to="/removeduserlist" className="hamburger-link">
-            <MenuItem>Removed Users</MenuItem>
+          <Link to="/formerusers" className="hamburger-link">
+            <MenuItem>Former Users</MenuItem>
           </Link>
           <MenuItem>
             <LogoutButton fullWidth={true} />

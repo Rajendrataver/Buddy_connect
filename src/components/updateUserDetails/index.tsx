@@ -1,26 +1,9 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Paper,
-  Radio,
-  RadioGroup,
-  Select,
-  TextField,
-  Typography,
-} from "@mui/material";
-
-import { createContext, useEffect } from "react";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import validationSchema from "../../schemas/userDetailsSchema";
-import axios from "axios";
 import TextInput from "../TextInput";
 import SelectInput from "../SelectInput";
 import DateInput from "../DateInput";
@@ -31,7 +14,7 @@ import useFetch from "../../customHook/useFetch";
 import { userFormContext } from "../creatUser";
 import Loader from "../loader";
 import * as SELECT from "../../selectListCollection";
-
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 const userData = {
   first_name: "",
   last_name: "",
@@ -52,18 +35,19 @@ const userData = {
 };
 
 const UpdateUser = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const params = useParams();
   const id = params.id;
   const [open, setOpen] = useState<boolean>(false);
   const [initialValues, setInitialValues] = useState(userData);
-  const [onLoad, setOnLoad] = useState(false);
+
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const [result, setResult] = useState("Update User");
+  const [result, setResult] = useState("");
   const fetch = useFetch();
 
   const getUsers = () => {
+    setLoading(true);
     const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
     response
       .then((res) => {
@@ -106,7 +90,7 @@ const UpdateUser = () => {
     initialValues: initialValues,
     validationSchema,
     onSubmit: (values) => {
-      setOnLoad(true);
+      setLoading(true);
       const response = fetch(
         API.UPDATE_USER_DETAILS_URL + id,
         "put",
@@ -121,7 +105,7 @@ const UpdateUser = () => {
           setResult(error.response.data.message);
         })
         .finally(() => {
-          setOnLoad(false);
+          setLoading(false);
         });
     },
   });
@@ -129,7 +113,13 @@ const UpdateUser = () => {
   return (
     <Box className="container">
       <Loader open={loading} />
-      {open && <PopUp msg={"User Updated Successfully"} path={"/user/" + id} />}
+      {open && (
+        <PopUp
+          msg={"User Updated Successfully"}
+          path={"/user/" + id}
+          title={<ThumbUpAltIcon color="success" sx={{fontSize:45}} />}
+        />
+      )}
 
       <Paper
         sx={{
@@ -145,6 +135,13 @@ const UpdateUser = () => {
         <Typography
           sx={{ fontWeight: "bold", color: "#422626d4", fontSize: 25, mb: 1 }}
           align="left"
+        >
+          Update User
+        </Typography>
+        <Typography
+          sx={{ fontWeight: "bold", fontSize: 18, mb: 1 }}
+          align="left"
+          color="error"
         >
           {result}
         </Typography>
@@ -216,21 +213,21 @@ const UpdateUser = () => {
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
             </Grid>
-            <Grid container>
-              <Grid item sm={12} md={4} xs={12}>
+            <Grid container columnSpacing={1}>
+              <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
                   fullWidth
                   sx={{ marginTop: 1 }}
-                  disabled={onLoad}
+                  disabled={loading}
                 >
-                  {onLoad ? <CircularProgress color="inherit" /> : "Update"}
+                  Update
                 </Button>
               </Grid>
-              <Grid item sm={0} md={4} xs={0}></Grid>
-              <Grid item sm={12} md={4} xs={12}>
+
+              <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
                   color="warning"
@@ -242,7 +239,7 @@ const UpdateUser = () => {
                     });
                     navigate("/user/" + id);
                   }}
-                  disabled={onLoad}
+                  disabled={loading}
                 >
                   Cancel
                 </Button>

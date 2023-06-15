@@ -201,7 +201,7 @@ const User = () => {
       {openAlert && (
         <PopUp
           msg="Invalid File Type !!!"
-          title="Warning"
+         
           path={"/user/" + id}
           setOpenAlert={setOpenAlert}
         />

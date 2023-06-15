@@ -305,11 +305,16 @@ const UserList: React.FC = () => {
             Users
           </Typography>
           <Toolbar>
-            <Grid container alignItems="center">
-              <Grid item>
+            <Grid container alignItems="center" spacing={1}>
+              <Grid
+                item
+                sm={12}
+                md={8.5}
+                xs={12}
+                display={"flex"}
+                alignItems={"center"}
+              >
                 <SearchIcon color="inherit" sx={{ display: "block" }} />
-              </Grid>
-              <Grid item sm={12} md={7.7}>
                 <TextField
                   fullWidth
                   placeholder="Search Name"
@@ -322,12 +327,12 @@ const UserList: React.FC = () => {
                     },
                   }}
                   onChange={handleFilter}
-                  variant="standard"
+                variant="standard"
                 />
               </Grid>
-              <Grid item md={4} sm={2} textAlign={"right"}>
+              <Grid item md={3.5} sm={12} xs={12} textAlign={"right"} mb={1}>
                 <Button
-                  sx={{ mr: 1, ta: "center", bgcolor: "primary" }}
+                  sx={{ ta: "center", bgcolor: "primary",mt:1 }}
                   variant="outlined"
                 >
                   <label style={{ textAlign: "center" }}>
@@ -342,7 +347,8 @@ const UserList: React.FC = () => {
                     />
                   </label>
                 </Button>
-                <Button variant="contained">
+
+                <Button variant="contained" sx={{mt:1,ml:1}}>
                   <Link to="/createuser">Create User</Link>
                 </Button>
               </Grid>

@@ -29,16 +29,11 @@ const AddBankDetails = ({
   id: string | undefined;
   setOpenBank: (v: boolean) => void;
 }) => {
-  const navigate = useNavigate();
-
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const token = localStorage.getItem("token");
   const [open, setOpen] = useState<boolean>(false);
-  const handleClose = () => {
-    setOpen(false);
-    navigate("/user/" + id);
-  };
+  
 
   const formik = useFormik({
     initialValues,
@@ -71,8 +66,8 @@ const AddBankDetails = ({
         sx={{
           maxWidth: 500,
           margin: "auto",
-          
-          padding:4,
+
+          padding: 4,
           overflow: "auto",
         }}
       >
@@ -115,27 +110,31 @@ const AddBankDetails = ({
                   items={SELECT.ACCOUNT_TYPE}
                 />
               </Grid>
-              <Grid item sm={12} xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  sx={{ marginTop: 1 }}
-                  disabled={onLoad}
-                >
-                  Add
-                </Button>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  onClick={() => setOpenBank(false)}
-                  fullWidth
-                  sx={{ marginTop: 1 }}
-                  disabled={onLoad}
-                >
-                  Cancel
-                </Button>
+              <Grid container spacing={1}>
+                <Grid item sm={4} xs={12} md={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    sx={{ marginTop: 1 }}
+                    disabled={onLoad}
+                  >
+                    Add
+                  </Button>
+                </Grid>
+                <Grid item sm={4} xs={12} md={4}>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    onClick={() => setOpenBank(false)}
+                    fullWidth
+                    sx={{ marginTop: 1 }}
+                    disabled={onLoad}
+                  >
+                    Cancel
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
           </form>

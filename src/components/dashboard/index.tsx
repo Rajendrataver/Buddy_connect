@@ -5,6 +5,9 @@ import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import RecentJoinedUser from "../recentJoinedUser";
 import Loader from "../loader";
+import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -49,36 +52,45 @@ const Dashboard = () => {
   }, [list]);
 
   return (
-    <Box className="container" mt={2} mb={5}>
+    <Box className="container" mt={5} mb={5}>
       <Loader open={loading} />
       <Box justifyContent={"space-between"}>
         <Grid container spacing={2} display={"flex"} justifyContent={"center"}>
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={list.length}
-              percentage={(list.length * 100) / list.length}
-              title={"Hello " + localStorage.getItem("email")}
               key={1}
-              msg="Users"
+              msg={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <SupervisedUserCircleIcon sx={{ fontSize: 50 }} color='primary' />
+                  Users
+                </span>
+              }
             />
           </Grid>
 
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={active}
-              percentage={(active * 100) / list.length}
-              title={"Buddy Connect"}
               key={1}
-              msg="Active Users"
+              msg={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <BookmarkAddedIcon sx={{ fontSize: 50 }} color="success"/>
+                  Active Users
+                </span>
+              }
             />
           </Grid>
           <Grid item xs={12} md={4} sm={12}>
             <RationCard
               count={list.length - active}
-              percentage={((list.length - active) * 100) / list.length}
-              title={"Buddy Connect"}
               key={1}
-              msg="Deactive Users"
+              msg={
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <BookmarkAddIcon sx={{ fontSize: 50 }} color={'warning'} />
+                  Deactive Users
+                </span>
+              }
             />
           </Grid>
         </Grid>

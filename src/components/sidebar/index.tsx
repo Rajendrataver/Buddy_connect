@@ -23,8 +23,10 @@ const SideBar = () => {
         }}
       >
         <Menu>
-          <MenuItem style={{ textAlign: "center" }}>
-            <h2>Buddy Connect</h2>
+          <MenuItem style={{ textAlign: "center", marginTop: 10 }}>
+            <Link to={"/dashboard"} className="sidebar-link">
+              <h2>Buddy Connect</h2>
+            </Link>
           </MenuItem>{" "}
           <NavLink
             to="/dashboard"

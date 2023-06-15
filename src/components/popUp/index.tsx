@@ -5,13 +5,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router";
+import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
+
 const PopUp = ({
-  title = "Notification",
+  title = <ErrorOutlineIcon sx={{ fontSize: 45 }} />,
   msg,
   path,
   setOpenAlert,
 }: {
-  title?: string;
+  title?: any;
   msg: string;
   path?: string;
   setOpenAlert?: (v: boolean) => void;
@@ -27,14 +29,15 @@ const PopUp = ({
     <div>
       <Dialog
         open={true}
-        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
         sx={{ width: 100 + "%", margin: "auto" }}
       >
-        <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
-        <DialogContent>
+        <DialogTitle id="alert-dialog-title" sx={{ pt: 1, pb: 0 }}>
+          {title}
+        </DialogTitle>
+        <DialogContent sx={{ pt: 0, pb: 0 }}>
           <DialogContentText
             id="alert-dialog-description"
             sx={{ textTransform: "capitalize" }}
@@ -42,7 +45,7 @@ const PopUp = ({
             {msg}
           </DialogContentText>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{ pt: 0, pb: 0 }}>
           <Button
             onClick={() => {
               if (setOpenAlert) {

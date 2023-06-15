@@ -111,8 +111,8 @@ const AddFamilyDetail = ({
               <Grid item sm={12} xs={12}>
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
-              <Grid container mt={2}>
-                <Grid item xs={12} md={4} sm={4} mt={1}>
+              <Grid container spacing={1}>
+                <Grid item xs={12} md={4} sm={4} >
                   <Button
                     variant="contained"
                     color="primary"
@@ -123,8 +123,7 @@ const AddFamilyDetail = ({
                     Add member
                   </Button>
                 </Grid>
-                <Grid item xs={0} md={4} sm={4}></Grid>
-                <Grid item xs={12} md={4} sm={4} mt={1}>
+                <Grid item xs={12} md={4} sm={4} >
                   <Button
                     disabled={onLoad}
                     variant="contained"
