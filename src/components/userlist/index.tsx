@@ -1,7 +1,7 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import papa from "papaparse";
-import useAxios from "../../customHook/useAxios";
+import * as SELECT from "../../selectListCollection";
 import {
   AppBar,
   Toolbar,
@@ -10,25 +10,25 @@ import {
   Grid,
   Button,
   TextField,
-  Switch,
   Box,
+  FormControl,
+  InputLabel,
+  Select,
 } from "@mui/material";
-
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import {} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-
 import ConfirmBox from "../confirmBox";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
-
 import PopUp from "../popUp";
-import { setMaxIdleHTTPParsers } from "http";
 import Loader from "../loader";
+import ToggelStatus from "../toggelStatus";
+import MenuItem from "@mui/material/MenuItem";
+
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -71,7 +71,6 @@ const UserList: React.FC = () => {
 
   React.useEffect(() => {
     getUserList();
-
   }, []);
   const handleClick = (id: string, status: string) => {
     setOnLoad(true);
@@ -98,7 +97,6 @@ const UserList: React.FC = () => {
           return item;
         });
         setUserlist(newList);
-      
       })
       .catch((error) => {
         console.log(error.response);
@@ -140,24 +138,7 @@ const UserList: React.FC = () => {
     {
       name: <h4>Active</h4>,
       cell: (row: userInterface) => {
-        if (row.status === "active")
-          return (
-            <Switch
-              checked
-              color="success"
-              onClick={() => handleClick(row.id, row.status)}
-              disabled={onLoad}
-            />
-          );
-        else {
-          return (
-            <Switch
-              color="success"
-              onClick={() => handleClick(row.id, row.status)}
-              disabled={onLoad}
-            />
-          );
-        }
+        return <ToggelStatus status={row.status} id={row.id} />;
       },
     },
     {
@@ -226,7 +207,6 @@ const UserList: React.FC = () => {
   };
   const [filedata, setFileData] = useState<any>([]);
   const uploadFile = () => {
-
     const reader = new FileReader();
 
     // Event listener on reader when the file
@@ -262,6 +242,16 @@ const UserList: React.FC = () => {
     });
     setData(newData);
   }
+  const handleRoleChange = (role: any) => {
+    if (role !== "Select") {
+      const newData = userList.filter((row) => {
+        return row.role === role;
+      });
+      setData(newData);
+    } else {
+      setData(userList);
+    }
+  };
   return (
     <Box className={"container"}>
       <ConfirmBox
@@ -301,15 +291,53 @@ const UserList: React.FC = () => {
           sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
         >
           {" "}
-          <Typography sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}>
-            Users
-          </Typography>
           <Toolbar>
-            <Grid container alignItems="center" spacing={1}>
+            <Grid
+              container
+              alignItems="center"
+              spacing={1}
+              display={"flex"}
+              justifyContent={"space-between"}
+            >
+              <Grid item md={6} sm={6} xs={12}>
+                <Typography
+                  sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}
+                >
+                  Users
+                </Typography>
+              </Grid>
+              <Grid
+                item
+                md={6}
+                sm={6}
+                xs={12}
+                textAlign={{ md: "right", sm: "right", xs: "left" }}
+              >
+                <Button
+                  sx={{ ta: "center", bgcolor: "primary" }}
+                  variant="outlined"
+                >
+                  <label style={{ textAlign: "center" }}>
+                    Upload File
+                    <input
+                      type="file"
+                      title="Upload File"
+                      alt="Upload File"
+                      accept=".csv"
+                      className="file-ipload-input"
+                      onChange={(e) => handleFileChange(e)}
+                    />
+                  </label>
+                </Button>
+
+                <Button variant="contained" sx={{ ml: 1 }}>
+                  <Link to="/createuser">Create User</Link>
+                </Button>
+              </Grid>
               <Grid
                 item
                 sm={12}
-                md={8.5}
+                md={8.9}
                 xs={12}
                 display={"flex"}
                 alignItems={"center"}
@@ -327,30 +355,34 @@ const UserList: React.FC = () => {
                     },
                   }}
                   onChange={handleFilter}
-                variant="standard"
+                  variant="standard"
                 />
               </Grid>
-              <Grid item md={3.5} sm={12} xs={12} textAlign={"right"} mb={1}>
-                <Button
-                  sx={{ ta: "center", bgcolor: "primary",mt:1 }}
-                  variant="outlined"
-                >
-                  <label style={{ textAlign: "center" }}>
-                    Upload File
-                    <input
-                      type="file"
-                      title="Upload File"
-                      alt="Upload File"
-                      accept=".csv"
-                      className="file-ipload-input"
-                      onChange={(e) => handleFileChange(e)}
-                    />
-                  </label>
-                </Button>
-
-                <Button variant="contained" sx={{mt:1,ml:1}}>
-                  <Link to="/createuser">Create User</Link>
-                </Button>
+              <Grid item md={3.1} sm={12} xs={12} mb={1}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    label="Age"
+                    onChange={(e) => handleRoleChange(e.target.value)}
+                  >
+                    <MenuItem value="Select" defaultChecked>
+                      Select
+                    </MenuItem>
+                    {SELECT.ROLES.map((role, i) => {
+                      return (
+                        <MenuItem
+                          value={role}
+                          key={i}
+                          sx={{ textTransform: "capitalize" }}
+                        >
+                          {role}
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
           </Toolbar>

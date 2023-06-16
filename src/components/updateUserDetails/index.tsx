@@ -215,7 +215,12 @@ const UpdateUser = () => {
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
             </Grid>
-            <Grid container columnSpacing={1}>
+            <Grid
+              container
+              columnSpacing={1}
+              direction={{ xs: "column-reverse", md: "row", sm: "row" }}
+              justifyContent={"flex-end"}
+            >
               <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"

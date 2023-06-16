@@ -20,6 +20,8 @@ import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
 import * as SELECT from "../../selectListCollection";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import { Direction } from "react-data-table-component";
+import Loader from "../loader";
 export const initialValues = {
   first_name: "",
   last_name: "",
@@ -43,7 +45,7 @@ const CreateUser = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState(false);
   const navigate = useNavigate();
-  const [result, setResult] = useState("Register User");
+  const [result, setResult] = useState("");
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -68,21 +70,15 @@ const CreateUser = () => {
           console.log(error);
 
           if (error.response.data.message === "This email is already exist.") {
-            setResult(formik.values.email + " Already Registered");
-            formik.values.email = "";
             formik.errors.email = error.response.data.message;
           } else if (
             error.response.data.message === "This contact is already exist."
           ) {
-            setResult(formik.values.contact + " Already Registered");
-            formik.values.contact = "";
             formik.errors.contact = error.response.data.message;
           } else if (
             error.response.data.message ===
             "This PAN_CARD number is already exist."
           ) {
-            setResult(formik.values.pan_card + " Already Registered");
-            formik.values.pan_card = "";
             formik.errors.pan_card = error.response.data.message;
           } else {
             setResult(error.response.data.message);
@@ -90,9 +86,6 @@ const CreateUser = () => {
         })
         .finally(() => {
           setOnLoad(false);
-          setTimeout(() => {
-            setResult("Register User");
-          }, 3000);
         });
     },
   });
@@ -106,6 +99,7 @@ const CreateUser = () => {
           title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
         />
       )}
+      <Loader open={onLoad} />
 
       <Paper
         sx={{
@@ -121,6 +115,12 @@ const CreateUser = () => {
       >
         <Typography
           sx={{ fontSize: 25, fontWeight: "bold", color: "#422626d4", mb: 1 }}
+          align="left"
+        >
+          Register User
+        </Typography>
+        <Typography
+          sx={{ fontSize: 15, fontWeight: "bold", color: "red", mb: 1 }}
           align="left"
         >
           {result}
@@ -193,20 +193,12 @@ const CreateUser = () => {
                 <TextInput type="number" label="Zip Code" name="zip_code" />
               </Grid>
             </Grid>
-            <Grid container columnSpacing={1}>
-              <Grid item sm={3} md={3} xs={12}>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  sx={{ marginTop: 1 }}
-                  disabled={onLoad}
-                >
-                  {onLoad ? <CircularProgress color="inherit" /> : "Register"}
-                </Button>
-              </Grid>
-
+            <Grid
+              container
+              columnSpacing={1}
+              direction={{ xs: "column-reverse", md: "row", sm: "row" }}
+              justifyContent={"flex-end"}
+            >
               <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
@@ -219,6 +211,18 @@ const CreateUser = () => {
                   disabled={onLoad}
                 >
                   Cancel
+                </Button>
+              </Grid>
+              <Grid item sm={3} md={3} xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  disabled={onLoad}
+                >
+                  Register
                 </Button>
               </Grid>
             </Grid>

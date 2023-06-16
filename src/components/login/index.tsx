@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import Loader from "../loader";
 const Login = () => {
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -70,6 +71,7 @@ const Login = () => {
 
   return (
     <section className="login-section">
+      <Loader open={onLoad}/>
       <Paper sx={{ background: "transparent", m: "auto", maxWidth: 450 }}>
         <Box m={5} p={1}>
           <h1>Login</h1>
@@ -119,7 +121,7 @@ const Login = () => {
                 disabled={onLoad}
                 sx={{ height: 40 }}
               >
-                {onLoad ? <CircularProgress color="inherit" /> : "Login"}
+                Login
               </Button>
             </form>
           </Box>
