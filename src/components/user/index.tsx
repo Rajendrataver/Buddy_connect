@@ -35,6 +35,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 import PopUp from "../popUp";
 import Loader from "../loader";
+import Profile from "../profile";
+import ToggelStatus from "../toggelStatus";
 const data = {
   first_name: "",
   email: "",
@@ -68,10 +70,6 @@ const User = () => {
   const [validUser, setValidUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
-  const [image, setImage] = useState<any>();
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
-  const [imageSrc, setImageSrc] = useState<string>();
   const navigate = useNavigate();
   const [tab, setTab] = useState(tabs.BANK_DETAILS);
   const params = useParams();
@@ -98,63 +96,10 @@ const User = () => {
       });
   };
 
-  const selectedImage = (e: any) => {
-    const image = e.target.files[0];
-    if (image) {
-      const extension = image.name.split(".").pop();
-      if (
-        extension === "png" ||
-        extension === "jpeg" ||
-        extension === "gif" ||
-        extension === "jpg"
-      ) {
-        setOpen(true);
-        setImage(image);
-        setImageSrc(URL.createObjectURL(image));
-      } else {
-        setOpenAlert(true);
-      }
-    }
-  };
   useEffect(() => {
     getUserDetails();
-    console.log(user);
   }, []);
-  var src = "";
-  if (user.image) {
-    src = API.IMAGE_SRC_URL + user.image;
-  } else if (user.gender === "female") {
-    src = "https://freesvg.org/img/FaceWoman.png";
-  } else {
-    src = API.DEFUALT_USER_AVATAR_URL;
-  }
-  const handleTabChange = (v: string) => {
-    setTab(v);
-  };
 
-  const handleUploadImage = () => {
-    const formData = new FormData();
-    formData.append("image", image);
-    axios({
-      url: API.UPLOAD_USER_PROFILE_URL + id,
-      method: "post",
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((res) => {
-        getUserDetails();
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setOpen(false);
-      });
-  };
   const changeStatus = () => {
     var status = "";
     setOnLoad(true);
@@ -163,7 +108,6 @@ const User = () => {
     } else {
       status = "active";
     }
-
     const response = fetch(API.SET_USER_STATUS_URL + id, "patch", token, {
       status,
     });
@@ -182,31 +126,7 @@ const User = () => {
     <Box>
       {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
       <Loader open={loading} />
-      <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
-        <DialogTitle id="alert-dialog-title">Upload Profile</DialogTitle>
-        <Avatar
-          src={imageSrc}
-          sx={{ width: 200, height: 200, margin: "auto" }}
-        />
-        <DialogActions>
-          <Button
-            onClick={() => {
-              setOpen(false);
-              setImage(null);
-            }}
-          >
-            Cancel
-          </Button>
-          <Button onClick={() => handleUploadImage()}>Upload</Button>
-        </DialogActions>
-      </Dialog>
-      {openAlert && (
-        <PopUp
-          msg="Invalid File Type !!!"
-          path={"/user/" + id}
-          setOpenAlert={setOpenAlert}
-        />
-      )}
+
       <Paper>
         <AppBar
           position="static"
@@ -217,26 +137,7 @@ const User = () => {
         >
           <Grid container alignItems={"center"}>
             <Grid item xs={12} md={4} textAlign={"center"}>
-              <Box className={"avatar-profile"}>
-                <img
-                  src={src}
-                  alt={"My Avatar"}
-                  className="avatar-male"
-                  loading="lazy"
-                />
-                <EditIcon
-                  className="edit"
-                  sx={{ fontSize: 40, color: " #607d8b" }}
-                />
-                <input
-                  type="file"
-                  className="avatar-input"
-                  onChange={(e) => {
-                    selectedImage(e);
-                  }}
-                />
-              </Box>
-
+              <Profile imageName={user.image} id={id} />
               <Button
                 variant="outlined"
                 sx={{ mt: 2 }}
@@ -278,12 +179,7 @@ const User = () => {
                     <TableRow>
                       <TableCell>Status</TableCell>
                       <TableCell align="left">
-                        <Switch
-                          color="success"
-                          checked={user.status === "active" ? true : false}
-                          onChange={changeStatus}
-                          disabled={onLoad}
-                        />
+                        <ToggelStatus id={id} status={user.status} />
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -307,19 +203,19 @@ const User = () => {
                   label={tabs.BANK_DETAILS}
                   icon={<AccountBalanceIcon />}
                   value={tabs.BANK_DETAILS}
-                  onClick={() => handleTabChange(tabs.BANK_DETAILS)}
+                  onClick={() => setTab(tabs.BANK_DETAILS)}
                 />
                 <Tab
                   label={tabs.SALARY_DETAILS}
                   icon={<CurrencyRupeeIcon />}
                   value={tabs.SALARY_DETAILS}
-                  onClick={() => handleTabChange(tabs.SALARY_DETAILS)}
+                  onClick={() => setTab(tabs.SALARY_DETAILS)}
                 />
                 <Tab
                   label={tabs.FAMILY_DETAILS}
                   icon={<FamilyRestroomIcon />}
                   value={tabs.FAMILY_DETAILS}
-                  onClick={() => handleTabChange(tabs.FAMILY_DETAILS)}
+                  onClick={() => setTab(tabs.FAMILY_DETAILS)}
                 />
               </Tabs>
             </Grid>

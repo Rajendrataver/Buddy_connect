@@ -27,7 +27,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddFamilyDetail from "../addFamilyDetails";
 import AddBankDetails from "../addBankDetails";
 import DialogBox from "../dialog";
-
+import PopUpform from "../PopUpForm";
 const bankData = {
   account_number: "",
   bank_name: "",
@@ -130,18 +130,18 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         setOpen={setOpen}
         handleOk={confirmRemove}
       />
-      <Dialog
+      <PopUpform
         open={openAddBankDetails}
-        onClose={() => setOpenAddBankDetails(false)}
-      >
-        <AddBankDetails
-          id={id}
-          setOpenBank={setOpenAddBankDetails}
-          setAdded={setAdded}
-        />
-      </Dialog>
+        element={
+          <AddBankDetails
+            id={id}
+            setOpenBank={setOpenAddBankDetails}
+            setAdded={setAdded}
+          />
+        }
+      />
 
-      <Grid container>
+      <Grid container sx={{mb:5}}>
         <Grid item xs={12} md={4}>
           <Button
             variant="contained"
@@ -194,7 +194,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
             </TableContainer>
           </Grid>
         )}
-        {accountList[0].bank_branch != "" && (
+        {accountList.length !== 1 && (
           <Grid item xs={12} md={8} sx={{ marginTop: 5 }}>
             <Accordion>
               <AccordionSummary

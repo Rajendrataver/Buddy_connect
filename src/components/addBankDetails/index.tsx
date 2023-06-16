@@ -71,7 +71,6 @@ const AddBankDetails = ({
         sx={{
           maxWidth: 500,
           margin: "auto",
-
           padding: 4,
           overflow: "auto",
         }}

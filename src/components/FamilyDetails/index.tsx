@@ -14,6 +14,7 @@ import useFetch from "../../customHook/useFetch";
 import { useNavigate } from "react-router";
 import ConfirmBox from "../confirmBox";
 import DialogBox from "../dialog";
+import PopUpform from "../PopUpForm";
 interface family {
   name: string;
   gender: string;
@@ -44,7 +45,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
       token
     );
     response.then((res) => {
-      console.log(res);
+     
       getFamilyList();
     });
   };
@@ -56,9 +57,12 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
         msg="Family Memeber Added Successfully"
         handleClose={() => setAdded(false)}
       />
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <AddFamilyDetail id={id} setOpen={setOpen} setAdded={setAdded} />
-      </Dialog>
+      <PopUpform
+        open={open}
+        element={
+          <AddFamilyDetail id={id} setOpen={setOpen} setAdded={setAdded} />
+        }
+      />
       <Button
         variant="contained"
         color="primary"

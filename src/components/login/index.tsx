@@ -37,7 +37,7 @@ const Login = () => {
           if (response.data.response.role === "superAdmin") {
             var info = response.data.response;
             localStorage.setItem("token", info.token);
-            console.log(info);
+           
 
             localStorage.setItem(
               "name",

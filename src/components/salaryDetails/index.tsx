@@ -1,4 +1,5 @@
 import {
+  Backdrop,
   Button,
   Dialog,
   Grid,
@@ -16,6 +17,7 @@ import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import AddSalaryDetails from "../addSalaryDetails";
 import DialogBox from "../dialog";
+import PopUpform from "../PopUpForm";
 
 interface salaryInterface {
   basic_salary: string;
@@ -58,13 +60,18 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
         open={added}
         handleClose={() => setAdded(false)}
       />
-      <Dialog open={openAddSalary}>
-        <AddSalaryDetails
-          id={id}
-          setOpenAddSalary={setOpenAddSalary}
-          setAdded={setAdded}
-        />
-      </Dialog>
+      {/* Add Salary Details  */}
+      <PopUpform
+        open={openAddSalary}
+        element={
+          <AddSalaryDetails
+            id={id}
+            setOpenAddSalary={setOpenAddSalary}
+            setAdded={setAdded}
+          />
+        }
+      />
+      {/* Add Salary Details  */}
       <Grid container>
         <Grid item xs={12} md={12}>
           <Button

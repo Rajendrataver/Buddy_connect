@@ -68,10 +68,12 @@ const AddSalaryDetails = ({
       <Paper
         sx={{
           maxWidth: 700,
-          margin: "auto",
           padding: 3,
+          overflow: "auto",
         }}
       >
+        <h1>Salary Details</h1>
+        <hr />
         <Typography
           sx={{ fontWeight: "bold", fontSize: 18, mb: 1 }}
           align="left"
@@ -81,9 +83,6 @@ const AddSalaryDetails = ({
         </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
-            <h1>Salary Details</h1>
-            <hr />
-
             <Grid container p={1}>
               <Grid item sm={12} xs={12}>
                 <h3>Salary</h3>

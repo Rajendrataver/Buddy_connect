@@ -71,7 +71,7 @@ const UserList: React.FC = () => {
 
   React.useEffect(() => {
     getUserList();
-    console.log(userList);
+
   }, []);
   const handleClick = (id: string, status: string) => {
     setOnLoad(true);
@@ -98,7 +98,7 @@ const UserList: React.FC = () => {
           return item;
         });
         setUserlist(newList);
-        console.log(newList);
+      
       })
       .catch((error) => {
         console.log(error.response);
@@ -226,7 +226,7 @@ const UserList: React.FC = () => {
   };
   const [filedata, setFileData] = useState<any>([]);
   const uploadFile = () => {
-    console.log(file);
+
     const reader = new FileReader();
 
     // Event listener on reader when the file
@@ -238,7 +238,7 @@ const UserList: React.FC = () => {
         setFileData(results.data);
       },
     });
-    console.log(filedata);
+
     setOpenUpload(false);
   };
   const handleFileChange = (e: any) => {
