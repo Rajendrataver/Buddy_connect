@@ -24,9 +24,11 @@ const initialValues = {
 const AddFamilyDetail = ({
   id,
   setOpen,
+  setAdded,
 }: {
   id: string | undefined;
   setOpen: (v: boolean) => void;
+  setAdded: (v: boolean) => void;
 }) => {
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
@@ -48,6 +50,7 @@ const AddFamilyDetail = ({
       })
         .then((res) => {
           setOpen(false);
+          setAdded(true)
         })
         .catch((err) => {
           if (err.response.data.message === "This relation is already exist.") {
@@ -112,7 +115,7 @@ const AddFamilyDetail = ({
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
               <Grid container spacing={1}>
-                <Grid item xs={12} md={4} sm={4} >
+                <Grid item xs={12} md={4} sm={4}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -123,7 +126,7 @@ const AddFamilyDetail = ({
                     Add member
                   </Button>
                 </Grid>
-                <Grid item xs={12} md={4} sm={4} >
+                <Grid item xs={12} md={4} sm={4}>
                   <Button
                     disabled={onLoad}
                     variant="contained"

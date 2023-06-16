@@ -13,6 +13,7 @@ import {
 import useFetch from "../../customHook/useFetch";
 import { useNavigate } from "react-router";
 import ConfirmBox from "../confirmBox";
+import DialogBox from "../dialog";
 interface family {
   name: string;
   gender: string;
@@ -21,7 +22,7 @@ interface family {
   id: number;
 }
 const FamilyDetails = ({ id }: { id: string | undefined }) => {
-  const navigate = useNavigate();
+  const [added, setAdded] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
   const token = localStorage.getItem("token");
   const fetch = useFetch();
@@ -34,7 +35,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
   };
   useEffect(() => {
     getFamilyList();
-  }, [open]);
+  }, [added]);
 
   const deleteMember = (member: family) => {
     const response = fetch(
@@ -50,10 +51,14 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
 
   return (
     <>
+      <DialogBox
+        open={added}
+        msg="Family Memeber Added Successfully"
+        handleClose={() => setAdded(false)}
+      />
       <Dialog open={open} onClose={() => setOpen(false)}>
-        <AddFamilyDetail id={id} setOpen={setOpen} />
+        <AddFamilyDetail id={id} setOpen={setOpen} setAdded={setAdded} />
       </Dialog>
-
       <Button
         variant="contained"
         color="primary"

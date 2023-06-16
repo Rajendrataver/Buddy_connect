@@ -26,6 +26,7 @@ import ConfirmBox from "../confirmBox";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import AddFamilyDetail from "../addFamilyDetails";
 import AddBankDetails from "../addBankDetails";
+import DialogBox from "../dialog";
 
 const bankData = {
   account_number: "",
@@ -56,6 +57,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   const [bank_id, setBank_id] = useState<string>();
   const [accountList, setBankInfo] = useState<Array<bankInterface>>([bankData]);
   const navigate = useNavigate();
+  const [added, setAdded] = useState<boolean>(false);
 
   const token = localStorage.getItem("token");
   const fetch = useFetch();
@@ -69,7 +71,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   };
   useEffect(() => {
     getBankdetails();
-  }, [openAddBankDetails]);
+  }, [added]);
   const setPrimary = (bank_id: string, type_account: string) => {
     setOnLoad(true);
 
@@ -117,6 +119,11 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   };
   return (
     <>
+      <DialogBox
+        open={added}
+        msg={"Bank Details Added Successfully."}
+        handleClose={() => setAdded(false)}
+      />
       <ConfirmBox
         msg="Do you want to Remove Details ?"
         open={open}
@@ -127,7 +134,11 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         open={openAddBankDetails}
         onClose={() => setOpenAddBankDetails(false)}
       >
-        <AddBankDetails id={id} setOpenBank={setOpenAddBankDetails} />
+        <AddBankDetails
+          id={id}
+          setOpenBank={setOpenAddBankDetails}
+          setAdded={setAdded}
+        />
       </Dialog>
 
       <Grid container>

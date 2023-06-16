@@ -11,6 +11,7 @@ import PopUp from "../popUp";
 import * as API from "../../apiURL";
 import * as SELECT from "../../selectListCollection";
 import Loader from "../loader";
+import DialogBox from "../dialog";
 
 const accountType = ["primary", "secondary"];
 const initialValues = {
@@ -25,16 +26,18 @@ const initialValues = {
 const AddBankDetails = ({
   id,
   setOpenBank,
+  setAdded
 }: {
   id: string | undefined;
-  setOpenBank: (v: boolean) => void;
+    setOpenBank: (v: boolean) => void;
+  setAdded:(v:boolean)=>void
 }) => {
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const token = localStorage.getItem("token");
-  const [open, setOpen] = useState<boolean>(false);
   
-
+  
+ 
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -50,6 +53,7 @@ const AddBankDetails = ({
       })
         .then((res) => {
           setOpenBank(false);
+          setAdded(true)
         })
         .catch((err) => {
           console.log(err);
@@ -62,6 +66,7 @@ const AddBankDetails = ({
   });
   return (
     <>
+     
       <Paper
         sx={{
           maxWidth: 500,
@@ -72,6 +77,7 @@ const AddBankDetails = ({
         }}
       >
         <Loader open={onLoad} />
+        
         <Typography sx={{ mx: 2, fontSize: 25 }} color="red" align="left">
           {result}
         </Typography>

@@ -14,6 +14,8 @@ import { useNavigate } from "react-router";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
+import AddSalaryDetails from "../addSalaryDetails";
+import DialogBox from "../dialog";
 
 interface salaryInterface {
   basic_salary: string;
@@ -28,7 +30,8 @@ interface salaryInterface {
 }
 
 const SalaryDetails = ({ id }: { id: string | undefined }) => {
-  const navigate = useNavigate();
+  const [openAddSalary, setOpenAddSalary] = useState<boolean>(false);
+  const [added, setAdded] = useState<boolean>(false);
   const fetch = useFetch();
   const [salaryList, setSalary] = useState<Array<salaryInterface>>([]);
   const token = localStorage.getItem("token");
@@ -46,16 +49,28 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
   };
   useEffect(() => {
     getSalaryDetails();
-  }, []);
+  }, [added]);
 
   return (
     <>
+      <DialogBox
+        msg="SalaryDetails Added SuccessFully."
+        open={added}
+        handleClose={() => setAdded(false)}
+      />
+      <Dialog open={openAddSalary}>
+        <AddSalaryDetails
+          id={id}
+          setOpenAddSalary={setOpenAddSalary}
+          setAdded={setAdded}
+        />
+      </Dialog>
       <Grid container>
         <Grid item xs={12} md={12}>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => navigate("/add-salary-details/" + id)}
+            onClick={() => setOpenAddSalary(true)}
             sx={{ marginTop: 3 }}
           >
             Add Salary Details

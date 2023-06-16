@@ -47,10 +47,6 @@ const Content = () => {
           <Route path="/users" element={<UserList />} />
           <Route path="/createuser" element={<CreateUser />} />
           <Route path="/user/:id" element={<User />} />
-          <Route
-            path="/add-salary-details/:user_id"
-            element={<AddSalaryDetails />}
-          />
           <Route path="/updateuser/:id" element={<UpdateUser />} />
           <Route path="/formerusers" element={<FormerUsers />} />
           <Route path="*" element={<UnkonownPage />}></Route>

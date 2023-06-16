@@ -8,10 +8,7 @@ import DateInput from "../DateInput";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useState } from "react";
-import PopUp from "../popUp";
 import validationSchema from "./salaryDetailsSchema";
-import { useNavigate } from "react-router";
-import CheckIcon from "@mui/icons-material/Check";
 const initialValues = {
   basic_salary: "",
   pf_amount: "",
@@ -26,12 +23,17 @@ const initialValues = {
   health_insurance: "",
 };
 
-const AddSalaryDetails = () => {
-  const navigate = useNavigate();
-  const [open, setOpen] = useState<boolean>(false);
+const AddSalaryDetails = ({
+  id,
+  setOpenAddSalary,
+  setAdded,
+}: {
+  id: string | undefined;
+  setOpenAddSalary: (v: boolean) => void;
+  setAdded: (v: boolean) => void;
+}) => {
+  const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
-  const params = useParams();
-  const id = params.user_id;
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const formik = useFormik({
@@ -48,12 +50,12 @@ const AddSalaryDetails = () => {
       response
         .then((res) => {
           if (res.data.response) {
-            setOpen(true);
+            setOpenAddSalary(false);
+            setAdded(true);
           }
         })
         .catch((err) => {
-          formik.values.appraisal_date = "";
-          formik.errors.appraisal_date = "Please Enter A Correct Date";
+          setResult(err.response.data.message);
         })
         .finally(() => {
           setOnLoad(false);
@@ -63,23 +65,20 @@ const AddSalaryDetails = () => {
 
   return (
     <div className="add-salary-section">
-      {open && (
-        <PopUp
-          msg="Salary Details Added Successfully"
-          path={"/user/" + id}
-          title={<CheckIcon sx={{ fontSize: 45 }} color="success" />}
-        />
-      )}
       <Paper
         sx={{
           maxWidth: 700,
           margin: "auto",
-          marginTop: 5,
-          mb: 5,
           padding: 3,
-          overflow: "hidden",
         }}
       >
+        <Typography
+          sx={{ fontWeight: "bold", fontSize: 18, mb: 1 }}
+          align="left"
+          color="error"
+        >
+          {result}
+        </Typography>
         <userFormContext.Provider value={formik}>
           <form onSubmit={formik.handleSubmit}>
             <h1>Salary Details</h1>
@@ -134,21 +133,21 @@ const AddSalaryDetails = () => {
                 </Grid>
                 <h3>Allowances</h3>
                 <Grid container columnSpacing={1}>
-                  <Grid item sm={4} xs={12} md={4}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="conveyance_allowance"
                       type="number"
                       label="Conveyance"
                     />
                   </Grid>
-                  <Grid item sm={4} xs={12} md={4}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="utility_allowance"
                       type="number"
                       label="Utility"
                     />
                   </Grid>
-                  <Grid item sm={4} xs={12} md={4}>
+                  <Grid item sm={6} xs={12} md={6}>
                     <TextInput
                       name="home_rent_allowances"
                       type="number"
@@ -171,14 +170,14 @@ const AddSalaryDetails = () => {
                   </Grid>
                 </Grid>
                 <h3>Appraisal Date</h3>
-                <Grid container>
-                  <Grid item sm={4} xs={12}>
+                <Grid container mb={3}>
+                  <Grid item sm={5} xs={12}>
                     <DateInput name="appraisal_date" label="" />
                   </Grid>
                 </Grid>
               </Grid>
               <Grid container spacing={1}>
-                <Grid item xs={12} md={3} sm={3}>
+                <Grid item xs={12} md={4} sm={4}>
                   <Button
                     variant="contained"
                     color="primary"
@@ -189,14 +188,12 @@ const AddSalaryDetails = () => {
                     Submit Details
                   </Button>
                 </Grid>
-                <Grid item xs={12} md={3} sm={3}>
+                <Grid item xs={12} md={4} sm={4}>
                   <Button
                     disabled={onLoad}
                     variant="contained"
                     color="warning"
-                    onClick={() => {
-                      navigate("/user/" + id);
-                    }}
+                    onClick={() => setOpenAddSalary(false)}
                     fullWidth
                   >
                     Cancel
