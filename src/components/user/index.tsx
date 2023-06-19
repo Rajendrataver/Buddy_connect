@@ -11,9 +11,8 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
-
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import GppBadIcon from "@mui/icons-material/GppBad";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -178,8 +177,20 @@ const User = () => {
                     </TableRow>
                     <TableRow>
                       <TableCell>Status</TableCell>
-                      <TableCell align="left">
-                        <ToggelStatus id={id} status={user.status} />
+                      <TableCell
+                        align="left"
+                        sx={{
+                          alignItems: "center",
+                          display: "flex",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {user.status}&nbsp;{" "}
+                        {user.status === "active" ? (
+                          <VerifiedUserIcon color={"primary"} />
+                        ) : (
+                          <GppBadIcon color={"warning"} />
+                        )}
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -194,7 +205,7 @@ const User = () => {
               <Tabs
                 sx={{ maxWidth: 500 + "px" }}
                 value={tab}
-                indicatorColor="secondary"
+                indicatorColor="primary"
                 textColor="inherit"
                 variant="fullWidth"
                 aria-label="full width tabs example"

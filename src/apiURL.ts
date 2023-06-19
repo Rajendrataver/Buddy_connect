@@ -17,3 +17,4 @@ export const GET_FORMER_USERS_URL = "https://buddy-connect.encoreskydev.com/api/
 export const SET_USER_STATUS_URL = "https://buddy-connect.encoreskydev.com/api/user/userStatus.php?user_id=";
 export const ADD_BANK_DETAULS_URL = "https://buddy-connect.encoreskydev.com/api/bank/addBankDetail.php?user_id=";
 export const LOGIN_USER_DEFAULT_AVATAR_URL = "https://cdn2.vectorstock.com/i/1000x1000/72/96/emotion-avatar-man-happy-successful-face-vector-13577296.jpg";
+export const ADD_CSV_FILE_URL = "https://buddy-connect.encoreskydev.com/api/user/csvFile.php";

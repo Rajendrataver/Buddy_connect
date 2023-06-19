@@ -23,7 +23,7 @@ interface userInterface {
 }
 const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
   return (
-    <Box sx={{ maxWidth: 1000, mt: 5 }}>
+    <Box>
       <TableContainer
         sx={{
           padding: 2,

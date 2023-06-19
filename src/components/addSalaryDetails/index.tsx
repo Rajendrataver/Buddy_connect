@@ -68,7 +68,7 @@ const AddSalaryDetails = ({
       <Paper
         sx={{
           maxWidth: 700,
-          padding: 3,
+          padding: 2.5,
           overflow: "auto",
         }}
       >
@@ -175,18 +175,13 @@ const AddSalaryDetails = ({
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={4} sm={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    disabled={onLoad}
-                  >
-                    Submit Details
-                  </Button>
-                </Grid>
+              <Grid
+                container
+                spacing={1}
+                columnSpacing={1}
+                direction={{ xs: "column-reverse", md: "row", sm: "row" }}
+                justifyContent={"flex-end"}
+              >
                 <Grid item xs={12} md={4} sm={4}>
                   <Button
                     disabled={onLoad}
@@ -196,6 +191,17 @@ const AddSalaryDetails = ({
                     fullWidth
                   >
                     Cancel
+                  </Button>
+                </Grid>{" "}
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Submit Details
                   </Button>
                 </Grid>
               </Grid>

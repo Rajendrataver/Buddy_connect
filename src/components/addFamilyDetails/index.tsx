@@ -50,7 +50,7 @@ const AddFamilyDetail = ({
       })
         .then((res) => {
           setOpen(false);
-          setAdded(true)
+          setAdded(true);
         })
         .catch((err) => {
           if (err.response.data.message === "This relation is already exist.") {
@@ -114,18 +114,13 @@ const AddFamilyDetail = ({
               <Grid item sm={12} xs={12}>
                 <TextInput name="address" type="text" label="Address" />
               </Grid>
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={4} sm={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    disabled={onLoad}
-                  >
-                    Add member
-                  </Button>
-                </Grid>
+              <Grid
+                container
+                spacing={1}
+                columnSpacing={1}
+                direction={{ xs: "column-reverse", md: "row", sm: "row" }}
+                justifyContent={"flex-end"}
+              >
                 <Grid item xs={12} md={4} sm={4}>
                   <Button
                     disabled={onLoad}
@@ -137,6 +132,17 @@ const AddFamilyDetail = ({
                     fullWidth
                   >
                     Cancel
+                  </Button>
+                </Grid>
+                <Grid item xs={12} md={4} sm={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    disabled={onLoad}
+                  >
+                    Add member
                   </Button>
                 </Grid>
               </Grid>

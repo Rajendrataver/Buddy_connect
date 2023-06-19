@@ -40,7 +40,7 @@ const SelectInput = ({
         }
         error={formik.touched[name] && formik.errors[name] ? true : false}
       >
-        <MenuItem value="">Select </MenuItem>
+        <MenuItem value="">Select</MenuItem>
         {items.map((item, i) => {
           return (
             <MenuItem key={i} value={item} sx={{ textTransform: "capitalize" }}>

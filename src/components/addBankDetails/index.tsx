@@ -26,18 +26,16 @@ const initialValues = {
 const AddBankDetails = ({
   id,
   setOpenBank,
-  setAdded
+  setAdded,
 }: {
   id: string | undefined;
-    setOpenBank: (v: boolean) => void;
-  setAdded:(v:boolean)=>void
+  setOpenBank: (v: boolean) => void;
+  setAdded: (v: boolean) => void;
 }) => {
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const token = localStorage.getItem("token");
-  
-  
- 
+
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -53,7 +51,7 @@ const AddBankDetails = ({
       })
         .then((res) => {
           setOpenBank(false);
-          setAdded(true)
+          setAdded(true);
         })
         .catch((err) => {
           console.log(err);
@@ -66,7 +64,6 @@ const AddBankDetails = ({
   });
   return (
     <>
-     
       <Paper
         sx={{
           maxWidth: 500,
@@ -76,7 +73,7 @@ const AddBankDetails = ({
         }}
       >
         <Loader open={onLoad} />
-        
+
         <Typography sx={{ mx: 2, fontSize: 25 }} color="red" align="left">
           {result}
         </Typography>
@@ -115,19 +112,13 @@ const AddBankDetails = ({
                   items={SELECT.ACCOUNT_TYPE}
                 />
               </Grid>
-              <Grid container spacing={1}>
-                <Grid item sm={4} xs={12} md={4}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    fullWidth
-                    sx={{ marginTop: 1 }}
-                    disabled={onLoad}
-                  >
-                    Add
-                  </Button>
-                </Grid>
+              <Grid
+                container
+                spacing={1}
+                columnSpacing={1}
+                direction={{ xs: "column-reverse", md: "row", sm: "row" }}
+                justifyContent={"flex-end"}
+              >
                 <Grid item sm={4} xs={12} md={4}>
                   <Button
                     variant="contained"
@@ -138,6 +129,18 @@ const AddBankDetails = ({
                     disabled={onLoad}
                   >
                     Cancel
+                  </Button>
+                </Grid>
+                <Grid item sm={4} xs={12} md={4}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    fullWidth
+                    sx={{ marginTop: 1 }}
+                    disabled={onLoad}
+                  >
+                    Add
                   </Button>
                 </Grid>
               </Grid>

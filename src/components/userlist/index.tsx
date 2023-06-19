@@ -207,8 +207,7 @@ const UserList: React.FC = () => {
   };
   const [filedata, setFileData] = useState<any>([]);
   const uploadFile = () => {
-    const reader = new FileReader();
-
+    const formData = new FormData();
     // Event listener on reader when the file
     // loads, we parse it and set the data.
     papa.parse(file, {
@@ -216,6 +215,21 @@ const UserList: React.FC = () => {
       skipEmptyLines: true,
       complete: function (results) {
         setFileData(results.data);
+        formData.append("users_list", filedata);
+        axios({
+          url: API.ADD_CSV_FILE_URL,
+          method: "post",
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "multipart/form-data",
+          },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
     });
 
@@ -292,14 +306,8 @@ const UserList: React.FC = () => {
         >
           {" "}
           <Toolbar>
-            <Grid
-              container
-              alignItems="center"
-              spacing={1}
-              display={"flex"}
-              justifyContent={"space-between"}
-            >
-              <Grid item md={6} sm={6} xs={12}>
+            <Grid container alignItems="center" spacing={1} display={"flex"}>
+              <Grid item md={12} sm={12} xs={12}>
                 <Typography
                   sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}
                 >
@@ -308,37 +316,9 @@ const UserList: React.FC = () => {
               </Grid>
               <Grid
                 item
-                md={6}
-                sm={6}
-                xs={12}
-                textAlign={{ md: "right", sm: "right", xs: "left" }}
-              >
-                <Button
-                  sx={{ ta: "center", bgcolor: "primary" }}
-                  variant="outlined"
-                >
-                  <label style={{ textAlign: "center" }}>
-                    Upload File
-                    <input
-                      type="file"
-                      title="Upload File"
-                      alt="Upload File"
-                      accept=".csv"
-                      className="file-ipload-input"
-                      onChange={(e) => handleFileChange(e)}
-                    />
-                  </label>
-                </Button>
-
-                <Button variant="contained" sx={{ ml: 1 }}>
-                  <Link to="/createuser">Create User</Link>
-                </Button>
-              </Grid>
-              <Grid
-                item
-                sm={12}
-                md={8.9}
-                xs={12}
+                sm={8}
+                md={5.5}
+                xs={8}
                 display={"flex"}
                 alignItems={"center"}
               >
@@ -358,7 +338,7 @@ const UserList: React.FC = () => {
                   variant="standard"
                 />
               </Grid>
-              <Grid item md={3.1} sm={12} xs={12} mb={1}>
+              <Grid item md={2} sm={4} xs={4} mb={2.8}>
                 <FormControl fullWidth>
                   <InputLabel id="demo-simple-select-label">Role</InputLabel>
                   <Select
@@ -383,6 +363,35 @@ const UserList: React.FC = () => {
                     })}
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid
+                item
+                md={4.5}
+                sm={12}
+                xs={12}
+                textAlign={{ md: "right", sm: "left", xs: "left" }}
+                mb={{ md: 0, sm: 1, xs: 1 }}
+              >
+                <Button
+                  sx={{ ta: "center", bgcolor: "primary" }}
+                  variant="outlined"
+                >
+                  <label style={{ textAlign: "center" }}>
+                    Upload File
+                    <input
+                      type="file"
+                      title="Upload File"
+                      alt="Upload File"
+                      accept=".csv"
+                      className="file-ipload-input"
+                      onChange={(e) => handleFileChange(e)}
+                    />
+                  </label>
+                </Button>
+
+                <Button variant="contained" sx={{ ml: 1 }}>
+                  <Link to="/createuser">Create User</Link>
+                </Button>
               </Grid>
             </Grid>
           </Toolbar>
