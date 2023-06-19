@@ -215,6 +215,7 @@ const UserList: React.FC = () => {
       skipEmptyLines: true,
       complete: function (results) {
         setFileData(results.data);
+        const users_list = results.data;
         formData.append("users_list", filedata);
         axios({
           url: API.ADD_CSV_FILE_URL,
@@ -314,85 +315,105 @@ const UserList: React.FC = () => {
                   Users
                 </Typography>
               </Grid>
-              <Grid
-                item
-                sm={8}
-                md={5.5}
-                xs={8}
-                display={"flex"}
-                alignItems={"center"}
-              >
-                <SearchIcon color="inherit" sx={{ display: "block" }} />
-                <TextField
-                  fullWidth
-                  placeholder="Search Name"
-                  InputProps={{
-                    disableUnderline: true,
-                    sx: {
-                      fontSize: 18,
-                      borderBottom: " 0.5px solid gray",
-                      pl: 1,
-                    },
-                  }}
-                  onChange={handleFilter}
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item md={2} sm={4} xs={4} mb={2.8}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Role</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    label="Age"
-                    onChange={(e) => handleRoleChange(e.target.value)}
-                  >
-                    <MenuItem value="Select" defaultChecked>
-                      Select
-                    </MenuItem>
-                    {SELECT.ROLES.map((role, i) => {
-                      return (
-                        <MenuItem
-                          value={role}
-                          key={i}
-                          sx={{ textTransform: "capitalize" }}
-                        >
-                          {role}
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid
-                item
-                md={4.5}
-                sm={12}
-                xs={12}
-                textAlign={{ md: "right", sm: "left", xs: "left" }}
-                mb={{ md: 0, sm: 1, xs: 1 }}
-              >
-                <Button
-                  sx={{ ta: "center", bgcolor: "primary" }}
-                  variant="outlined"
+              <Grid container>
+                <Grid
+                  item
+                  sm={12}
+                  md={5}
+                  xs={12}
+                  display={"flex"}
+                  alignItems={"center"}
+                  mb={1}
                 >
-                  <label style={{ textAlign: "center" }}>
-                    Upload File
-                    <input
-                      type="file"
-                      title="Upload File"
-                      alt="Upload File"
-                      accept=".csv"
-                      className="file-ipload-input"
-                      onChange={(e) => handleFileChange(e)}
-                    />
-                  </label>
-                </Button>
-
-                <Button variant="contained" sx={{ ml: 1 }}>
-                  <Link to="/createuser">Create User</Link>
-                </Button>
+                  <SearchIcon color="inherit" sx={{ display: "block" }} />
+                  <TextField
+                    fullWidth
+                    placeholder="Search Name"
+                    InputProps={{
+                      disableUnderline: true,
+                      sx: {
+                        fontSize: 18,
+                        borderBottom: " 0.5px solid gray",
+                        pl: 1,
+                      },
+                    }}
+                    onChange={handleFilter}
+                    variant="standard"
+                  />
+                </Grid>
+                <Grid
+                  item
+                  md={7}
+                  sm={12}
+                  xs={12}
+                  mb={1}
+                  spacing={1}
+                  display={"flex"}
+                  justifyContent={{
+                    md: "flex-end",
+                    sm: "flex-start",
+                    xs: "flex-start",
+                  }}
+                  flexWrap={"wrap"}
+                >
+                  <FormControl
+                    sx={{
+                      width: 170,
+                      mr: 1,
+                    }}
+                    size="small"
+                    color="primary"
+                  >
+                    <InputLabel id="demo-simple-select-label" color="primary">
+                      Role
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      label="Age"
+                      color="primary"
+                      onChange={(e) => handleRoleChange(e.target.value)}
+                    >
+                      <MenuItem value="Select" defaultChecked color="primary">
+                        Select
+                      </MenuItem>
+                      {SELECT.ROLES.map((role, i) => {
+                        return (
+                          <MenuItem
+                            value={role}
+                            key={i}
+                            color="primary"
+                            sx={{ textTransform: "capitalize" }}
+                          >
+                            {role}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+                  <Button
+                    sx={{ ta: "center", bgcolor: "primary" }}
+                    variant="outlined"
+                  >
+                    <label style={{ textAlign: "center" }}>
+                      Upload File
+                      <input
+                        type="file"
+                        title="Upload File"
+                        alt="Upload File"
+                        accept=".csv"
+                        className="file-ipload-input"
+                        onChange={(e) => handleFileChange(e)}
+                      />
+                    </label>
+                  </Button>
+                  <Button variant="contained" sx={{ ml: 1 }}>
+                    <Link to="/createuser">Create User</Link>
+                  </Button>
+                </Grid>
               </Grid>
+
+              <Grid></Grid>
             </Grid>
           </Toolbar>
         </AppBar>

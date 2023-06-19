@@ -26,7 +26,6 @@ const Dashboard = () => {
   const fetch = useFetch();
   const [list, setList] = useState<Array<userInterface>>([]);
   const [active, setActive] = useState<number>(0);
-  const [nonActive, setNonActive] = useState<number>(0);
   const [hr, setHR] = useState<number>(0);
   const [admin, setAdmin] = useState<number>(0);
   const [assosiate, setAssosiate] = useState<number>(0);
@@ -68,7 +67,11 @@ const Dashboard = () => {
     });
     setAdmin(newData.length);
   }, [list]);
-
+  const data = [
+    { argument: "HR", value: hr, color: "rgb(220, 57, 18)" },
+    { argument: "Admin", value: admin, color: "rgb(51, 102, 204)" },
+    { argument: "Assosiate", value: assosiate, color: "rgb(255, 153, 0)" },
+  ];
   return (
     <Box className="container" mt={5} mb={5}>
       <Loader open={loading} />
@@ -115,16 +118,12 @@ const Dashboard = () => {
             />
           </Grid>
         </Grid>
-        <Grid
-          container
-          mt={3}
-          spacing={2}
-        >
+        <Grid container mt={3} spacing={2}>
           <Grid item md={8} sm={12} xs={12}>
             <RecentJoinedUser userList={list} />
           </Grid>
           <Grid item md={4} sm={12} xs={12}>
-            <RoleChart hr={hr} admin={admin} assosiate={assosiate} />
+            <RoleChart data={data} title="Users According Role" />
           </Grid>
         </Grid>
       </Box>
