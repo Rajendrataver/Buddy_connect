@@ -28,6 +28,7 @@ import PopUp from "../popUp";
 import Loader from "../loader";
 import ToggelStatus from "../toggelStatus";
 import MenuItem from "@mui/material/MenuItem";
+import UploadFileButton from "../uploadFileButton";
 
 interface userInterface {
   first_name: string;
@@ -42,9 +43,8 @@ interface userInterface {
 }
 
 const UserList: React.FC = () => {
-  const [openAlert, setOpenAlert] = useState<boolean>(false);
+ const [fileAdded,setFilAdded]=useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(true);
-  const [file, setFile] = useState<any>();
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
   const [userName, setUserName] = useState<string>();
@@ -71,40 +71,8 @@ const UserList: React.FC = () => {
 
   React.useEffect(() => {
     getUserList();
-  }, []);
-  const handleClick = (id: string, status: string) => {
-    setOnLoad(true);
+  }, [fileAdded]);
 
-    const token = localStorage.getItem("token");
-    if (status === "active") {
-      status = "deActive";
-    } else {
-      status = "active";
-    }
-    axios({
-      url: API.SET_USER_STATUS_URL + id,
-      method: "patch",
-      data: { status },
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    })
-      .then((result) => {
-        const newList = userList.map((item) => {
-          if (item.id === id) {
-            item.status = status;
-          }
-          return item;
-        });
-        setUserlist(newList);
-      })
-      .catch((error) => {
-        console.log(error.response);
-      })
-      .finally(() => {
-        setOnLoad(false);
-      });
-  };
   const columns: TableColumn<userInterface>[] = [
     {
       name: <h4>Name</h4>,
@@ -205,49 +173,6 @@ const UserList: React.FC = () => {
         setOnLoad(false);
       });
   };
-  const [filedata, setFileData] = useState<any>([]);
-  const uploadFile = () => {
-    const formData = new FormData();
-    // Event listener on reader when the file
-    // loads, we parse it and set the data.
-    papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        setFileData(results.data);
-        const users_list = results.data;
-        formData.append("users_list", filedata);
-        axios({
-          url: API.ADD_CSV_FILE_URL,
-          method: "post",
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "multipart/form-data",
-          },
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      },
-    });
-
-    setOpenUpload(false);
-  };
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    if (file) {
-      const extension = file.name.split(".").pop();
-      if (extension === "csv") {
-        setFile(file);
-        setOpenUpload(true);
-      } else {
-        setOpenAlert(true);
-      }
-    }
-  };
 
   function handleFilter(event: any) {
     const newData = userList.filter((row) => {
@@ -269,12 +194,6 @@ const UserList: React.FC = () => {
   };
   return (
     <Box className={"container"}>
-      <ConfirmBox
-        msg={"Upload  File ?"}
-        open={openUpload}
-        handleOk={uploadFile}
-        setOpen={setOpenUpload}
-      />
       <Loader open={loading} />
       <ConfirmBox
         msg={"Do you want to Delete " + userName + " ?"}
@@ -282,12 +201,7 @@ const UserList: React.FC = () => {
         handleOk={deletUser}
         setOpen={setOpen}
       />
-      {openAlert && (
-        <PopUp
-          msg="Invalid File Type Select CSV file"
-          setOpenAlert={setOpenAlert}
-        />
-      )}
+
       <Paper
         className="userlist-section"
         sx={{
@@ -391,22 +305,7 @@ const UserList: React.FC = () => {
                       })}
                     </Select>
                   </FormControl>
-                  <Button
-                    sx={{ ta: "center", bgcolor: "primary" }}
-                    variant="outlined"
-                  >
-                    <label style={{ textAlign: "center" }}>
-                      Upload File
-                      <input
-                        type="file"
-                        title="Upload File"
-                        alt="Upload File"
-                        accept=".csv"
-                        className="file-ipload-input"
-                        onChange={(e) => handleFileChange(e)}
-                      />
-                    </label>
-                  </Button>
+                  <UploadFileButton setFileAdded={setFilAdded} />
                   <Button variant="contained" sx={{ ml: 1 }}>
                     <Link to="/createuser">Create User</Link>
                   </Button>

@@ -224,19 +224,6 @@ const UpdateUser = () => {
               <Grid item sm={3} md={3} xs={12}>
                 <Button
                   variant="contained"
-                  color="primary"
-                  type="submit"
-                  fullWidth
-                  sx={{ marginTop: 1 }}
-                  disabled={loading}
-                >
-                  Update
-                </Button>
-              </Grid>
-
-              <Grid item sm={3} md={3} xs={12}>
-                <Button
-                  variant="contained"
                   color="warning"
                   fullWidth
                   sx={{ marginTop: 1 }}
@@ -249,6 +236,18 @@ const UpdateUser = () => {
                   disabled={loading}
                 >
                   Cancel
+                </Button>
+              </Grid>{" "}
+              <Grid item sm={3} md={3} xs={12}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                  sx={{ marginTop: 1 }}
+                  disabled={loading}
+                >
+                  Update
                 </Button>
               </Grid>
             </Grid>

@@ -21,12 +21,13 @@ interface userInterface {
   designation: string;
   role: string;
   image: string;
-  city:string
+  city: string;
 }
 
 const Dashboard = () => {
   const fetch = useFetch();
   const [list, setList] = useState<Array<userInterface>>([]);
+  
   const [active, setActive] = useState<number>(0);
   const [hr, setHR] = useState<number>(0);
   const [admin, setAdmin] = useState<number>(0);
@@ -68,8 +69,10 @@ const Dashboard = () => {
       return row.role === "admin";
     });
     setAdmin(newData.length);
+   
   }, [list]);
   const data = [
+   
     { argument: "HR", value: hr, color: "rgb(220, 57, 18)" },
     { argument: "Admin", value: admin, color: "rgb(51, 102, 204)" },
     { argument: "Assosiate", value: assosiate, color: "rgb(255, 153, 0)" },
