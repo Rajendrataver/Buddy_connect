@@ -20,7 +20,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import FamilyDetails from "../FamilyDetails";
 import { useNavigate, useParams } from "react-router";
-
+import VerifiedIcon from "@mui/icons-material/Verified";
 import { useEffect, useState } from "react";
 import * as API from "../../apiURL";
 
@@ -38,6 +38,7 @@ import Profile from "../profile";
 import ToggelStatus from "../toggelStatus";
 const data = {
   first_name: "",
+  last_name: "",
   email: "",
   mobile: "",
   city: "",
@@ -50,6 +51,7 @@ const data = {
 };
 interface userInterface {
   first_name: string;
+  last_name: string;
   email: string;
   mobile: string;
   city: string;
@@ -137,14 +139,31 @@ const User = () => {
           <Grid container alignItems={"center"}>
             <Grid item xs={12} md={4} textAlign={"center"}>
               <Profile imageName={user.image} id={id} />
+              <Typography
+                gutterBottom
+                sx={{
+                  fontSize: 30,
+                  color: "darkslategrey",
+                  fontWeight: "bold",
+                  textTransform: "capitalize",
+                  alignItems: "center",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                {user.first_name + " " + user.last_name}{" "}
+                {user.role === "admin" ? (
+                  <VerifiedIcon color={"primary"} />
+                ) : null}
+              </Typography>
               <Button
                 variant="outlined"
-                sx={{ mt: 2 }}
+                
                 onClick={() => {
                   navigate("/updateuser/" + id);
                 }}
               >
-                Update Details <EditIcon />
+                Update Details
               </Button>
             </Grid>
             <Grid item xs={12} md={8}>
@@ -186,11 +205,7 @@ const User = () => {
                         }}
                       >
                         {user.status}&nbsp;{" "}
-                        {user.status === "active" ? (
-                          <VerifiedUserIcon color={"primary"} />
-                        ) : (
-                          <GppBadIcon color={"warning"} />
-                        )}
+                       
                       </TableCell>
                     </TableRow>
                   </TableHead>

@@ -21,7 +21,9 @@ interface userInterface {
   designation: string;
   role: string;
   image: string;
+  city:string
 }
+
 const Dashboard = () => {
   const fetch = useFetch();
   const [list, setList] = useState<Array<userInterface>>([]);

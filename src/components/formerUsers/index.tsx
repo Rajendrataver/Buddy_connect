@@ -4,14 +4,13 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
-import { Box } from "@mui/material";
+import { Avatar, Box } from "@mui/material";
 import Loader from "../loader";
 interface userInterface {
   first_name: string;
@@ -23,6 +22,7 @@ interface userInterface {
   contact: string;
   designation: string;
   role: string;
+  image: string;
 }
 
 const FormerUsers: React.FC = () => {
@@ -57,6 +57,19 @@ const FormerUsers: React.FC = () => {
       selector: (row: userInterface) => {
         return data.indexOf(row) + 1;
       },
+    },
+    {
+      name: <h4>Profile</h4>,
+      cell: (row: userInterface) => {
+        return (
+          <Avatar
+            src={API.IMAGE_SRC_URL + row.image}
+            sx={{ width: 55, height: 55, objectFit: "cover" }}
+            alt={row.first_name.toLocaleUpperCase()}
+          />
+        );
+      },
+      style: { padding: 5 +'px' },
     },
     {
       name: <h4>Name</h4>,
@@ -144,6 +157,7 @@ const FormerUsers: React.FC = () => {
             columns={columns}
             data={data}
             fixedHeader
+            style={{ padding: 1}}
           />
         </Typography>
       </Paper>

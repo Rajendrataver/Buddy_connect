@@ -14,6 +14,8 @@ import { useNavigate } from "react-router";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IMAGE_SRC_URL } from "../../apiURL";
 import { Link } from "react-router-dom";
+import PopUpform from "../PopUpForm";
+import UserProfile from "../userProfileDialogBox";
 interface userInterface {
   first_name: string;
   last_name: string;
@@ -25,18 +27,32 @@ interface userInterface {
   designation: string;
   role: string;
   image: string;
+  city:string
 }
 const Row = ({ user, sNo }: { user: userInterface; sNo: number }) => {
   const [open, setOpen] = React.useState<boolean>(false);
-  const navigate = useNavigate();
+ 
   return (
     <React.Fragment>
+      <PopUpform
+        open={open}
+        element={<UserProfile user={user} onClose={()=>setOpen(false)}/>}
+        onClose={() => setOpen(false)}
+      />
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>{sNo}</TableCell>
         <TableCell>
           <Avatar
             src={IMAGE_SRC_URL + user.image}
-            sx={{ width: 55, height: 55, objectFit: "cover" }}
+            sx={{
+              width: 55,
+              height: 55,
+              objectFit: "cover",
+              cursor: "pointer",
+            }}
+            alt={user.first_name.toLocaleUpperCase()}
+            onClick={() => setOpen(true)}
+            
           />
         </TableCell>
         <TableCell

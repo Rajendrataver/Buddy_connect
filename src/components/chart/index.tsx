@@ -1,7 +1,4 @@
-import React from "react";
-import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import { Grid, Paper, Typography } from "@mui/material";
-import PersonPinCircleIcon from "@mui/icons-material/PersonPinCircle";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { PieChart } from "react-minimal-pie-chart";
 
@@ -11,9 +8,13 @@ interface dataInterface {
   color: string;
 }
 
-const RoleChart = ({data,title}:{data:dataInterface[],title:string}) => {
- 
-
+const RoleChart = ({
+  data,
+  title,
+}: {
+  data: dataInterface[];
+  title: string;
+}) => {
   return (
     <Paper sx={{ p: 2 }}>
       <Typography
@@ -34,22 +35,19 @@ const RoleChart = ({data,title}:{data:dataInterface[],title:string}) => {
         animationDuration={2000}
         animationEasing={"ease-in-out"}
         radius={45}
-        
       />
       <hr />
       <Grid container spacing={2} p={2.5} justifyContent={"center"}>
-        {
-          data.map((row) => {
-            return (
-              <Grid item display={"flex"} alignItems={"center"}>
-                <FiberManualRecordIcon sx={{ color: row.color }} />
-                <Typography fontSize={20} display={"flex"}>
-                 {row.argument}
-                </Typography>
-              </Grid>
-            );
-          })
-        }
+        {data.map((row) => {
+          return (
+            <Grid item display={"flex"} alignItems={"center"}>
+              <FiberManualRecordIcon sx={{ color: row.color }} />
+              <Typography fontSize={20} display={"flex"}>
+                {row.argument}
+              </Typography>
+            </Grid>
+          );
+        })}
       </Grid>
     </Paper>
   );

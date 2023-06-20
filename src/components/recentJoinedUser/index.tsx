@@ -20,6 +20,7 @@ interface userInterface {
   designation: string;
   role: string;
   image: string;
+  city:string
 }
 const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
   return (
