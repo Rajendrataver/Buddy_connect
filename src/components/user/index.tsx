@@ -1,10 +1,5 @@
-import Table from "@mui/material/Table";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
 import FamilyDetails from "../FamilyDetails";
-import { useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useEffect, useState } from "react";
 import * as API from "../../apiURL";
@@ -28,6 +23,8 @@ import {
   Tabs,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
+import UserDetails from "../userDetails";
 const tabs = {
   BANK_DETAILS: "Bank Details",
   SALARY_DETAILS: "Salary Details",
@@ -36,8 +33,6 @@ const tabs = {
 const User = () => {
   const [validUser, setValidUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [onLoad, setOnLoad] = useState<boolean>(false);
-  const navigate = useNavigate();
   const [tab, setTab] = useState(tabs.BANK_DETAILS);
   const params = useParams();
   const id = params.id;
@@ -67,117 +62,23 @@ const User = () => {
     getUserDetails();
   }, []);
 
-  const changeStatus = () => {
-    var status = "";
-    setOnLoad(true);
-    if (user.status === "active") {
-      status = "deActive";
-    } else {
-      status = "active";
-    }
-    const response = fetch(API.SET_USER_STATUS_URL + id, "patch", token, {
-      status,
-    });
-    response
-      .then((res) => {
-        user.status = status;
-      })
-      .catch((err) => {
-        console.log(err.data.response.message);
-      })
-      .finally(() => {
-        setOnLoad(false);
-      });
-  };
   return (
-    <Box>
+    <Box mt={5}>
       {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
       <Loader open={loading} />
-
-      <Paper>
-        <AppBar
-          position="static"
-          color="default"
-          elevation={0}
-          sx={{ minHeight: 100 + "vh", pt: 5 }}
-          className="container"
-        >
           <Grid container alignItems={"center"}>
             <Grid item xs={12} md={4} textAlign={"center"}>
               <Profile imageName={user.image} id={id} />
-              <Typography
-                gutterBottom
-                sx={{
-                  fontSize: 30,
-                  color: "darkslategrey",
-                  fontWeight: "bold",
-                  textTransform: "capitalize",
-                  alignItems: "center",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                {user.first_name + " " + user.last_name}{" "}
-                {user.role === "admin" ? (
-                  <VerifiedIcon color={"primary"} />
-                ) : null}
-              </Typography>
-              <Button
-                variant="outlined"
-                onClick={() => {
-                  navigate("/updateuser/" + id);
-                }}
-              >
-                Update Details
-              </Button>
+              <Link to={"/updateuser/" + id}>
+                <Button variant="outlined" sx={{ mt: 2 }}>
+                  Update Details
+                </Button>
+              </Link>
             </Grid>
             <Grid item xs={12} md={8}>
-              <TableContainer>
-                <Table
-                  sx={{ maxWidth: 650, width: 100 + "%" }}
-                  size="small"
-                  aria-label="a dense table"
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Name</TableCell>
-                      <TableCell align="left">{user.first_name}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Contact</TableCell>
-                      <TableCell align="left">{user.contact}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Designation</TableCell>
-                      <TableCell align="left">{user.designation}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Role</TableCell>
-                      <TableCell align="left">{user.role}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Email</TableCell>
-                      <TableCell align="left">{user.email}</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>Status</TableCell>
-                      <TableCell
-                        align="left"
-                        sx={{
-                          alignItems: "center",
-                          display: "flex",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {user.status}&nbsp;{" "}
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
-                </Table>
-              </TableContainer>
+              <UserDetails user={user} />
             </Grid>
           </Grid>
-
           <Grid container>
             <Grid item xs={0} md={1} sm={0}></Grid>
             <Grid item xs={12} md={11} sm={12}>
@@ -216,8 +117,6 @@ const User = () => {
               {tab === tabs.FAMILY_DETAILS && <FamilyDetails id={id} />}
             </Grid>
           </Grid>
-        </AppBar>
-      </Paper>
     </Box>
   );
 };

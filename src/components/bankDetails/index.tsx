@@ -22,6 +22,7 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from "@mui/material";
+import PrimaryAccount from "../primaryAccount";
 
 const BankDetails = ({ id }: { id: string | undefined }) => {
   const [openAddBankDetails, setOpenAddBankDetails] = useState<boolean>(false);
@@ -126,43 +127,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         </Grid>
         {accountList[0].bank_name !== "" && (
           <Grid item xs={12} md={12}>
-            <Button variant="outlined" color="success">
-              <Typography variant="h6">Primary Account</Typography>
-            </Button>
-            <TableContainer>
-              <Table
-                sx={{ maxWidth: 650, width: 100 + "%" }}
-                size="small"
-                aria-label="a dense table"
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Bank Name</TableCell>
-                    <TableCell align="left">
-                      {accountList[0].bank_name}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Account Number</TableCell>
-                    <TableCell align="left">
-                      {accountList[0].account_number}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>Branch Name</TableCell>
-                    <TableCell align="left">
-                      {accountList[0].bank_branch}
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>IFSC CODE</TableCell>
-                    <TableCell align="left">
-                      {accountList[0].ifsc_code}
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
-              </Table>
-            </TableContainer>
+            <PrimaryAccount account={accountList[0]} />
           </Grid>
         )}
         {accountList.length !== 1 && (
