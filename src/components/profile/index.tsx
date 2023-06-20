@@ -25,10 +25,10 @@ const Profile = ({
   const [imageSrc, setImageSrc] = useState<string>();
   const [open, setOpen] = useState<boolean>(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
-  console.log(imageName);
+
   const selectedImage = (e: any) => {
     const image = e.target.files[0];
-    console.log(image);
+   
 
     if (image) {
       const extension = image.name.split(".").pop();
@@ -62,8 +62,8 @@ const Profile = ({
       },
     })
       .then((res) => {
-        console.log("upload");
-        console.log(res.data.response);
+       
+      
         setSrc(API.IMAGE_SRC_URL + res.data.response);
       })
       .catch((err) => {

@@ -38,9 +38,9 @@ const RoleChart = ({
       />
       <hr />
       <Grid container spacing={2} p={2.5} justifyContent={"center"}>
-        {data.map((row) => {
+        {data.map((row,i) => {
           return (
-            <Grid item display={"flex"} alignItems={"center"}>
+            <Grid item display={"flex"} alignItems={"center"} key={i}>
               <FiberManualRecordIcon sx={{ color: row.color }} />
               <Typography fontSize={20} display={"flex"}>
                 {row.argument}

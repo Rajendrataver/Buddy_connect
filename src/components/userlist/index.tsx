@@ -31,7 +31,6 @@ import MenuItem from "@mui/material/MenuItem";
 import UploadFileButton from "../uploadFileButton";
 import userDetails from "../../InterFaces";
 
-
 const UserList: React.FC = () => {
   const [fileAdded, setFilAdded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
@@ -65,7 +64,7 @@ const UserList: React.FC = () => {
 
   const columns: TableColumn<userDetails>[] = [
     {
-      name: <h4>Name</h4>,
+      name: "Name",
       cell: (row: userDetails) => {
         return (
           <span style={{ textTransform: "capitalize", fontWeight: "bold" }}>
@@ -76,31 +75,31 @@ const UserList: React.FC = () => {
       sortable: true,
     },
     {
-      name: <h4>Email</h4>,
+      name: "Email",
       selector: (row: userDetails) => row.email,
       sortable: true,
     },
 
     {
-      name: <h4>Designation</h4>,
+      name: "Designation",
       selector: (row: userDetails) => row.designation,
       sortable: true,
     },
     {
-      name: <h4>Role</h4>,
+      name: "Role",
       cell: (row: userDetails) => {
         return <span style={{ textTransform: "capitalize" }}>{row.role}</span>;
       },
       sortable: true,
     },
     {
-      name: <h4>Active</h4>,
+      name: "Active",
       cell: (row: userDetails) => {
         return <ToggelStatus status={row.status} id={row.id} />;
       },
     },
     {
-      name: <h4>Update</h4>,
+      name: "Update",
       cell: (row: userDetails) => {
         return (
           <Link to={"/updateuser/" + row.id}>
@@ -112,7 +111,7 @@ const UserList: React.FC = () => {
       },
     },
     {
-      name: <h4>Remove</h4>,
+      name: "Remove",
       cell: (row: userDetails) => {
         return (
           <Button
@@ -135,7 +134,7 @@ const UserList: React.FC = () => {
       },
     },
     {
-      name: <h4>Deatails</h4>,
+      name: "Deatails",
       cell: (row: userDetails) => {
         return (
           <Link to={"/user/" + row.id}>
@@ -258,7 +257,7 @@ const UserList: React.FC = () => {
                   sm={12}
                   xs={12}
                   mb={1}
-                  spacing={1}
+                
                   display={"flex"}
                   justifyContent={{
                     md: "flex-end",
@@ -285,7 +284,7 @@ const UserList: React.FC = () => {
                       color="primary"
                       onChange={(e) => handleRoleChange(e.target.value)}
                     >
-                      <MenuItem value="Select" defaultChecked color="primary">
+                      <MenuItem defaultChecked color="primary">
                         Select
                       </MenuItem>
                       {SELECT.ROLES.map((role, i) => {

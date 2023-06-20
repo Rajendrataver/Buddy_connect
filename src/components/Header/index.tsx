@@ -10,7 +10,7 @@ import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
 import * as API from "../../apiURL";
-
+import links from "../../appLinks";
 
 export default function Header({
   setSidebar,
@@ -67,39 +67,19 @@ export default function Header({
                 </Typography>
               </Grid>
               <Grid item xs>
-                <NavLink
-                  to="/dashboard"
-                  className={({ isActive }) =>
-                    isActive ? "active-link" : "inactive"
-                  }
-                >
-                  DashBoard
-                </NavLink>
-
-                <NavLink
-                  to="/users"
-                  className={({ isActive }) =>
-                    isActive ? "active-link" : "inactive"
-                  }
-                >
-                  Users
-                </NavLink>
-                <NavLink
-                  to="/createuser"
-                  className={({ isActive }) =>
-                    isActive ? "active-link" : "inactive"
-                  }
-                >
-                  Create User
-                </NavLink>
-                <NavLink
-                  to="/formerusers"
-                  className={({ isActive }) =>
-                    isActive ? "active-link" : "inactive"
-                  }
-                >
-                  Former Users
-                </NavLink>
+                {links.map((item, i) => {
+                  return (
+                    <NavLink
+                      key={i}
+                      to={item.url}
+                      className={({ isActive }) =>
+                        isActive ? "active-link" : "inactive"
+                      }
+                    >
+                      {item.title}
+                    </NavLink>
+                  );
+                })}
               </Grid>
 
               <Grid

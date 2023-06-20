@@ -2,15 +2,10 @@ import "./index.css";
 import { Route, Routes, useNavigate } from "react-router";
 import Header from "../Header";
 import { useEffect, useState } from "react";
-import UserList from "../userlist";
-import Dashboard from "../dashboard";
-import CreateUser from "../creatUser";
-import User from "../user";
 import { Box } from "@mui/material";
 import SideBar from "../sidebar";
-import UpdateUser from "../updateUserDetails";
-import FormerUsers from "../formerUsers";
-import UnkonownPage from "../404";
+import routes from "../../appLinks/routes";
+
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
   const navigate = useNavigate();
@@ -19,7 +14,10 @@ const Content = () => {
     className = "none";
   }
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (
+      !localStorage.getItem("token") &&
+      localStorage.getItem("role") !== "superAdmin"
+    ) {
       navigate("/");
     }
   });
@@ -40,13 +38,9 @@ const Content = () => {
       <Box sx={{ width: 100 + "%" }}>
         <Header setSidebar={setSidebar} toggleSidebar={toggleSidebar} />
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/users" element={<UserList />} />
-          <Route path="/createuser" element={<CreateUser />} />
-          <Route path="/user/:id" element={<User />} />
-          <Route path="/updateuser/:id" element={<UpdateUser />} />
-          <Route path="/formerusers" element={<FormerUsers />} />
-          <Route path="*" element={<UnkonownPage />}></Route>
+          {routes.map((item, i) => {
+            return <Route path={item.path} key={i} element={item.element} />;
+          })}
         </Routes>
       </Box>
     </Box>
