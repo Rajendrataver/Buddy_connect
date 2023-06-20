@@ -115,7 +115,7 @@ const Profile = ({
           src={src}
           alt={"My Avatar"}
           className="avatar-male"
-          loading="lazy"
+        
         />
         <EditIcon className="edit" sx={{ fontSize: 40, color: " #607d8b" }} />
         <input

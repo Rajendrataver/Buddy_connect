@@ -29,28 +29,18 @@ import Loader from "../loader";
 import ToggelStatus from "../toggelStatus";
 import MenuItem from "@mui/material/MenuItem";
 import UploadFileButton from "../uploadFileButton";
+import userDetails from "../../InterFaces";
 
-interface userInterface {
-  first_name: string;
-  last_name: string;
-  status: string;
-  token: string;
-  id: string;
-  email: string;
-  contact: string;
-  designation: string;
-  role: string;
-}
 
 const UserList: React.FC = () => {
- const [fileAdded,setFilAdded]=useState<boolean>(false)
+  const [fileAdded, setFilAdded] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
   const [userName, setUserName] = useState<string>();
   const [openUpload, setOpenUpload] = useState<boolean>(false);
-  const [userList, setUserlist] = useState<Array<userInterface>>([]);
-  const [data, setData] = useState<Array<userInterface>>([]);
+  const [userList, setUserlist] = useState<Array<userDetails>>([]);
+  const [data, setData] = useState<Array<userDetails>>([]);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const fetch = useFetch();
@@ -73,10 +63,10 @@ const UserList: React.FC = () => {
     getUserList();
   }, [fileAdded]);
 
-  const columns: TableColumn<userInterface>[] = [
+  const columns: TableColumn<userDetails>[] = [
     {
       name: <h4>Name</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return (
           <span style={{ textTransform: "capitalize", fontWeight: "bold" }}>
             {row.first_name}
@@ -87,31 +77,31 @@ const UserList: React.FC = () => {
     },
     {
       name: <h4>Email</h4>,
-      selector: (row: userInterface) => row.email,
+      selector: (row: userDetails) => row.email,
       sortable: true,
     },
 
     {
       name: <h4>Designation</h4>,
-      selector: (row: userInterface) => row.designation,
+      selector: (row: userDetails) => row.designation,
       sortable: true,
     },
     {
       name: <h4>Role</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return <span style={{ textTransform: "capitalize" }}>{row.role}</span>;
       },
       sortable: true,
     },
     {
       name: <h4>Active</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return <ToggelStatus status={row.status} id={row.id} />;
       },
     },
     {
       name: <h4>Update</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return (
           <Link to={"/updateuser/" + row.id}>
             <Button key={row.id} color="primary" variant="outlined">
@@ -123,7 +113,7 @@ const UserList: React.FC = () => {
     },
     {
       name: <h4>Remove</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return (
           <Button
             key={row.id}
@@ -146,7 +136,7 @@ const UserList: React.FC = () => {
     },
     {
       name: <h4>Deatails</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return (
           <Link to={"/user/" + row.id}>
             <Button key={row.id} fullWidth color="info" variant="contained">
@@ -155,6 +145,7 @@ const UserList: React.FC = () => {
           </Link>
         );
       },
+      style: { padding: 0 },
     },
   ];
 
@@ -224,7 +215,13 @@ const UserList: React.FC = () => {
             <Grid container alignItems="center" spacing={1} display={"flex"}>
               <Grid item md={12} sm={12} xs={12}>
                 <Typography
-                  sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "sans-serif",
+                    mt: 2,
+                    ml: 2,
+                    fontSize: 30,
+                  }}
                 >
                   Users
                 </Typography>

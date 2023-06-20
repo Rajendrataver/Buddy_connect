@@ -7,28 +7,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import TrendingFlatIcon from "@mui/icons-material/TrendingFlat";
 import { Link } from "react-router-dom";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
-
-interface userInterface {
-  first_name: string;
-  last_name: string;
-  status: string;
-  token: string;
-  id: number;
-  email: string;
-  contact: string;
-  designation: string;
-  role: string;
-  image: string;
-  city: string;
-}
+import userDetails from "../../InterFaces";
 
 const UserProfile = ({
   user,
   onClose,
 }: {
-  user: userInterface;
+  user: userDetails;
   onClose: () => void;
 }) => {
   return (

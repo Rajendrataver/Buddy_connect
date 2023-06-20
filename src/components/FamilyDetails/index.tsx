@@ -15,19 +15,13 @@ import { useNavigate } from "react-router";
 import ConfirmBox from "../confirmBox";
 import DialogBox from "../dialog";
 import PopUpform from "../PopUpForm";
-interface family {
-  name: string;
-  gender: string;
-  relation: string;
-  contact: string;
-  id: number;
-}
+import { familyDetails } from "../../InterFaces";
 const FamilyDetails = ({ id }: { id: string | undefined }) => {
   const [added, setAdded] = useState(false);
   const [open, setOpen] = useState<boolean>(false);
   const token = localStorage.getItem("token");
   const fetch = useFetch();
-  const [familyList, setFamilyList] = useState<Array<family>>([]);
+  const [familyList, setFamilyList] = useState<Array<familyDetails>>([]);
 
   const getFamilyList = () => {
     fetch(API.GET_FAMILY_DETAILS_URL + id, "get", token).then((res) => {
@@ -38,7 +32,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
     getFamilyList();
   }, [added]);
 
-  const deleteMember = (member: family) => {
+  const deleteMember = (member: familyDetails) => {
     const response = fetch(
       API.DELETE_FAMILY_DETAILS_URL + id + "&&family_id=" + member.id,
       "delete",

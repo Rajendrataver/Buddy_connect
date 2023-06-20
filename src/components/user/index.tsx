@@ -1,18 +1,3 @@
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Dialog,
-  Grid,
-  Paper,
-  Switch,
-  Tab,
-  Tabs,
-  Typography,
-} from "@mui/material";
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import GppBadIcon from "@mui/icons-material/GppBad";
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -23,45 +8,26 @@ import { useNavigate, useParams } from "react-router";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useEffect, useState } from "react";
 import * as API from "../../apiURL";
-
 import BankDetails from "../bankDetails";
 import useFetch from "../../customHook/useFetch";
 import SalaryDetails from "../salaryDetails";
 import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import FamilyRestroomIcon from "@mui/icons-material/FamilyRestroom";
-import EditIcon from "@mui/icons-material/Edit";
-import axios from "axios";
 import PopUp from "../popUp";
 import Loader from "../loader";
 import Profile from "../profile";
-import ToggelStatus from "../toggelStatus";
-const data = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  mobile: "",
-  city: "",
-  designation: "",
-  role: "",
-  contact: "",
-  gender: "",
-  image: "",
-  status: "",
-};
-interface userInterface {
-  first_name: string;
-  last_name: string;
-  email: string;
-  mobile: string;
-  city: string;
-  designation: string;
-  role: string;
-  contact: string;
-  gender: string;
-  image: string | null;
-  status: string;
-}
+import userDetails, { userData } from "../../InterFaces";
+import {
+  AppBar,
+  Box,
+  Button,
+  Grid,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
 const tabs = {
   BANK_DETAILS: "Bank Details",
   SALARY_DETAILS: "Salary Details",
@@ -76,7 +42,7 @@ const User = () => {
   const params = useParams();
   const id = params.id;
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState<userInterface>(data);
+  const [user, setUser] = useState<userDetails>(userData);
   const fetch = useFetch();
   const getUserDetails = () => {
     setLoading(true);
@@ -158,7 +124,6 @@ const User = () => {
               </Typography>
               <Button
                 variant="outlined"
-                
                 onClick={() => {
                   navigate("/updateuser/" + id);
                 }}
@@ -205,7 +170,6 @@ const User = () => {
                         }}
                       >
                         {user.status}&nbsp;{" "}
-                       
                       </TableCell>
                     </TableRow>
                   </TableHead>

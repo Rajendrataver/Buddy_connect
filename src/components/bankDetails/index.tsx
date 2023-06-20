@@ -1,18 +1,3 @@
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  Paper,
-  Typography,
-  Switch,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Dialog,
-} from "@mui/material";
-
 import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -28,37 +13,23 @@ import AddFamilyDetail from "../addFamilyDetails";
 import AddBankDetails from "../addBankDetails";
 import DialogBox from "../dialog";
 import PopUpform from "../PopUpForm";
-const bankData = {
-  account_number: "",
-  bank_name: "",
-  bank_branch: "",
-  ifsc_code: "",
-  micr_code: "",
-  cif_code: "",
-  type_account: "",
-  id: "",
-};
-
-interface bankInterface {
-  account_number: string;
-  bank_name: string;
-  bank_branch: string;
-  ifsc_code: string;
-  id: string;
-  cif_code: string;
-  micr_code: string;
-  type_account: string;
-}
+import { bankData, bankDetails } from "../../InterFaces";
+import {
+  Button,
+  Grid,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 
 const BankDetails = ({ id }: { id: string | undefined }) => {
   const [openAddBankDetails, setOpenAddBankDetails] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const [bank_id, setBank_id] = useState<string>();
-  const [accountList, setBankInfo] = useState<Array<bankInterface>>([bankData]);
-  const navigate = useNavigate();
+  const [accountList, setBankInfo] = useState<Array<bankDetails>>([bankData]);
   const [added, setAdded] = useState<boolean>(false);
-
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const getBankdetails = () => {
@@ -141,7 +112,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
         }
       />
 
-      <Grid container sx={{mb:5}}>
+      <Grid container sx={{ mb: 5 }}>
         <Grid item xs={12} md={4}>
           <Button
             variant="contained"
@@ -206,7 +177,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
               </AccordionSummary>
               <AccordionDetails>
                 <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
-                  {accountList.map((bankInfo: bankInterface, i) => {
+                  {accountList.map((bankInfo: bankDetails, i) => {
                     if (i === 0) {
                       return null;
                     }

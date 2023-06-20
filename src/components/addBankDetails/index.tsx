@@ -8,21 +8,12 @@ import validationSchema from "./bankDetailsSchema";
 import { useState } from "react";
 import axios from "axios";
 import PopUp from "../popUp";
-import * as API from "../../apiURL";
+import { ADD_BANK_DETAULS_URL } from "../../apiURL";
 import * as SELECT from "../../selectListCollection";
 import Loader from "../loader";
-import DialogBox from "../dialog";
+import { bankData } from "../../InterFaces";
 
-const accountType = ["primary", "secondary"];
-const initialValues = {
-  account_number: "",
-  bank_name: "",
-  bank_branch: "",
-  ifsc_code: "",
-  micr_code: "",
-  cif_code: "",
-  type_account: "",
-};
+
 const AddBankDetails = ({
   id,
   setOpenBank,
@@ -35,14 +26,13 @@ const AddBankDetails = ({
   const [result, setResult] = useState<string>("");
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const token = localStorage.getItem("token");
-
   const formik = useFormik({
-    initialValues,
+    initialValues: bankData,
     validationSchema,
     onSubmit: (values) => {
       setOnLoad(true);
       axios({
-        url: API.ADD_BANK_DETAULS_URL + id,
+        url: ADD_BANK_DETAULS_URL + id,
         data: values,
         method: "post",
         headers: {

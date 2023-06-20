@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Grid, Paper, Typography } from "@mui/material";
 import "./index.css";
 import { createContext } from "react";
 import { useFormik } from "formik";
@@ -20,25 +13,8 @@ import RadioInput from "../RadioInput";
 import PopUp from "../popUp";
 import * as SELECT from "../../selectListCollection";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import { Direction } from "react-data-table-component";
 import Loader from "../loader";
-export const initialValues = {
-  first_name: "",
-  last_name: "",
-  email: "",
-  city: "",
-  gender: "",
-  address: "",
-  contact: "",
-  dob: "",
-  zip_code: "",
-  pan_card: "",
-  designation: "",
-  role: "",
-  joining_date: "",
-  country: "",
-  state: "",
-};
+import { userInitialSate } from "../../InterFaces";
 const userFormContext = createContext<any>(0);
 
 const CreateUser = () => {
@@ -47,7 +23,7 @@ const CreateUser = () => {
   const navigate = useNavigate();
   const [result, setResult] = useState("");
   const formik = useFormik({
-    initialValues,
+    initialValues: userInitialSate,
     validationSchema,
     onSubmit: (values) => {
       setOnLoad(true);

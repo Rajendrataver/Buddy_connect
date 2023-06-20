@@ -1,6 +1,5 @@
 import "./index.css";
 import { Button, Grid, Paper, Typography } from "@mui/material";
-import { useParams } from "react-router";
 import { userFormContext } from "../creatUser";
 import { useFormik } from "formik";
 import TextInput from "../TextInput";
@@ -9,20 +8,7 @@ import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useState } from "react";
 import validationSchema from "./salaryDetailsSchema";
-const initialValues = {
-  basic_salary: "",
-  pf_amount: "",
-  esic_amount: "",
-  pt_amount: "",
-  income_tax: "",
-  appraisal_date: "",
-  home_rent_allowances: "",
-  conveyance_allowance: "",
-  utility_allowance: "",
-  loan: "",
-  health_insurance: "",
-};
-
+import { salaryData } from "../../InterFaces";
 const AddSalaryDetails = ({
   id,
   setOpenAddSalary,
@@ -37,7 +23,7 @@ const AddSalaryDetails = ({
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const formik = useFormik({
-    initialValues,
+    initialValues: salaryData,
     validationSchema,
     onSubmit: (values) => {
       setOnLoad(true);

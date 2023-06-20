@@ -2,7 +2,6 @@ import "./index.css";
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -10,9 +9,8 @@ import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
-
 import * as API from "../../apiURL";
-const lightColor = "rgba(255, 255, 255, 0.7)";
+
 
 export default function Header({
   setSidebar,

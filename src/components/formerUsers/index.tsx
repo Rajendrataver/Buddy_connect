@@ -12,24 +12,12 @@ import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { Avatar, Box } from "@mui/material";
 import Loader from "../loader";
-interface userInterface {
-  first_name: string;
-  last_name: string;
-  status: string;
-  token: string;
-  id: string;
-  email: string;
-  contact: string;
-  designation: string;
-  role: string;
-  image: string;
-}
-
+import userDetails from "../../InterFaces";
 const FormerUsers: React.FC = () => {
   const token = localStorage.getItem("token");
   const [loading, setLoading] = useState<boolean>(false);
-  const [userList, setUserlist] = useState<Array<userInterface>>([]);
-  const [data, setData] = useState<Array<userInterface>>([]);
+  const [userList, setUserlist] = useState<Array<userDetails>>([]);
+  const [data, setData] = useState<Array<userDetails>>([]);
   const fetch = useFetch();
   const getUserList = () => {
     setLoading(true);
@@ -51,16 +39,16 @@ const FormerUsers: React.FC = () => {
     getUserList();
   }, []);
 
-  const columns: TableColumn<userInterface>[] = [
+  const columns: TableColumn<userDetails>[] = [
     {
       name: <h4>S.No</h4>,
-      selector: (row: userInterface) => {
+      selector: (row: userDetails) => {
         return data.indexOf(row) + 1;
       },
     },
     {
       name: <h4>Profile</h4>,
-      cell: (row: userInterface) => {
+      cell: (row: userDetails) => {
         return (
           <Avatar
             src={API.IMAGE_SRC_URL + row.image}
@@ -69,27 +57,27 @@ const FormerUsers: React.FC = () => {
           />
         );
       },
-      style: { padding: 5 +'px' },
+      style: { padding: 5 + "px" },
     },
     {
       name: <h4>Name</h4>,
-      selector: (row: userInterface) => row.first_name.toLocaleUpperCase(),
+      selector: (row: userDetails) => row.first_name.toLocaleUpperCase(),
       sortable: true,
     },
     {
       name: <h4>Email</h4>,
-      selector: (row: userInterface) => row.email,
+      selector: (row: userDetails) => row.email,
       sortable: true,
     },
 
     {
       name: <h4>Designation</h4>,
-      selector: (row: userInterface) => row.designation,
+      selector: (row: userDetails) => row.designation,
       sortable: true,
     },
     {
       name: <h4>Role</h4>,
-      selector: (row: userInterface) => row.role.toLocaleUpperCase(),
+      selector: (row: userDetails) => row.role.toLocaleUpperCase(),
       sortable: true,
     },
   ];
@@ -122,7 +110,15 @@ const FormerUsers: React.FC = () => {
           elevation={0}
           sx={{ borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
         >
-          <Typography sx={{ display: "block", ml: 4, mt: 2, fontSize: 32 }}>
+          <Typography
+            sx={{
+              fontWeight: "bold",
+              fontFamily: "sans-serif",
+              mt: 2,
+              ml: 4,
+              fontSize: 30,
+            }}
+          >
             Former Users
           </Typography>
           <Toolbar>
@@ -157,7 +153,7 @@ const FormerUsers: React.FC = () => {
             columns={columns}
             data={data}
             fixedHeader
-            style={{ padding: 1}}
+            style={{ padding: 1 }}
           />
         </Typography>
       </Paper>

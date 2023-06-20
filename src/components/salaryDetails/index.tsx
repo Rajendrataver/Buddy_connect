@@ -11,31 +11,19 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
 import { useEffect, useState } from "react";
 import AddSalaryDetails from "../addSalaryDetails";
 import DialogBox from "../dialog";
 import PopUpform from "../PopUpForm";
-
-interface salaryInterface {
-  basic_salary: string;
-  home_rent_allowances: string;
-  conveyance_allowance: string;
-  pf_amount: string;
-  esic_amount: string;
-  pt_amount: string;
-  income_tax: string;
-  appraisal_date: string;
-  id: string;
-}
+import { salaryDetails } from "../../InterFaces";
 
 const SalaryDetails = ({ id }: { id: string | undefined }) => {
   const [openAddSalary, setOpenAddSalary] = useState<boolean>(false);
   const [added, setAdded] = useState<boolean>(false);
   const fetch = useFetch();
-  const [salaryList, setSalary] = useState<Array<salaryInterface>>([]);
+  const [salaryList, setSalary] = useState<Array<salaryDetails>>([]);
   const token = localStorage.getItem("token");
   const getSalaryDetails = () => {
     const response = fetch(API.GET_SALARY_DETAILS_URL + id, "get", token);

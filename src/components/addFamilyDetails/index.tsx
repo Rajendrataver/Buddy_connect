@@ -12,15 +12,7 @@ import * as API from "../../apiURL";
 import validationSchema from "./familyDetailsSchema";
 import * as SELECT from "../../selectListCollection";
 import Loader from "../loader";
-
-const initialValues = {
-  name: "",
-  contact: "",
-  dob: "",
-  gender: "",
-  relation: "",
-  address: "",
-};
+import { familyData } from "../../InterFaces";
 const AddFamilyDetail = ({
   id,
   setOpen,
@@ -36,7 +28,7 @@ const AddFamilyDetail = ({
   const token = localStorage.getItem("token");
 
   const formik = useFormik({
-    initialValues,
+    initialValues: familyData,
     validationSchema,
     onSubmit: (values) => {
       setOnLoad(true);

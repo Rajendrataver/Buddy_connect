@@ -4,7 +4,6 @@ import {
   CardContent,
  
 } from "@mui/material";
-import { ReactHTMLElement } from "react";
 import { useNavigate } from "react-router";
 
 const RationCard = ({ count, msg }: { msg: any; count: number }) => {

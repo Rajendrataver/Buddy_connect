@@ -9,20 +9,8 @@ import {
   Typography,
 } from "@mui/material";
 import Row from "../tableRow";
-interface userInterface {
-  first_name: string;
-  last_name: string;
-  status: string;
-  token: string;
-  id: number;
-  email: string;
-  contact: string;
-  designation: string;
-  role: string;
-  image: string;
-  city:string
-}
-const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
+import userDetails from "../../InterFaces";
+const RecentJoinedUser = ({ userList }: { userList: userDetails[] }) => {
   return (
     <Box>
       <TableContainer
@@ -32,7 +20,6 @@ const RecentJoinedUser = ({ userList }: { userList: userInterface[] }) => {
           margin: "auto",
           width: " -webkit-fill-available",
         }}
-        
       >
         <Typography
           sx={{ fontWeight: "bold", fontFamily: "sans-serif" }}

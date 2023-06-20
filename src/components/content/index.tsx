@@ -1,6 +1,5 @@
 import "./index.css";
 import { Route, Routes, useNavigate } from "react-router";
-
 import Header from "../Header";
 import { useEffect, useState } from "react";
 import UserList from "../userlist";
@@ -9,8 +8,6 @@ import CreateUser from "../creatUser";
 import User from "../user";
 import { Box } from "@mui/material";
 import SideBar from "../sidebar";
-import AddBankDetails from "../addBankDetails";
-import AddSalaryDetails from "../addSalaryDetails";
 import UpdateUser from "../updateUserDetails";
 import FormerUsers from "../formerUsers";
 import UnkonownPage from "../404";
