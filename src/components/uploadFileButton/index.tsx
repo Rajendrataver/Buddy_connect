@@ -1,14 +1,18 @@
-import { Alert, Box, Button, Snackbar } from "@mui/material";
+import { Alert, Button, Snackbar } from "@mui/material";
 import { useState } from "react";
 import ConfirmBox from "../confirmBox";
 import PopUp from "../popUp";
 import LinearProgress from "@mui/material/LinearProgress";
 import { ADD_CSV_FILE_URL } from "../../apiURL";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import axios from "axios";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
+
 const UploadFileButton = () => {
   const token = localStorage.getItem("token");
+  const [success, setSuccess] = useState<boolean>(false);
   const [file, setFile] = useState<any>(null);
+  const [addedUser, setAddedUser] = useState(0);
   const [open, setOpen] = useState<boolean>(false);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [openUpload, setOpenUpload] = useState<boolean>(false);
@@ -38,7 +42,17 @@ const UploadFileButton = () => {
         "Content-Type": "multipart/form-data",
       },
     })
-      .then((res) => {})
+      .then((res) => {
+        console.log(res.data.response);
+        const newsuccessfullRegistered = res.data.response.filter(
+          (item: any) => {
+            if (typeof item === "string") {
+              if (item.includes("Registered successfully")) return item;
+            }
+          }
+        );
+        setAddedUser(newsuccessfullRegistered.length);
+      })
       .catch((err) => {})
       .finally(() => {});
 
@@ -46,18 +60,35 @@ const UploadFileButton = () => {
   };
   return (
     <>
+      <PopUp
+        open={success}
+        title={
+          addedUser !== 0 ? (
+            <CheckCircleOutlineIcon sx={{ fontSize: 45 }} />
+          ) : (
+            <PriorityHighIcon sx={{ fontSize: 45 }} />
+          )
+        }
+        msg={
+          addedUser === 0
+            ? "Users Not Added"
+            : addedUser + " Users added Successfully"
+        }
+        handleClose={() => setSuccess(false)}
+      />
+
       <Snackbar
         open={open}
-        autoHideDuration={3000}
+        autoHideDuration={1500}
         onClose={() => {
           setOpen(false);
-          setFile(null);
+          setSuccess(true);
         }}
       >
         <Alert
           onClose={() => {
             setOpen(false);
-            setFile(null);
+            setSuccess(true);
           }}
           severity="success"
           sx={{ width: "100%" }}
@@ -68,7 +99,7 @@ const UploadFileButton = () => {
       </Snackbar>
 
       <ConfirmBox
-        msg={"Upload  File ?"}
+        msg={file && "Do you want to Upload  ( " + file.name + " ) ?"}
         open={openUpload}
         handleOk={uploadFile}
         handleClose={() => {
@@ -76,17 +107,17 @@ const UploadFileButton = () => {
           setFile(null);
         }}
       />
-      {openAlert && (
-        <PopUp
-          msg="Invalid File Type Select CSV file"
-          setOpenAlert={setOpenAlert}
-        />
-      )}
+
+      <PopUp
+        msg="Invalid File Type Select CSV file"
+        handleClose={() => setOpenAlert(false)}
+        open={openAlert}
+      />
+
       <Button sx={{ ta: "center", bgcolor: "primary" }} variant="outlined">
         <label style={{ textAlign: "center" }}>
           Upload File
           <input
-            
             type="file"
             title="Upload File"
             alt="Upload File"

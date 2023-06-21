@@ -1,5 +1,5 @@
 import FamilyDetails from "../FamilyDetails";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import { useEffect, useState } from "react";
 import * as API from "../../apiURL";
@@ -36,6 +36,7 @@ const User = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [tab, setTab] = useState(tabs.BANK_DETAILS);
   const params = useParams();
+  const navigate = useNavigate();
   const id = params.id;
   const token = localStorage.getItem("token");
   const [user, setUser] = useState<userDetails>(userData);
@@ -62,17 +63,22 @@ const User = () => {
   useEffect(() => {
     getUserDetails();
   }, []);
-  
+
   return (
     <Box mt={5}>
-      {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
+      <PopUp
+        open={validUser}
+        handleClose={() => navigate("/dashboard")}
+        msg="Invalid User"
+      />
+
       <Loader open={loading} />
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={4} textAlign={"center"}>
           <Profile imageName={user.image} id={id} />
           <Link to={"/updateuser/" + id}>
             <Button variant="outlined" sx={{ mt: 2 }}>
-              Update Details 
+              Update Details
             </Button>
           </Link>
         </Grid>

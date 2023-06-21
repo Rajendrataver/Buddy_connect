@@ -24,7 +24,6 @@ import EditIcon from "@mui/icons-material/Edit";
 import ConfirmBox from "../confirmBox";
 import useFetch from "../../customHook/useFetch";
 import * as API from "../../apiURL";
-import PopUp from "../popUp";
 import Loader from "../loader";
 import ToggelStatus from "../toggelStatus";
 import MenuItem from "@mui/material/MenuItem";

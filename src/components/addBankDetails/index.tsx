@@ -1,5 +1,4 @@
 import { Button, Grid, Paper, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router";
 import { userFormContext } from "../creatUser";
 import { useFormik } from "formik";
 import TextInput from "../TextInput";
@@ -7,7 +6,6 @@ import SelectInput from "../SelectInput";
 import validationSchema from "./bankDetailsSchema";
 import { useState } from "react";
 import axios from "axios";
-import PopUp from "../popUp";
 import { ADD_BANK_DETAULS_URL } from "../../apiURL";
 import * as SELECT from "../../selectListCollection";
 import Loader from "../loader";

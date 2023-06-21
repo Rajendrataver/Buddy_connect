@@ -68,13 +68,13 @@ const CreateUser = () => {
 
   return (
     <Box className="container">
-      {open && (
-        <PopUp
-          msg={"User Registered Successfully"}
-          path="/users"
-          title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
-        />
-      )}
+      <PopUp
+        msg={"User Registered Successfully"}
+        open={open}
+        handleClose={() => navigate("/users")}
+        title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
+      />
+
       <Loader open={onLoad} />
 
       <Paper

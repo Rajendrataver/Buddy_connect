@@ -92,6 +92,8 @@ const UpdateUser = () => {
     validationSchema,
     onSubmit: (values) => {
       setLoading(true);
+      console.log(values);
+
       const response = fetch(
         API.UPDATE_USER_DETAILS_URL + id,
         "put",
@@ -113,16 +115,18 @@ const UpdateUser = () => {
 
   return (
     <Box className="container">
-      {validUser && <PopUp path="/dashboard" msg="Invalid User" />}
+      <PopUp
+        open={validUser}
+        msg="Invalid User"
+        handleClose={() => navigate("/dashboard")}
+      />
       <Loader open={loading} />
-      {open && (
-        <PopUp
-          msg={"User Updated Successfully"}
-          path={"/user/" + id}
-          title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
-        />
-      )}
-
+      <PopUp
+        msg={"User Updated Successfully"}
+        handleClose={() => navigate("/user/" + id)}
+        open={open}
+        title={<ThumbUpAltIcon color="success" sx={{ fontSize: 45 }} />}
+      />
       <Paper
         sx={{
           maxWidth: 700,

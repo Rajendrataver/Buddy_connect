@@ -28,7 +28,6 @@ const Profile = ({
 
   const selectedImage = (e: any) => {
     const image = e.target.files[0];
-   
 
     if (image) {
       const extension = image.name.split(".").pop();
@@ -62,8 +61,6 @@ const Profile = ({
       },
     })
       .then((res) => {
-       
-      
         setSrc(API.IMAGE_SRC_URL + res.data.response);
       })
       .catch((err) => {
@@ -84,13 +81,11 @@ const Profile = ({
 
   return (
     <>
-      {openAlert && (
-        <PopUp
-          msg="Invalid File Type !!!"
-          path={"/user/" + id}
-          setOpenAlert={setOpenAlert}
-        />
-      )}
+      <PopUp
+        msg="Invalid File Type !!!"
+        open={openAlert}
+        handleClose={() => setOpenAlert(false)}
+      />
       <Dialog open={open} fullWidth sx={{ textAlign: "center" }}>
         <Loader open={loading} />
         <DialogTitle id="alert-dialog-title">Upload Profile</DialogTitle>
@@ -111,12 +106,7 @@ const Profile = ({
         </DialogActions>
       </Dialog>
       <Box className={"avatar-profile"}>
-        <img
-          src={src}
-          alt={"My Avatar"}
-          className="avatar-male"
-        
-        />
+        <img src={src} alt={"My Avatar"} className="avatar-male" />
         <EditIcon className="edit" sx={{ fontSize: 40, color: " #607d8b" }} />
         <input
           type="file"

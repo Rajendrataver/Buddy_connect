@@ -10,25 +10,19 @@ import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 const PopUp = ({
   title = <ErrorOutlineIcon sx={{ fontSize: 45 }} />,
   msg,
-  path,
-  setOpenAlert,
+  open,
+  handleClose,
 }: {
+  open: boolean;
   title?: any;
   msg: string;
-  path?: string;
-  setOpenAlert?: (v: boolean) => void;
+  handleClose?: () => void;
 }) => {
   const navigate = useNavigate();
-  const handleClose = () => {
-    if (path) {
-      navigate(path);
-    }
-  };
-
   return (
     <div>
       <Dialog
-        open={true}
+        open={open}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
@@ -46,17 +40,7 @@ const PopUp = ({
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ pt: 0, pb: 0 }}>
-          <Button
-            onClick={() => {
-              if (setOpenAlert) {
-                setOpenAlert(false);
-              } else {
-                handleClose();
-              }
-            }}
-          >
-            Ok
-          </Button>
+          <Button onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
     </div>
