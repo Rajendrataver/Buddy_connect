@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import userDetails from "../../InterFaces";
 
+
 const UserProfile = ({
   user,
   onClose,
@@ -22,10 +23,12 @@ const UserProfile = ({
       sx={{
         maxWidth: 500,
         width: { md: 500, sm: 500, xs: 100 + "%" },
+        minHeight: 40+ "vh",
         pt: 2,
         pb: 1,
         position: "relative",
       }}
+      className={"container"}
     >
       {" "}
       <CloseIcon
@@ -127,6 +130,7 @@ const UserProfile = ({
           </Link>
         </Grid>
       </Grid>
+      
     </Box>
   );
 };

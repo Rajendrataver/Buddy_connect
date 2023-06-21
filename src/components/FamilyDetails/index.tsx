@@ -65,11 +65,11 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
       >
         Add Memeber
       </Button>
-      <Grid container sx={{ marginTop: 5 }}>
+      <Grid container sx={{ marginTop: 5 }} style={{maxWidth:700}}>
         <Grid item xs={12} md={12}>
           <TableContainer>
             <Table
-              sx={{ maxWidth: 800, width: 100 + "%" }}
+             
               size="small"
               aria-label="a dense table"
             >

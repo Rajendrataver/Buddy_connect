@@ -131,7 +131,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
           </Grid>
         )}
         {accountList.length !== 1 && (
-          <Grid item xs={12} md={8} sx={{ marginTop: 5 }}>
+          <Grid item xs={12} md={12} sx={{ marginTop: 5}} style={{maxWidth:700}}>
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

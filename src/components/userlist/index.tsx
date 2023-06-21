@@ -1,6 +1,6 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import papa from "papaparse";
+import SyncIcon from "@mui/icons-material/Sync";
 import * as SELECT from "../../selectListCollection";
 import {
   AppBar,
@@ -31,7 +31,6 @@ import UploadFileButton from "../uploadFileButton";
 import userDetails from "../../InterFaces";
 
 const UserList: React.FC = () => {
-  
   const [loading, setLoading] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
@@ -43,6 +42,7 @@ const UserList: React.FC = () => {
   const [open, setOpen] = useState<boolean>(false);
   const fetch = useFetch();
   const getUserList = () => {
+    setLoading(true)
     const response = fetch(API.GET_USERS_URL, "get", token);
     response.then((res) => {
       setUserlist(res.data.response);
@@ -188,7 +188,7 @@ const UserList: React.FC = () => {
         msg={"Do you want to Delete " + userName + " ?"}
         open={open}
         handleOk={deletUser}
-        handleClose={()=>setOpen(false)}
+        handleClose={() => setOpen(false)}
       />
 
       <Paper
@@ -249,6 +249,12 @@ const UserList: React.FC = () => {
                     onChange={handleFilter}
                     variant="standard"
                   />
+
+                  <SyncIcon
+                    sx={{ fontSize: 35, cursor: "pointer" }}
+                    color={"primary"}
+                    onClick={() => getUserList()}
+                  />
                 </Grid>
                 <Grid
                   item
@@ -256,7 +262,6 @@ const UserList: React.FC = () => {
                   sm={12}
                   xs={12}
                   mb={1}
-                
                   display={"flex"}
                   justifyContent={{
                     md: "flex-end",
@@ -300,7 +305,7 @@ const UserList: React.FC = () => {
                       })}
                     </Select>
                   </FormControl>
-                  <UploadFileButton  />
+                  <UploadFileButton />
                   <Button variant="contained" sx={{ ml: 1 }}>
                     <Link to="/createuser">Create User</Link>
                   </Button>

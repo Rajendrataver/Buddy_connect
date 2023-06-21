@@ -72,12 +72,12 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
+      <Grid container style={{ maxWidth: 700 }}>
+        <Grid item xs={12} md={12} sx={{ marginTop: 2 }}>
           {salaryList.length !== 0 && (
             <TableContainer>
               <Table
-                sx={{ maxWidth: 650, width: 100 + "%" }}
+                sx={{ width: 100 + "%" }}
                 size="small"
                 aria-label="a dense table"
               >
