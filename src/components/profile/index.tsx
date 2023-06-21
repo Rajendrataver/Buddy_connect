@@ -110,6 +110,7 @@ const Profile = ({
         <EditIcon className="edit" sx={{ fontSize: 40, color: " #607d8b" }} />
         <input
           type="file"
+          title=""
           className="avatar-input"
           onChange={(e) => {
             selectedImage(e);

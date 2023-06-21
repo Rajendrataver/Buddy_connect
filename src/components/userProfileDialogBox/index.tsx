@@ -18,7 +18,15 @@ const UserProfile = ({
   onClose: () => void;
 }) => {
   return (
-    <Box sx={{ maxWidth: 500, width: 500, pt: 2, pb: 1, position: "relative" }}>
+    <Box
+      sx={{
+        maxWidth: 500,
+        width: { md: 500, sm: 500, xs: 100 + "%" },
+        pt: 2,
+        pb: 1,
+        position: "relative",
+      }}
+    >
       {" "}
       <CloseIcon
         sx={{
