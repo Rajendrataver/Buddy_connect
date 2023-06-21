@@ -17,7 +17,7 @@ const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
         msg="Do you want to Log-out ?"
         open={open}
         handleOk={confirmLogout}
-        setOpen={setOpen}
+        handleClose={() => setOpen(false)}
       />
       <div
         onClick={() => setOpen(true)}

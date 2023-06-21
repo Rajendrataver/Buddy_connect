@@ -15,6 +15,7 @@ const PopUpform = ({
         zIndex: (theme) => theme.zIndex.drawer + 1,
         padding: 1,
         overflow: "auto",
+        width:100+"%"
       }}
       open={open}
       onClose={onClose}

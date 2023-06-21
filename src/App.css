@@ -122,6 +122,8 @@ input::-webkit-inner-spin-button {
 }
 .container {
   padding: 0 15px;
+  max-width: 1600px;
+  margin: 0 auto;
 }
 .fullwidth{
   width: -webkit-fill-available;

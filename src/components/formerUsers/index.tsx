@@ -61,8 +61,11 @@ const FormerUsers: React.FC = () => {
     },
     {
       name: <h4>Name</h4>,
-      selector: (row: userDetails) => row.first_name.toLocaleUpperCase(),
+      selector: (row: userDetails) => row.first_name,
       sortable: true,
+      style: {
+        textTransform: "capitalize",
+      },
     },
     {
       name: <h4>Email</h4>,
@@ -77,8 +80,11 @@ const FormerUsers: React.FC = () => {
     },
     {
       name: <h4>Role</h4>,
-      selector: (row: userDetails) => row.role.toLocaleUpperCase(),
+      selector: (row: userDetails) => row.role,
       sortable: true,
+      style: {
+        textTransform: "capitalize",
+      },
     },
   ];
 

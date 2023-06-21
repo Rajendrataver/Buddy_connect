@@ -99,7 +99,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
       <ConfirmBox
         msg="Do you want to Remove Details ?"
         open={open}
-        setOpen={setOpen}
+        handleClose={()=>setOpen(false)}
         handleOk={confirmRemove}
       />
       <PopUpform

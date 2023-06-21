@@ -8,14 +8,14 @@ interface confirmInterface {
   msg: string;
   open: boolean;
   handleOk: (member?: any) => void;
-  setOpen: (v: boolean) => void;
+  handleClose: () => void;
 }
-const ConfirmBox = ({ msg, open, handleOk, setOpen }: confirmInterface) => {
+const ConfirmBox = ({ msg, open, handleOk, handleClose }: confirmInterface) => {
   return (
     <div>
       <Dialog
         open={open}
-        onClose={() => setOpen(false)}
+        onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         fullWidth
@@ -28,7 +28,7 @@ const ConfirmBox = ({ msg, open, handleOk, setOpen }: confirmInterface) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={() => handleOk()}>Ok</Button>{" "}
         </DialogActions>
       </Dialog>

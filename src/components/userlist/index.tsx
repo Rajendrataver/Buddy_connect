@@ -32,7 +32,7 @@ import UploadFileButton from "../uploadFileButton";
 import userDetails from "../../InterFaces";
 
 const UserList: React.FC = () => {
-  const [fileAdded, setFilAdded] = useState<boolean>(false);
+  
   const [loading, setLoading] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
@@ -60,7 +60,7 @@ const UserList: React.FC = () => {
 
   React.useEffect(() => {
     getUserList();
-  }, [fileAdded]);
+  }, []);
 
   const columns: TableColumn<userDetails>[] = [
     {
@@ -189,7 +189,7 @@ const UserList: React.FC = () => {
         msg={"Do you want to Delete " + userName + " ?"}
         open={open}
         handleOk={deletUser}
-        setOpen={setOpen}
+        handleClose={()=>setOpen(false)}
       />
 
       <Paper
@@ -301,7 +301,7 @@ const UserList: React.FC = () => {
                       })}
                     </Select>
                   </FormControl>
-                  <UploadFileButton setFileAdded={setFilAdded} />
+                  <UploadFileButton  />
                   <Button variant="contained" sx={{ ml: 1 }}>
                     <Link to="/createuser">Create User</Link>
                   </Button>
