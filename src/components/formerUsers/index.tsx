@@ -23,8 +23,9 @@ const FormerUsers: React.FC = () => {
     setLoading(true);
     const response = fetch(API.GET_FORMER_USERS_URL, "get", token);
     response.then((res) => {
-      setUserlist(res.data.response);
-      setData(res.data.response);
+      const data = res.data.response.reverse();
+      setUserlist(data);
+      setData(data);
     });
     response
       .catch((error) => {

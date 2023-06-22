@@ -10,50 +10,29 @@ import { Link } from "react-router-dom";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import userDetails from "../../InterFaces";
 
-const UserProfile = ({
-  width = 500,
-  user,
-  onClose,
-}: {
-  width?: number;
-  user: userDetails;
-  onClose: () => void;
-}) => {
+const UserTip = ({ user }: { user: userDetails }) => {
   return (
     <Box
       sx={{
-        maxWidth: width,
-        width: { md: width, sm: width, xs: 100 + "%" },
-        minHeight: 40 + "vh",
+        maxWidth: 250,
+        width: 100 + "%",
         pt: 2,
         pb: 1,
         position: "relative",
       }}
-      className={"container"}
     >
-      {" "}
-      <CloseIcon
-        sx={{
-          position: "absolute",
-          top: 20,
-          right: 25,
-          fontSize: 25,
-          cursor: "pointer",
-        }}
-        onClick={onClose}
-      />
       <Grid container>
-        <Grid item textAlign={"center"} sx={{ margin: "auto" }}>
+        <Grid item justifyContent={"center"} sx={{ margin: "auto" }}>
           <Avatar
             src={IMAGE_SRC_URL + user.image}
-            sx={{ width: 200, height: 200, objectFit: "cover" }}
+            sx={{ width: 120, height: 120, objectFit: "cover", m: "auto" }}
             alt={user.first_name.toLocaleUpperCase()}
           />
           <Typography
             gutterBottom
             sx={{
-              fontSize: 30,
-              color: "darkslategrey",
+              fontSize: 20,
+              color: "white",
               fontWeight: "bold",
               textTransform: "capitalize",
               alignItems: "center",
@@ -62,19 +41,18 @@ const UserProfile = ({
             }}
           >
             {user.first_name + " " + user.last_name}{" "}
-            {user.role === "admin" ? <VerifiedIcon color={"primary"} /> : null}
+            {user.role === "admin" ? <VerifiedIcon color={"inherit"} /> : null}
           </Typography>
         </Grid>
       </Grid>
-      <Grid item p={4} pt={1}>
+      <Grid item p={1} pt={1}>
         <Typography
           display="block"
           variant="caption"
           sx={{
             display: "flex",
             alignItems: "center",
-            fontSize: 20,
-            pt: 1,
+            fontSize: 14,
             pb: 1,
           }}
         >
@@ -87,8 +65,8 @@ const UserProfile = ({
           sx={{
             display: "flex",
             alignItems: "center",
-            fontSize: 20,
-            pt: 1,
+            fontSize: 14,
+
             pb: 1,
           }}
         >
@@ -101,38 +79,16 @@ const UserProfile = ({
           sx={{
             display: "flex",
             alignItems: "center",
-            fontSize: 20,
-            pt: 1,
+            fontSize: 14,
             pb: 1,
           }}
         >
           <PhoneIcon /> &nbsp;&nbsp;&nbsp;&nbsp;{user.contact}
         </Typography>
         <hr />{" "}
-        <Typography
-          display="block"
-          variant="caption"
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            fontSize: 20,
-            pt: 1,
-            pb: 1,
-          }}
-        >
-          <FmdGoodIcon /> &nbsp;&nbsp;&nbsp;&nbsp;{user.city}{" "}
-        </Typography>
-        <hr />
-        <Grid item textAlign={"right"}>
-          <Link to={"/user/" + user.id}>
-            <Button variant="contained" sx={{ mt: 2 }}>
-              Go To Profile <TrendingFlatIcon />
-            </Button>
-          </Link>
-        </Grid>
       </Grid>
     </Box>
   );
 };
 
-export default UserProfile;
+export default UserTip;

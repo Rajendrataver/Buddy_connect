@@ -1,47 +1,48 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
 import { Avatar, Button } from "@mui/material";
-import Collapse from "@mui/material/Collapse";
-import IconButton from "@mui/material/IconButton";
-import Table from "@mui/material/Table";
 import TableCell from "@mui/material/TableCell";
-import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { useNavigate } from "react-router";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { IMAGE_SRC_URL } from "../../apiURL";
+import Zoom from "@mui/material/Zoom";
 import { Link } from "react-router-dom";
 import PopUpform from "../PopUpForm";
 import UserProfile from "../userProfileDialogBox";
 import userDetails from "../../InterFaces";
+import UserTip from "../userTip";
 const Row = ({ user, sNo }: { user: userDetails; sNo: number }) => {
   const [open, setOpen] = React.useState<boolean>(false);
- 
+
   return (
     <React.Fragment>
       <PopUpform
         open={open}
-        element={<UserProfile user={user} onClose={()=>setOpen(false)}/>}
+        element={<UserProfile user={user} onClose={() => setOpen(false)} />}
         onClose={() => setOpen(false)}
       />
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell>{sNo}</TableCell>
         <TableCell>
-          <Avatar
-            src={IMAGE_SRC_URL + user.image}
-            sx={{
-              width: 55,
-              height: 55,
-              objectFit: "cover",
-              cursor: "pointer",
-            }}
-            alt={user.first_name.toLocaleUpperCase()}
-            onClick={() => setOpen(true)}
-            
-          />
+          <Tooltip
+            title={<UserTip user={user} />}
+            TransitionComponent={Zoom}
+            TransitionProps={{ timeout: 400 }}
+            arrow
+            followCursor
+          >
+            <Avatar
+              src={IMAGE_SRC_URL + user.image}
+              sx={{
+                width: 55,
+                height: 55,
+                objectFit: "cover",
+                cursor: "pointer",
+              }}
+              alt={user.first_name.toLocaleUpperCase()}
+              onClick={() => setOpen(true)}
+            />
+          </Tooltip>
         </TableCell>
         <TableCell
           component="th"

@@ -2,6 +2,8 @@ import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SyncIcon from "@mui/icons-material/Sync";
 import * as SELECT from "../../selectListCollection";
+import Tooltip from "@mui/material/Tooltip";
+import Fade from "@mui/material/Fade";
 import {
   AppBar,
   Toolbar,
@@ -29,20 +31,20 @@ import ToggelStatus from "../toggelStatus";
 import MenuItem from "@mui/material/MenuItem";
 import UploadFileButton from "../uploadFileButton";
 import userDetails from "../../InterFaces";
+import UserTip from "../userTip";
 
 const UserList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const [user_id, setuser_id] = useState<string>();
   const [userName, setUserName] = useState<string>();
-  const [openUpload, setOpenUpload] = useState<boolean>(false);
   const [userList, setUserlist] = useState<Array<userDetails>>([]);
   const [data, setData] = useState<Array<userDetails>>([]);
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const fetch = useFetch();
   const getUserList = () => {
-    setLoading(true)
+    setLoading(true);
     const response = fetch(API.GET_USERS_URL, "get", token);
     response.then((res) => {
       setUserlist(res.data.response);
@@ -66,16 +68,37 @@ const UserList: React.FC = () => {
       name: "Name",
       cell: (row: userDetails) => {
         return (
-          <span style={{ textTransform: "capitalize", fontWeight: "bold" }}>
-            {row.first_name}
-          </span>
+          <Tooltip
+            title={<UserTip user={row} />}
+            sx={{ cursor: "pointer" }}
+            TransitionComponent={Fade}
+            TransitionProps={{ timeout: 600 }}
+            arrow
+            followCursor
+          >
+            <span
+              style={{
+                textTransform: "capitalize",
+                fontWeight: "bold",
+                cursor: "pointer",
+              }}
+            >
+              {row.first_name}
+            </span>
+          </Tooltip>
         );
       },
       sortable: true,
     },
     {
       name: "Email",
-      selector: (row: userDetails) => row.email,
+      cell: (row: userDetails) => {
+        return (
+          <Tooltip title={row.email}>
+            <span>{row.email}</span>
+          </Tooltip>
+        );
+      },
       sortable: true,
     },
 
@@ -250,11 +273,11 @@ const UserList: React.FC = () => {
                     variant="standard"
                   />
 
-                  <SyncIcon
+                  {/* <SyncIcon
                     sx={{ fontSize: 35, cursor: "pointer" }}
                     color={"primary"}
                     onClick={() => getUserList()}
-                  />
+                  /> */}
                 </Grid>
                 <Grid
                   item

@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
+import { Box, Menu, MenuItem, Toolbar, Button } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
@@ -169,8 +169,19 @@ export default function Header({
           sx={{ zIndex: 0, padding: 20 + "px" }}
         >
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <h2>Buddy Connect</h2>
-            <MenuOutlined onClick={toggleHamburger} id="hamburger-icon" />
+            <span
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                flexWrap: "wrap",
+              }}
+            >
+              <MenuOutlined onClick={toggleHamburger} id="hamburger-icon" />
+              &nbsp;&nbsp;<h2>Buddy Connect</h2>
+            </span>
+
+            <LogoutButton />
           </Box>
         </AppBar>
         <div className="links" id="links" onClick={toggleHamburger}>
@@ -186,9 +197,6 @@ export default function Header({
           <Link to="/formerusers" className="hamburger-link">
             <MenuItem>Former Users</MenuItem>
           </Link>
-          <MenuItem>
-            <LogoutButton fullWidth={true} />
-          </MenuItem>
         </div>
       </div>
       <Grid></Grid>
