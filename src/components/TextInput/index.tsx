@@ -6,16 +6,19 @@ const TextInput = ({
   label,
   type,
   readOnly = false,
+  className,
 }: {
   name: string;
   label: string;
   type: string;
   readOnly?: boolean;
+  className?: string;
 }) => {
   const formik = useContext(userFormContext);
   return (
     <Box sx={{ position: "relative", mb: 2 }}>
       <TextField
+        className={className}
         type={type}
         variant="outlined"
         color="primary"

@@ -29,7 +29,7 @@ const Row = ({ user, sNo }: { user: userDetails; sNo: number }) => {
             TransitionComponent={Zoom}
             TransitionProps={{ timeout: 400 }}
             arrow
-            followCursor
+       
           >
             <Avatar
               src={IMAGE_SRC_URL + user.image}

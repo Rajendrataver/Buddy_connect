@@ -16,6 +16,8 @@ import {
   FormControl,
   InputLabel,
   Select,
+  Zoom,
+  Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
@@ -65,37 +67,50 @@ const UserList: React.FC = () => {
 
   const columns: TableColumn<userDetails>[] = [
     {
-      name: "Name",
+      name: "SNo.",
+      selector: (row: userDetails) => data.indexOf(row) + 1,
+      center: true,
+    },
+    {
+      name: "Profile",
       cell: (row: userDetails) => {
         return (
           <Tooltip
             title={<UserTip user={row} />}
-            sx={{ cursor: "pointer" }}
-            TransitionComponent={Fade}
-            TransitionProps={{ timeout: 600 }}
+            TransitionComponent={Zoom}
+            TransitionProps={{ timeout: 400 }}
             arrow
-            followCursor
           >
-            <span
-              style={{
-                textTransform: "capitalize",
-                fontWeight: "bold",
+            <Avatar
+              src={API.IMAGE_SRC_URL + row.image}
+              sx={{
+                width: 60,
+                height: 60,
+                objectFit: "cover",
                 cursor: "pointer",
               }}
-            >
-              {row.first_name}
-            </span>
+              alt={row.first_name.toLocaleUpperCase()}
+            />
           </Tooltip>
         );
       },
+      style: {
+        paddingTop: 10 + "px",
+        paddingBottom: 10 + "px",
+        justifyContent: "center",
+      },
+    },
+    {
+      name: "Name",
+      selector: (row: userDetails) => row.first_name,
       sortable: true,
     },
     {
       name: "Email",
       cell: (row: userDetails) => {
         return (
-          <Tooltip title={row.email}>
-            <span>{row.email}</span>
+          <Tooltip title={<Typography fontSize={14}>{row.email}</Typography>}>
+            <span>{row.email.slice(0, 15)}...</span>
           </Tooltip>
         );
       },
@@ -195,7 +210,7 @@ const UserList: React.FC = () => {
     setData(newData);
   }
   const handleRoleChange = (role: any) => {
-    if (role !== "Select") {
+    if (role) {
       const newData = userList.filter((row) => {
         return row.role === role;
       });
@@ -214,10 +229,10 @@ const UserList: React.FC = () => {
         handleClose={() => setOpen(false)}
       />
 
-      <Paper
+      <Box
         className="userlist-section"
         sx={{
-          maxWidth: 1200,
+          maxWidth: 1400,
           margin: "auto",
           width: 100 + "%",
           marginTop: 5,
@@ -311,7 +326,7 @@ const UserList: React.FC = () => {
                       color="primary"
                       onChange={(e) => handleRoleChange(e.target.value)}
                     >
-                      <MenuItem defaultChecked color="primary">
+                      <MenuItem defaultChecked color="primary" value="">
                         Select
                       </MenuItem>
                       {SELECT.ROLES.map((role, i) => {
@@ -339,8 +354,9 @@ const UserList: React.FC = () => {
             </Grid>
           </Toolbar>
         </AppBar>
-        <Typography sx={{ mx: 2 }} color="text.secondary" align="center">
+        <Typography color="text.secondary" align="center">
           <Table
+            noTableHead
             striped
             className="table"
             columns={columns}
@@ -348,7 +364,7 @@ const UserList: React.FC = () => {
             pagination
           />
         </Typography>
-      </Paper>
+      </Box>
     </Box>
   );
 };
