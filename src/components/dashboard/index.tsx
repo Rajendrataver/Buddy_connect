@@ -58,8 +58,8 @@ const Dashboard = () => {
     setAdmin(newData.length);
   }, [list]);
   const data = [
-    { argument: "HR", value: hr, color: "rgb(220, 57, 18)" },
-    { argument: "Admin", value: admin, color: "rgb(51, 102, 204)" },
+    { argument: "HR", value: hr, color: "rgb(140, 163, 186)" },
+    { argument: "Admin", value: admin, color: "rgb(36, 153, 239)" },
     { argument: "Assosiate", value: assosiate, color: "rgb(255, 153, 0)" },
   ];
   return (

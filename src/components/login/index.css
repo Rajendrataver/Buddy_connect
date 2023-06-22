@@ -1,21 +1,20 @@
-.login-section{
-   align-items: center;
-    height: 100%;
-    display: flex;
-    background-image: url('../../../public//assets/image/back3.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-   
+.login-section {
+  color: rgb(18, 31, 67);
+  font-family: Montserrat, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  height: 100%;
+  line-height: 1.5;
+  display: flex;
 }
-.login-section button{
-    margin-top: 15px;
+.login-section button {
+  margin-top: 15px;
 }
-.login-section p{
+
+.login-section h1 {
   margin: 0;
   padding: 0;
 }
-.login-section h1{
-  margin: 0;
-  padding: 0;
+.login-input div{
+  border-radius: 10px;
 }
