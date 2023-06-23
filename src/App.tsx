@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, useNavigate } from "react-router";
 import "./App.css";
 import Content from "./components/content";
 import Login from "./components/login";
@@ -8,12 +8,14 @@ import { createContext } from "react";
 const LogInContext = createContext<any>(0);
 function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  const navigate = useNavigate();
   useEffect(() => {
     if (
       !localStorage.getItem("token") &&
       localStorage.getItem("role") !== "superAdmin"
     ) {
       setLoggedIn(false);
+      navigate("/");
     } else {
       setLoggedIn(true);
     }
@@ -23,7 +25,8 @@ function App() {
     <LogInContext.Provider value={setLoggedIn}>
       <div className="App">
         <Routes>
-          <Route path="*" element={loggedIn ? <Content /> : <Login />} />
+          <Route path="/" element={<Login />} />
+          <Route path="*" element={<Content />} />
         </Routes>
       </div>
     </LogInContext.Provider>

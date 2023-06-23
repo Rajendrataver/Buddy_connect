@@ -185,7 +185,7 @@ export default function Header({
           </Box>
         </AppBar>
         <div className="links" id="links" onClick={toggleHamburger}>
-          <Link to="/" className="hamburger-link">
+          <Link to="/dashboard" className="hamburger-link">
             <MenuItem>Dashboard</MenuItem>
           </Link>
           <Link to="/users" className="hamburger-link">

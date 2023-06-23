@@ -1,14 +1,12 @@
 import * as React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
-import SyncIcon from "@mui/icons-material/Sync";
 import * as SELECT from "../../selectListCollection";
 import Tooltip from "@mui/material/Tooltip";
-import Fade from "@mui/material/Fade";
+import { useEffect } from "react";
 import {
   AppBar,
   Toolbar,
   Typography,
-  Paper,
   Grid,
   Button,
   TextField,
@@ -22,7 +20,6 @@ import {
 import SearchIcon from "@mui/icons-material/Search";
 import Table, { TableColumn } from "react-data-table-component";
 import { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import ConfirmBox from "../confirmBox";
@@ -45,23 +42,23 @@ const UserList: React.FC = () => {
   const [onLoad, setOnLoad] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const fetch = useFetch();
+
   const getUserList = () => {
     setLoading(true);
-    const response = fetch(API.GET_USERS_URL, "get", token);
-    response.then((res) => {
-      setUserlist(res.data.response);
-      setData(res.data.response);
-    });
-    response
-      .catch((error) => {
-        console.log(error);
+    const response = fetch(API.GET_USERS_URL, "get", token)
+      .then((res) => {
+        setUserlist(res.data.response);
+        setData(res.data.response);
+      })
+      .catch((err) => {
+        console.log(err);
       })
       .finally(() => {
         setLoading(false);
       });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     getUserList();
   }, []);
 

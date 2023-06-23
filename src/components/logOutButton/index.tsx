@@ -1,16 +1,18 @@
-
 import ConfirmBox from "../confirmBox";
 import { useState } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useContext } from "react";
 import { LogInContext } from "../../App";
+import { useNavigate } from "react-router";
 const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
+  const navigate = useNavigate();
   const login = useContext(LogInContext);
   const [open, setOpen] = useState<boolean>(false);
   const confirmLogout = () => {
     setOpen(false);
     localStorage.clear();
-    login(false)
+    login(false);
+    navigate("/");
   };
   return (
     <>
@@ -24,7 +26,7 @@ const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
         onClick={() => setOpen(true)}
         style={{
           height: 100 + "%",
-          width:100+"%",
+          width: 100 + "%",
           display: "flex",
           alignItems: "center",
         }}

@@ -22,8 +22,7 @@ const User = () => {
   const fetch = useFetch();
   const getUserDetails = () => {
     setLoading(true);
-    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
-    response
+    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token)
       .then((res) => {
         if (!res.data.success) {
           setValidUser(true);
@@ -32,7 +31,7 @@ const User = () => {
         }
       })
       .catch((err) => {
-        console.log(err.data.response.message);
+        // console.log(err.data.response.message);
       })
       .finally(() => {
         setLoading(false);
@@ -41,13 +40,13 @@ const User = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, [id]);
+  }, []);
 
   return (
     <Box mt={5} className={"container"}>
       <PopUp
         open={validUser}
-        handleClose={() => navigate("/")}
+        handleClose={() => navigate("/dashboard")}
         msg="Invalid User"
       />
       <Loader open={loading} />

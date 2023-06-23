@@ -8,28 +8,31 @@ import Loader from "../loader";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import { useNavigate } from "react-router";
 import RoleChart from "../chart";
 import userDetails from "../../InterFaces";
+import { useContext } from "react";
+import { LogInContext } from "../../App";
+import { useNavigate } from "react-router";
 const Dashboard = () => {
+  const navigate = useNavigate();
   const fetch = useFetch();
+  const login = useContext(LogInContext);
   const [list, setList] = useState<Array<userDetails>>([]);
-
   const [active, setActive] = useState<number>(0);
   const [hr, setHR] = useState<number>(0);
   const [admin, setAdmin] = useState<number>(0);
   const [assosiate, setAssosiate] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const getUserList = () => {
-    const response = fetch(API.GET_USERS_URL, "get", token);
-    response
+    const response = fetch(API.GET_USERS_URL, "get", token)
       .then((res) => {
         setList(res.data.response);
       })
       .catch((err) => {
+        console.log("dashboard", err);
         localStorage.clear();
+        login(false);
         navigate("/");
       })
       .finally(() => {

@@ -117,7 +117,7 @@ const UpdateUser = () => {
       <PopUp
         open={validUser}
         msg="Invalid User"
-        handleClose={() => navigate("/")}
+        handleClose={() => navigate("/dashboard")}
       />
       <Loader open={loading} />
       <PopUp

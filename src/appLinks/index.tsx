@@ -9,7 +9,7 @@ import FormerUsers from "../components/formerUsers";
 const links = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: <HomeOutlinedIcon sx={{ fontSize: 30 }} />,
     component: <Dashboard />,
   },

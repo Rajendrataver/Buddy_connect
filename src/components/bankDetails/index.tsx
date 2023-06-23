@@ -58,12 +58,13 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
       "patch",
       token,
       { type_account }
-    );
-    response
+    )
       .then((res) => {
         getBankdetails();
       })
-      .catch((err) => {})
+      .catch((err) => {
+        console.log("bank", err);
+      })
       .finally(() => {
         setOnLoad(false);
       });
@@ -73,8 +74,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
       API.DELETE_BANK_DETAILS_URL + id + "&&bank_id=" + bank_id,
       "delete",
       token
-    );
-    response
+    )
       .then((res) => {
         getBankdetails();
       })
@@ -99,7 +99,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
       <ConfirmBox
         msg="Do you want to Remove Details ?"
         open={open}
-        handleClose={()=>setOpen(false)}
+        handleClose={() => setOpen(false)}
         handleOk={confirmRemove}
       />
       <PopUpform
@@ -131,7 +131,13 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
           </Grid>
         )}
         {accountList.length !== 1 && (
-          <Grid item xs={12} md={12} sx={{ marginTop: 5}} style={{maxWidth:700}}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{ marginTop: 5 }}
+            style={{ maxWidth: 700 }}
+          >
             <Accordion>
               <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

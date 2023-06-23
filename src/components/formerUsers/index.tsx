@@ -22,12 +22,12 @@ const FormerUsers: React.FC = () => {
   const getUserList = () => {
     setLoading(true);
     const response = fetch(API.GET_FORMER_USERS_URL, "get", token);
-    response.then((res) => {
-      const data = res.data.response.reverse();
-      setUserlist(data);
-      setData(data);
-    });
     response
+      .then((res) => {
+        const data = res.data.response.reverse();
+        setUserlist(data);
+        setData(data);
+      })
       .catch((error) => {
         console.log(error);
       })

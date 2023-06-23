@@ -16,7 +16,7 @@ const UnkonownPage = () => {
           modify it, edit the <code>404.html</code> file in your project's
           configured <code>public</code> directory.
               </p>
-            <Link to="/">Back to DashBoard</Link>
+            <Link to="/dashboard">Back to DashBoard</Link>
       </div>
     </>
   );

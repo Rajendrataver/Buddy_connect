@@ -11,7 +11,9 @@ import { useState } from "react";
 import Loader from "../loader";
 import PopUp from "../popUp";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 const Login = () => {
+  const navigate = useNavigate();
   const login: any = useContext(LogInContext);
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
@@ -44,12 +46,13 @@ const Login = () => {
             localStorage.setItem("email", info.email);
             localStorage.setItem("role", info.role);
             login(true);
+            navigate("/dashboard");
           } else {
             throw new Error("Invalid User");
           }
         })
         .catch((error) => {
-          // console.log("error:", error.response.data.message);
+          console.log("error:", error.response.data.message);
           if (error.response) {
             setResultMSG(error.response.data.message);
           } else {
