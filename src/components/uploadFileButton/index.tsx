@@ -43,7 +43,7 @@ const UploadFileButton = () => {
       },
     })
       .then((res) => {
-        console.log(res.data.response);
+       
         const newsuccessfullRegistered = res.data.response.filter(
           (item: any) => {
             if (typeof item === "string") {

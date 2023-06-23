@@ -40,6 +40,7 @@ const PasswordInput = ({
         id="filled-adornment-password"
         name={name}
         value={formik.values[name]}
+        autoComplete="OFF"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
         type={showPassword ? "text" : "password"}

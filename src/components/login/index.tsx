@@ -3,33 +3,18 @@ import Checkbox from "@mui/material/Checkbox";
 import axios from "axios";
 import { userFormContext } from "../creatUser";
 import PasswordInput from "../passwordInput";
-import {
-  TextField,
-  Box,
-  Grid,
-  Paper,
-  Button,
-  CircularProgress,
-  Typography,
-  FormControl,
-  InputLabel,
-  FilledInput,
-  InputAdornment,
-  IconButton,
-  OutlinedInput,
-} from "@mui/material";
+import { LogInContext } from "../../App";
+import { TextField, Box, Button, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useNavigate } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Loader from "../loader";
 import PopUp from "../popUp";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useContext } from "react";
 const Login = () => {
+  const login: any = useContext(LogInContext);
   const [open, setOpen] = useState<boolean>(false);
   const [onLoad, setOnLoad] = useState<boolean>(false);
-  const [showPassword, setShowpassword] = useState<boolean>(false);
-  const navigate = useNavigate();
   const [resultMSG, setResultMSG] = useState<string>("");
   const formik = useFormik({
     initialValues: {
@@ -58,13 +43,13 @@ const Login = () => {
             );
             localStorage.setItem("email", info.email);
             localStorage.setItem("role", info.role);
-            navigate("/dashboard");
+            login(true);
           } else {
             throw new Error("Invalid User");
           }
         })
         .catch((error) => {
-          console.log("error:", error.response.data.message);
+          // console.log("error:", error.response.data.message);
           if (error.response) {
             setResultMSG(error.response.data.message);
           } else {
@@ -76,14 +61,6 @@ const Login = () => {
           setOnLoad(false);
         });
     },
-  });
-  useEffect(() => {
-    if (
-      localStorage.getItem("role") === "superAdmin" &&
-      localStorage.getItem("token")
-    ) {
-      navigate("/dashboard");
-    }
   });
 
   return (

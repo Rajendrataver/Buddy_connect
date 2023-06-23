@@ -5,7 +5,7 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { Box, Menu, MenuItem, Toolbar, Button } from "@mui/material";
+import { Box, Menu, MenuItem, Toolbar } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { MenuOutlined } from "@mui/icons-material";
 import LogoutButton from "../logOutButton";
@@ -185,7 +185,7 @@ export default function Header({
           </Box>
         </AppBar>
         <div className="links" id="links" onClick={toggleHamburger}>
-          <Link to="/dashboard" className="hamburger-link">
+          <Link to="/" className="hamburger-link">
             <MenuItem>Dashboard</MenuItem>
           </Link>
           <Link to="/users" className="hamburger-link">

@@ -6,15 +6,11 @@ import PopUp from "../popUp";
 import Loader from "../loader";
 import Profile from "../profile";
 import userDetails, { userData } from "../../InterFaces";
-import { Box, Button, Grid, Tab, Tabs } from "@mui/material";
+import { Box, Button, Grid } from "@mui/material";
 import { Link } from "react-router-dom";
 import UserDetails from "../userDetails";
 import UserOtherDetails from "../usersOtherDetails";
-const tabs = {
-  BANK_DETAILS: "Bank Details",
-  SALARY_DETAILS: "Salary Details",
-  FAMILY_DETAILS: "Family Details",
-};
+
 const User = () => {
   const [validUser, setValidUser] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,13 +41,13 @@ const User = () => {
 
   useEffect(() => {
     getUserDetails();
-  }, []);
+  }, [id]);
 
   return (
     <Box mt={5} className={"container"}>
       <PopUp
         open={validUser}
-        handleClose={() => navigate("/dashboard")}
+        handleClose={() => navigate("/")}
         msg="Invalid User"
       />
       <Loader open={loading} />

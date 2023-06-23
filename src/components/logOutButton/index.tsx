@@ -1,15 +1,16 @@
-import { Button } from "@mui/material";
-import { useNavigate } from "react-router";
+
 import ConfirmBox from "../confirmBox";
 import { useState } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useContext } from "react";
+import { LogInContext } from "../../App";
 const LogoutButton = ({ fullWidth }: { fullWidth?: boolean }) => {
+  const login = useContext(LogInContext);
   const [open, setOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
   const confirmLogout = () => {
     setOpen(false);
     localStorage.clear();
-    navigate("/");
+    login(false)
   };
   return (
     <>

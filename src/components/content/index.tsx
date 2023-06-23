@@ -1,26 +1,17 @@
 import "./index.css";
-import { Route, Routes, useNavigate } from "react-router";
+import { Route, Routes } from "react-router";
 import Header from "../Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Box } from "@mui/material";
 import SideBar from "../sidebar";
 import routes from "../../appLinks/routes";
 
 const Content = () => {
   const [toggleSidebar, setSidebar] = useState(true);
-  const navigate = useNavigate();
   var className = "block";
   if (!toggleSidebar) {
     className = "none";
   }
-  useEffect(() => {
-    if (
-      !localStorage.getItem("token") &&
-      localStorage.getItem("role") !== "superAdmin"
-    ) {
-      navigate("/");
-    }
-  });
   return (
     <Box sx={{ display: "flex" }}>
       <Box className={className}>

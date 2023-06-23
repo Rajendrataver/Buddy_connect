@@ -92,7 +92,6 @@ const UpdateUser = () => {
     validationSchema,
     onSubmit: (values) => {
       setLoading(true);
-      console.log(values);
 
       const response = fetch(
         API.UPDATE_USER_DETAILS_URL + id,
@@ -118,7 +117,7 @@ const UpdateUser = () => {
       <PopUp
         open={validUser}
         msg="Invalid User"
-        handleClose={() => navigate("/dashboard")}
+        handleClose={() => navigate("/")}
       />
       <Loader open={loading} />
       <PopUp

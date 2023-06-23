@@ -8,7 +8,7 @@ import UpdateUser from "../components/updateUserDetails";
 const routes = [
   {
     name: "Dashboard",
-    path: "/dashboard",
+    path: "/",
     element: <Dashboard />,
   },
   {
