@@ -35,11 +35,15 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   const fetch = useFetch();
   const getBankdetails = () => {
     const response = fetch(API.GET_BANK_DETAILS_URL + id, "get", token);
-    response.then((res) => {
-      if (res.data.response.length) {
-        setBankInfo(res.data.response);
-      }
-    });
+    response
+      .then((res) => {
+        if (res.data.response.length) {
+          setBankInfo(res.data.response);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   useEffect(() => {
     getBankdetails();
