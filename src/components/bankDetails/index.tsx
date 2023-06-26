@@ -34,7 +34,7 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
   const token = localStorage.getItem("token");
   const fetch = useFetch();
   const getBankdetails = () => {
-    const response = fetch(API.GET_BANK_DETAILS_URL + id, "get", token);
+    const response = fetch(API.GET_BANK_DETAILS_URL + id, "get");
     response
       .then((res) => {
         if (res.data.response.length) {
@@ -60,7 +60,6 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     const response = fetch(
       API.SET_ACCOUNT_TYPE_URL + id + "&&bank_id=" + bank_id,
       "patch",
-      token,
       { type_account }
     )
       .then((res) => {
@@ -77,7 +76,6 @@ const BankDetails = ({ id }: { id: string | undefined }) => {
     const response = fetch(
       API.DELETE_BANK_DETAILS_URL + id + "&&bank_id=" + bank_id,
       "delete",
-      token
     )
       .then((res) => {
         getBankdetails();

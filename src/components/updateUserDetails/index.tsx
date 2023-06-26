@@ -49,7 +49,7 @@ const UpdateUser = () => {
 
   const getUsers = () => {
     setLoading(true);
-    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token);
+    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get");
     response
       .then((res) => {
         if (!res.data.success) {
@@ -93,12 +93,7 @@ const UpdateUser = () => {
     onSubmit: (values) => {
       setLoading(true);
 
-      const response = fetch(
-        API.UPDATE_USER_DETAILS_URL + id,
-        "put",
-        token,
-        values
-      );
+      const response = fetch(API.UPDATE_USER_DETAILS_URL + id, "put", values);
       response
         .then((res) => {
           setOpen(true);

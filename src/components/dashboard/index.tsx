@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const token = localStorage.getItem("token");
   const getUserList = () => {
-    const response = fetch(API.GET_USERS_URL, "get", token)
+    const response = fetch(API.GET_USERS_URL, "get")
       .then((res) => {
         setList(res.data.response);
       })

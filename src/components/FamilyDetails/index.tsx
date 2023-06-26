@@ -24,7 +24,7 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
   const [familyList, setFamilyList] = useState<Array<familyDetails>>([]);
 
   const getFamilyList = () => {
-    fetch(API.GET_FAMILY_DETAILS_URL + id, "get", token).then((res) => {
+    fetch(API.GET_FAMILY_DETAILS_URL + id, "get").then((res) => {
       setFamilyList(res.data.response);
     });
   };
@@ -36,7 +36,6 @@ const FamilyDetails = ({ id }: { id: string | undefined }) => {
     const response = fetch(
       API.DELETE_FAMILY_DETAILS_URL + id + "&&family_id=" + member.id,
       "delete",
-      token
     );
     response.then((res) => {
      

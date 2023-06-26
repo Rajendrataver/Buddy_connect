@@ -26,7 +26,7 @@ const SalaryDetails = ({ id }: { id: string | undefined }) => {
   const [salaryList, setSalary] = useState<Array<salaryDetails>>([]);
   const token = localStorage.getItem("token");
   const getSalaryDetails = () => {
-    const response = fetch(API.GET_SALARY_DETAILS_URL + id, "get", token);
+    const response = fetch(API.GET_SALARY_DETAILS_URL + id, "get",);
     response
       .then((res) => {
         if (res.data.response) {

@@ -22,7 +22,7 @@ const User = () => {
   const fetch = useFetch();
   const getUserDetails = () => {
     setLoading(true);
-    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get", token)
+    const response = fetch(API.GET_PERSONAL_DETAILS_URL + id, "get")
       .then((res) => {
         if (!res.data.success) {
           setValidUser(true);

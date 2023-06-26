@@ -45,7 +45,7 @@ const UserList: React.FC = () => {
 
   const getUserList = () => {
     setLoading(true);
-    const response = fetch(API.GET_USERS_URL, "get", token)
+    const response = fetch(API.GET_USERS_URL, "get")
       .then((res) => {
         setUserlist(res.data.response);
         setData(res.data.response);
@@ -184,7 +184,7 @@ const UserList: React.FC = () => {
 
   const deletUser = () => {
     setOnLoad(true);
-    const response = fetch(API.DELTE_USER_URL + user_id, "delete", token);
+    const response = fetch(API.DELTE_USER_URL + user_id, "delete");
     response
       .then((res) => {
         getUserList();

@@ -23,7 +23,7 @@ const ToggelStatus = ({
       status = "active";
     }
 
-    const response = fetch(API.SET_USER_STATUS_URL + id, "patch", token, {
+    const response = fetch(API.SET_USER_STATUS_URL + id, "patch", {
       status,
     });
     response

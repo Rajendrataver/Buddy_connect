@@ -30,7 +30,6 @@ const AddSalaryDetails = ({
       const response = fetch(
         API.ADD_SALARY_DETAILS_URL + id,
         "post",
-        token,
         values
       );
       response
